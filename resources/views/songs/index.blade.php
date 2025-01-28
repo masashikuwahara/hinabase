@@ -11,9 +11,15 @@
         <h2>{{ $song->title }}</h2>
         <ul>
             @foreach ($song->members as $member)
-                <li>{{ $member->name }}</li>
+                <li>
+                    {{ $member->name }}
+                    @if ($member->pivot->is_center)
+                        <strong>（センター）</strong>
+                    @endif
+                </li>
             @endforeach
         </ul>
     @endforeach
 </body>
 </html>
+
