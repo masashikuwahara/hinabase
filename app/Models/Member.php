@@ -13,6 +13,8 @@ class Member extends Model
 
     public function songs()
     {
-        return $this->belongsToMany(Song::class, 'song_members');
+        return $this->belongsToMany(Song::class, 'song_members')
+        ->withPivot('is_center'); // 中間テーブルのデータを取得
+        return $this->belongsToMany(Song::class, 'song_members')->withPivot('is_center'); // 中間テーブルの情報も取得
     }
 }
