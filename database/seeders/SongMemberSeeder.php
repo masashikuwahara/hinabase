@@ -18,7 +18,16 @@ class SongMemberSeeder extends Seeder
         $memberB = Member::where('name', '山下葉留花')->first();
         $memberC = Member::where('name', '小西夏菜実')->first();
 
-        $songA->members()->attach([$memberA->id, $memberB->id]);
-        $songB->members()->attach([$memberB->id, $memberC->id]);
+        // 曲Aにメンバーを追加（メンバーAをセンターに設定）
+        $songA->members()->attach([
+            $memberA->id => ['is_center' => true],
+            $memberB->id => ['is_center' => false],
+        ]);
+        // 曲Bにメンバーを追加（メンバーCをセンターに設定）
+        $songB->members()->attach([
+            $memberB->id => ['is_center' => false],
+            $memberC->id => ['is_center' => true],
+        ]);
+        
     }
 }
