@@ -7,19 +7,13 @@
 </head>
 <body>
     <h1>楽曲一覧</h1>
-    @foreach ($songs as $song)
-        <h2>{{ $song->title }}</h2>
-        <ul>
-            @foreach ($song->members as $member)
-                <li>
-                    {{ $member->name }}
-                    @if ($member->pivot->is_center)
-                        <strong>（センター）</strong>
-                    @endif
-                </li>
-            @endforeach
-        </ul>
-    @endforeach
+    <ul>
+        @foreach ($songs as $song)
+            <li>
+                <a href="{{ route('songs.show', $song->id) }}">{{ $song->title }}</a>
+            </li>
+        @endforeach
+    </ul>
 </body>
 </html>
 
