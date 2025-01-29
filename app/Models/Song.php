@@ -13,9 +13,6 @@ class Song extends Model
 
     public function members()
     {
-        return $this->belongsToMany(Member::class, 'song_members')
-        ->withPivot('is_center'); // 中間テーブルのデータを取得
-
         return $this->belongsToMany(Member::class, 'song_members')->withPivot('is_center');
     }
 }
