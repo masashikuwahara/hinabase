@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SongController;
+use App\Http\Controllers\Admin\MemberController as AdminMemberController;
+use App\Http\Controllers\Admin\SongController as AdminSongController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,6 +32,14 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/members', [AdminController::class, 'members'])->name('admin.members');
     Route::get('/songs', [AdminController::class, 'songs'])->name('admin.songs');
+});
+
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::get('/members/create', [AdminMemberController::class, 'create'])->name('admin.members.create');
+    Route::post('/members', [AdminMemberController::class, 'store'])->name('admin.members.store');
+    
+    Route::get('/songs/create', [AdminSongController::class, 'create'])->name('admin.songs.create');
+    Route::post('/songs', [AdminSongController::class, 'store'])->name('admin.songs.store');
 });
 
 require __DIR__.'/auth.php';
