@@ -1,0 +1,10 @@
+@extends('layouts.app')
+
+@section('content')
+    <h1>楽曲管理</h1>
+    <ul>
+        @foreach ($songs as $song)
+            <li>{{ $song->title }}</li>
+        @endforeach
+    </ul>
+@endsection
