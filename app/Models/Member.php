@@ -9,7 +9,7 @@ class Member extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'birthday', 'position'];
+    protected $fillable = ['name', 'birthday', 'constellation','blood_type','birthplace','grade','color1','color2','selection','graduation'];
 
     public function songs()
     {
