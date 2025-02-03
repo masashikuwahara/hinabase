@@ -9,4 +9,6 @@
         <input type="text" name="name" id="name" required>
         <button type="submit">追加</button>
     </form>
+
+    <a href="{{ route('admin.members') }}">戻る</a>
 @endsection

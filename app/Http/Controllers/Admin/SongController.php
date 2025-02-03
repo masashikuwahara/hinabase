@@ -17,13 +17,13 @@ class SongController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'release_date' => 'nullable|date',
+            'release' => 'required|date',
+            'lyricist' => 'nullable|string|max:255',
+            'composer' => 'nullable|string|max:255',
+            'arranger' => 'nullable|string|max:255',
         ]);
 
-        Song::create([
-            'title' => $request->title,
-            'release_date' => $request->release_date,
-        ]);
+        Song::create($request->all());
 
         return redirect()->route('admin.songs.create')->with('success', '楽曲が追加されました！');
     }
