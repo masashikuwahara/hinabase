@@ -8,4 +8,5 @@
             <li>{{ $member->name }}</li>
         @endforeach
     </ul>
+    <a href="{{ route('admin.dashboard') }}">戻る</a>
 @endsection
