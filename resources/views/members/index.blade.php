@@ -14,5 +14,6 @@
             </li>
         @endforeach
     </ul>
+    <a href="{{ url('/') }}">トップページへ</a>
 </body>
 </html>
