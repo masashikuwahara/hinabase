@@ -14,6 +14,22 @@
     @else
         <ul>
             @foreach ($member->songs as $song)
+                生年月日
+                <li>{{ $member->birthday }}</li>
+                星座
+                <li>{{ $member->constellation }}</li>
+                血液型
+                <li>{{ $member->blood_type }}</li>
+                出身地
+                <li>{{ $member->birthplace }}</li>
+                何期生？
+                <li>{{ $member->grade }}</li>
+                ペンライトカラー
+                <li><div style="background-color: {{ $member->color1 }}; width: 20px; height: 20px;"></div></li>
+                <li><div style="background-color: {{ $member->color2 }}; width: 20px; height: 20px;"></div></li>
+                選抜回数
+                <li>{{ $member->selection }}回</li>
+                参加楽曲
                 <li>
                     {{ $song->title }}
                     @if ($song->pivot->is_center)
