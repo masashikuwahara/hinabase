@@ -3,6 +3,12 @@
 @section('title', 'メンバー追加')
 
 @section('content')
+    <h1>楽曲登録</h1>
+    
+    @if (session('success'))
+    <p style="color: green;">{{ session('success') }}</p>
+    @endif
+
     <form action="{{ route('admin.members.store') }}" method="POST">
         @csrf
         <label for="name">名前:</label>
