@@ -12,10 +12,14 @@
 @if ($song->members->isEmpty())
     <p>この楽曲にはまだ参加メンバーが登録されていません。</p>
 @else
+    リリース日: {{ $song->release }}
+    作詞: {{ $song->lyricist }}
+    作曲: {{ $song->composer }}
+    編曲: {{ $song->arranger }}
     <ul>
         @foreach ($song->members as $member)
             <li>
-                {{ $member->name }}
+                <a href="{{ route('members.show', $member->id) }}">{{ $member->name }}</a>
                 @if ($member->pivot->is_center)
                     <strong>（センター）</strong>
                 @endif
