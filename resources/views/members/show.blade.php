@@ -8,30 +8,24 @@
 <body>
     <h1>{{ $member->name }}のプロフィール</h1>
 
-    <h2>参加楽曲</h2>
     @if ($member->songs->isEmpty())
         <p>このメンバーはまだ楽曲に参加していません。</p>
     @else
         <ul>
+            <li>{{ $member->birthday }}</li>
+            <li>{{ $member->constellation }}</li>
+            <li>{{ $member->blood_type }}</li>
+            <li>{{ $member->birthplace }}</li>
+            <li>{{ $member->grade }}</li>
+            <li><div style="background-color: {{ $member->color1 }}; width: 20px; height: 20px;"></div></li>
+            <li><div style="background-color: {{ $member->color2 }}; width: 20px; height: 20px;"></div></li>
+            <li>{{ $member->selection }}回</li>
+        </ul>
+        <h2>参加楽曲</h2>
+        <ul>
             @foreach ($member->songs as $song)
-                生年月日
-                <li>{{ $member->birthday }}</li>
-                星座
-                <li>{{ $member->constellation }}</li>
-                血液型
-                <li>{{ $member->blood_type }}</li>
-                出身地
-                <li>{{ $member->birthplace }}</li>
-                何期生？
-                <li>{{ $member->grade }}</li>
-                ペンライトカラー
-                <li><div style="background-color: {{ $member->color1 }}; width: 20px; height: 20px;"></div></li>
-                <li><div style="background-color: {{ $member->color2 }}; width: 20px; height: 20px;"></div></li>
-                選抜回数
-                <li>{{ $member->selection }}回</li>
-                参加楽曲
                 <li>
-                    {{ $song->title }}
+                    <a href="{{ route('songs.show', $song->id) }}">{{ $song->title }}</a>
                     @if ($song->pivot->is_center)
                         <strong>（センター）</strong>
                     @endif
