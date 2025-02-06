@@ -3,13 +3,13 @@
 @section('title', 'メンバー追加')
 
 @section('content')
-    <h1>楽曲登録</h1>
+    <h1>メンバー登録</h1>
     
     @if (session('success'))
     <p style="color: green;">{{ session('success') }}</p>
     @endif
 
-    <form action="{{ route('admin.members.store') }}" method="POST">
+    <form action="{{ route('admin.members.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <label for="name">名前:</label>
         <input type="text" name="name" id="name" required>
@@ -37,6 +37,9 @@
 
         <label for="selection">選抜情報:</label>
         <input type="text" name="selection" id="selection" >
+
+        <label for="image">顔写真:</label>
+        <input type="file" name="image" id="image" accept="image/*">
 
         <label for="graduation">卒業:</label>
         <select name="graduation" id="graduation">
