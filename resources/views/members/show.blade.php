@@ -9,8 +9,10 @@
     <h1>{{ $member->name }}のプロフィール</h1>
 
     @if ($member->songs->isEmpty())
-        <p>このメンバーはまだ楽曲に参加していません。</p>
+        <p>ただいま編集中です。</p>
     @else
+    
+    <img src="{{ asset('storage/' . $member->image) }}" alt="顔写真" width="150">
         <ul>
             <li>{{ $member->birthday }}</li>
             <li>{{ $member->constellation }}</li>
