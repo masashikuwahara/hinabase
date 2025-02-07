@@ -15,16 +15,32 @@ class SongController extends Controller
 
     public function store(Request $request)
     {
+        $photoPath = null;
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('photos', 'public');
+        }
         $request->validate([
             'title' => 'required|string|max:255',
             'release' => 'required|date',
             'lyricist' => 'nullable|string|max:255',
             'composer' => 'nullable|string|max:255',
             'arranger' => 'nullable|string|max:255',
+            'titlesong' => 'required|boolean',
+            'youtube' => 'nullable|string|max:510',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        Song::create($request->all());
+        Song::create([
+            'title' => $request->title,
+            'release' => $request->release,
+            'lyricist' => $request->lyricist,
+            'composer' => $request->composer,
+            'arranger' => $request->arranger,
+            'titlesong' => $request->titlesong,
+            'youtube' => $request->youtube,
+            'photo' => $photoPath,
+        ]);
 
-        return redirect()->route('admin.songs.create')->with('success', '楽曲が追加されました！');
+        return redirect()->route('admin.songs.create')->with('success', '楽曲を追加しました！');
     }
 }
