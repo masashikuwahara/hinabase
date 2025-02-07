@@ -9,7 +9,8 @@ class Song extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'release', 'lyricist', 'composer', 'arranger'];
+    protected $fillable = ['title', 'release', 'lyricist', 'composer', 
+    'arranger', 'titlesong', 'youtube', 'photo'];
 
     public function members()
     {
