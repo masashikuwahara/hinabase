@@ -9,7 +9,7 @@
         <p style="color: green;">{{ session('success') }}</p>
     @endif
 
-    <form action="{{ route('admin.songs.store') }}" method="POST">
+    <form action="{{ route('admin.songs.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <label for="title">タイトル:</label>
         <input type="text" name="title" id="title" required>
@@ -25,6 +25,18 @@
 
         <label for="arranger">編曲:</label>
         <input type="text" name="arranger" id="arranger">
+
+        <label for="titlesong">表題曲？:</label>
+        <select name="titlesong" id="titlesong">
+            <option value="1" >表題曲</option>
+            <option value="0" >カップリング曲</option>
+        </select>
+
+        <label for="youtube">YouTube:</label>
+        <input type="text" name="youtube" id="youtube">
+
+        <label for="photo">ジャケット写真:</label>
+        <input type="file" name="photo" id="photo" accept="image/*">
 
         <button type="submit">登録</button>
     </form>
