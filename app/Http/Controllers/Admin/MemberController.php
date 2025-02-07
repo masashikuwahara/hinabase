@@ -47,6 +47,6 @@ class MemberController extends Controller
             'image' => $imagePath
         ]);
 
-        return redirect()->route('admin.members.create')->with('success', 'メンバーが追加されました！');
+        return redirect()->route('admin.members.create')->with('success', 'メンバーを追加しました！');
     }
 }
