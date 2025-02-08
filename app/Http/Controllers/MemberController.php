@@ -9,8 +9,9 @@ class MemberController extends Controller
 {
     public function index()
     {
-        $members = Member::all(); // メンバー情報を全件取得
-        return view('members.index', compact('members'));
+        $currentMembers = Member::where('graduation', 0)->get();
+        $graduatedMembers = Member::where('graduation', 1)->get();
+        return view('members.index', compact('currentMembers', 'graduatedMembers'));
     }
 
     public function show($id)
