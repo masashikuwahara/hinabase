@@ -16,12 +16,14 @@
         <ul>
             <li>{{ $member->birthday }}</li>
             <li>{{ $member->constellation }}</li>
+            <li>{{ $member->height }}㎝</li>
             <li>{{ $member->blood_type }}</li>
             <li>{{ $member->birthplace }}</li>
             <li>{{ $member->grade }}</li>
-            <li><div style="background-color: {{ $member->color1 }}; width: 20px; height: 20px;"></div></li>
-            <li><div style="background-color: {{ $member->color2 }}; width: 20px; height: 20px;"></div></li>
-            <li>{{ $member->selection }}回</li>
+            <li><div style="background-color: {{ $member->color1 }}; width: 150px; 
+            height: 20px;">{{ $member->colorname1 }}</div></li>
+            <li><div style="background-color: {{ $member->color2 }}; width: 150px; 
+            height: 20px;">{{ $member->colorname2 }}</div></li>
         </ul>
         <h2>参加楽曲</h2>
         <ul>
