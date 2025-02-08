@@ -28,6 +28,7 @@
     作詞: {{ $song->lyricist }}
     作曲: {{ $song->composer }}
     編曲: {{ $song->arranger }}
+    収録: {{ $song->is_recorded }}
     <h2>参加メンバー</h2>
     <ul>
         @foreach ($song->members as $member)

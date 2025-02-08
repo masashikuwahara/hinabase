@@ -26,10 +26,13 @@
         <label for="arranger">編曲:</label>
         <input type="text" name="arranger" id="arranger">
 
+        <label for="is_recorded">収録:</label>
+        <input type="text" name="is_recorded" id="is_recorded">
+
         <label for="titlesong">表題曲？:</label>
         <select name="titlesong" id="titlesong">
             <option value="1" >表題曲</option>
-            <option value="0" >カップリング曲</option>
+            <option value="0" >その他</option>
         </select>
 
         <label for="youtube">YouTube:</label>
