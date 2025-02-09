@@ -11,15 +11,19 @@ class MemberSeeder extends Seeder
     public function run()
     {
         Member::create([
-            'name' => '藤嶌果歩',
-            'birthday' => '2006-08-07',
+            'name' => '平尾帆夏',
+            'birthday' => '2003-07-31',
             'constellation' => 'しし座',
-            'blood_type' => '不明',
-            'birthplace' => '北海道',
+            'height' => '158.5',
+            'blood_type' => 'A型',
+            'birthplace' => '鳥取県',
             'grade' => '四期生',
-            'color1' => '#fceeeb',
-            'color2' => '#0000ff',
+            'color1' => '#49BDF0br',
+            'colorname1' => 'パステルブルー',
+            'color2' => '#ffa500',
+            'colorname2' => 'オレンジ',
             'graduation' => '0',
-            'image' => 'images/kaho.jpg']);
+            'image' => 'images/hiraho.jpg'
+        ]);
     }
 }
