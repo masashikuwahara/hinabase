@@ -6,6 +6,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\Admin\MemberController as AdminMemberController;
 use App\Http\Controllers\Admin\SongController as AdminSongController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -41,5 +42,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/songs/create', [AdminSongController::class, 'create'])->name('admin.songs.create');
     Route::post('/songs', [AdminSongController::class, 'store'])->name('admin.songs.store');
 });
+
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 require __DIR__.'/auth.php';
