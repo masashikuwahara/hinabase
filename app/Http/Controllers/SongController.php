@@ -10,14 +10,18 @@ class SongController extends Controller
     // 楽曲一覧ページ
     public function index()
     {
-        $songs = Song::all(); // 楽曲データを取得
-        return view('songs.index', compact('songs'));
+        $others = Song::where('titlesong', 0)->get();
+        $singles = Song::where('titlesong', 1)->get();
+        return view('songs.index', compact('others', 'singles'));
     }
 
     // 楽曲詳細ページ
     public function show($id)
     {
         $song = Song::with('members')->findOrFail($id); // 楽曲の参加メンバーを取得
-        return view('songs.show', compact('song'));
+        $recordedSongs = Song::where('is_recorded', $song->is_recorded)
+        ->where('id', '!=', $song->id) // 自分自身は除外
+        ->get();
+        return view('songs.show', compact('song', 'recordedSongs'));
     }
 }

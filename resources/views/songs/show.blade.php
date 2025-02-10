@@ -28,7 +28,18 @@
     作詞: {{ $song->lyricist }}
     作曲: {{ $song->composer }}
     編曲: {{ $song->arranger }}
-    収録: {{ $song->is_recorded }}
+
+    <!-- 収録楽曲一覧を追加 -->
+    @if (!$recordedSongs->isEmpty())
+    <h2>この楽曲に収録されている楽曲</h2>
+    <ul>
+        @foreach ($recordedSongs as $recordedSong)
+            <li>
+                <a href="{{ route('songs.show', $recordedSong->id) }}">{{ $recordedSong->title }}</a>
+            </li>
+        @endforeach
+    </ul>
+    @endif
     <h2>参加メンバー</h2>
     <ul>
         @foreach ($song->members as $member)
@@ -40,10 +51,12 @@
             </li>
         @endforeach
     </ul>
+    <h2>ミュージックビデオ</h2>
     <div class="video">
         {!! $song->youtube !!}
     </div>
 @endif
+
 <a href="{{ route('songs.index') }}">楽曲一覧へ戻る</a>
 </body>
 </html>

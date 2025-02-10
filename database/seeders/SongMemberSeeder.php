@@ -28,6 +28,5 @@ class SongMemberSeeder extends Seeder
             $memberB->id => ['is_center' => false],
             $memberC->id => ['is_center' => true],
         ]);
-        
     }
 }
