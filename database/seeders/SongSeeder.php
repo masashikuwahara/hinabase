@@ -11,26 +11,37 @@ class SongSeeder extends Seeder
     public function run()
     {
         Song::create([
-            'title' => 'ブルーベリー＆ラズベリー',
-            'release' => '2022-10-26',
+            'title' => 'ソンナコトナイヨ',
+            'release' => '2020-02-19',
             'lyricist' => '秋元康',
-            'composer' => '小野貴光',
-            'arranger' => '若田部誠',
-            'is_recorded' => '月と星が踊るMidnight',
-            'titlesong' => '0',
-            'youtube' => '<iframe width="560" height="315" src="https://www.youtube.com/embed/lV_Boxqp-ak?si=3imndfeHQsIOuhBR" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
-            'photo' => 'Blueberry & Raspberry.png',
+            'composer' => '柳沢英樹',
+            'arranger' => '柳沢英樹',
+            'is_recorded' => 'ソンナコトナイヨ',
+            'titlesong' => '1',
+            'youtube' => '<iframe width="560" height="315" src="https://www.youtube.com/embed/7njC5lgL61c?si=AD3oGCX6gtaiq3i6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+            'photo' => 'photos/sonnakotonaiyo.jpg',
         ]);
         Song::create([
-            'title' => '錆つかない剣を持て!',
-            'release' => '2024-05-08',
+            'title' => '青春の馬',
+            'release' => '2020-02-19',
             'lyricist' => '秋元康',
-            'composer' => 'karia',
-            'arranger' => 'APAZZI',
-            'is_recorded' => '君はハニーデュー',
+            'composer' => '近藤圭一',
+            'arranger' => '近藤圭一',
+            'is_recorded' => 'ソンナコトナイヨ',
             'titlesong' => '0',
-            'youtube' => '<iframe width="560" height="315" src="https://www.youtube.com/embed/MYMyC927h0o?si=qkK87d74f99So96f" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
-            'photo' => 'maxresdefault.jpg',
+            'youtube' => '<iframe width="560" height="315" src="https://www.youtube.com/embed/WnCksS3LEyA?si=Sa_2WIWs5XbRDXdn" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+            'photo' => 'photos/seishunnouma.jpg',
+        ]);
+        Song::create([
+            'title' => '窓を開けなくても',
+            'release' => '2020-02-19',
+            'lyricist' => '秋元康',
+            'composer' => 'CHOCOLATE MIX',
+            'arranger' => 'CHOCOLATE MIX',
+            'is_recorded' => 'ソンナコトナイヨ',
+            'titlesong' => '0',
+            'youtube' => '<iframe width="560" height="315" src="https://www.youtube.com/embed/LjQWrrctzV0?si=bCXL0AOeum9KGeIm" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>',
+            'photo' => 'photos/madowo.jpg',
         ]);
     }
 }
