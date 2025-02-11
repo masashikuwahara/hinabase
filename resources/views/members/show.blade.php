@@ -14,7 +14,7 @@
     
     <img src="{{ asset('storage/' . $member->image) }}" alt="顔写真" width="150">
         <ul>
-            <li>{{ $member->birthday }}</li>
+            <li>{{ \Carbon\Carbon::parse($member->birthday)->format('Y年m月d日') }}</li>
             <li>{{ $member->constellation }}</li>
             <li>{{ $member->height }}㎝</li>
             <li>{{ $member->blood_type }}</li>

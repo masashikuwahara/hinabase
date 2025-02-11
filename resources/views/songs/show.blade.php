@@ -24,7 +24,7 @@
     <p>この楽曲にはまだ参加メンバーが登録されていません。</p>
 @else
     <img src="{{ asset('storage/' . $song->photo) }}" alt="ジャケット" width="150"><br>
-    リリース日: {{ $song->release }}
+    リリース日: {{ \Carbon\Carbon::parse($song->release)->format('Y年m月d日') }}
     作詞: {{ $song->lyricist }}
     作曲: {{ $song->composer }}
     編曲: {{ $song->arranger }}
