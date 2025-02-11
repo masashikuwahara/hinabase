@@ -7,29 +7,37 @@
 </head>
 <body>
     <h1>メンバー一覧</h1>
+
+    <!-- 在籍メンバー -->
     <h2>在籍メンバー</h2>
     @if ($currentMembers->isEmpty())
         <p>在籍メンバーはいません。</p>
     @else
-        <ul>
-            @foreach ($currentMembers as $member)
-                <li>
-                    <a href="{{ route('members.show', $member->id) }}">{{ $member->name }}</a>
-                </li>
-            @endforeach
-        </ul>
+        @foreach ($currentMembers as $grade => $members)
+            <h3>{{ $grade }}</h3>
+            <ul>
+                @foreach ($members as $member)
+                    <li><a href="{{ route('members.show', $member->id) }}">{{ $member->name }}</a></li>
+                @endforeach
+            </ul>
+        @endforeach
     @endif
 
+    <!-- 卒業メンバー -->
     <h2>卒業メンバー</h2>
     @if ($graduatedMembers->isEmpty())
         <p>卒業メンバーはいません。</p>
     @else
-        <ul>
-            @foreach ($graduatedMembers as $member)
-                <li><a href="{{ route('members.show', $member->id) }}">{{ $member->name }}</a></li>
-            @endforeach
-        </ul>
+        @foreach ($graduatedMembers as $grade => $members)
+            <h3>{{ $grade }}</h3>
+            <ul>
+                @foreach ($members as $member)
+                    <li><a href="{{ route('members.show', $member->id) }}">{{ $member->name }}</a></li>
+                @endforeach
+            </ul>
+        @endforeach
     @endif
+
     <a href="{{ url('/') }}">トップページへ</a>
 </body>
 </html>

@@ -9,8 +9,8 @@ class MemberController extends Controller
 {
     public function index()
     {
-        $currentMembers = Member::where('graduation', 0)->get();
-        $graduatedMembers = Member::where('graduation', 1)->get();
+        $currentMembers = Member::where('graduation', 0)->get()->groupBy('grade');
+        $graduatedMembers = Member::where('graduation', 1)->get()->groupBy('grade');
         return view('members.index', compact('currentMembers', 'graduatedMembers'));
     }
 
