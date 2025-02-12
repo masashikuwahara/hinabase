@@ -30,6 +30,7 @@ class SearchController extends Controller
             $results->push([
                 'type' => 'member',
                 'name' => $member->name,
+                'image' => $member->image,
                 'url' => route('members.show', $member->id)
             ]);
         }
@@ -38,6 +39,7 @@ class SearchController extends Controller
             $results->push([
                 'type' => 'song',
                 'name' => $song->title ,
+                'image' => $song->photo ,
                 'url' => route('songs.show', $song->id) // ここで正しくIDを取得
             ]);
         }
