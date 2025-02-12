@@ -14,16 +14,18 @@
     
     <img src="{{ asset('storage/' . $member->image) }}" alt="顔写真" width="150">
         <ul>
-            <li>{{ \Carbon\Carbon::parse($member->birthday)->format('Y年m月d日') }}</li>
-            <li>{{ $member->constellation }}</li>
-            <li>{{ $member->height }}㎝</li>
-            <li>{{ $member->blood_type }}</li>
-            <li>{{ $member->birthplace }}</li>
-            <li>{{ $member->grade }}</li>
-            <li><div style="background-color: {{ $member->color1 }}; width: 150px; 
+            <li>ニックネーム：{{ $member->nickname }}</li>
+            <li>生年月日：{{ \Carbon\Carbon::parse($member->birthday)->format('Y年m月d日') }}</li>
+            <li>星座：{{ $member->constellation }}</li>
+            <li>身長：{{ $member->height }}㎝</li>
+            <li>血液型：{{ $member->blood_type }}</li>
+            <li>出身地：{{ $member->birthplace }}</li>
+            <li>加入：{{ $member->grade }}</li>
+            <li>ペンライトカラー：<div style="background-color: {{ $member->color1 }}; width: 150px; 
             height: 20px;">{{ $member->colorname1 }}</div></li>
-            <li><div style="background-color: {{ $member->color2 }}; width: 150px; 
-            height: 20px;">{{ $member->colorname2 }}</div></li>
+            <div style="background-color: {{ $member->color2 }}; width: 150px; 
+            height: 20px;">{{ $member->colorname2 }}</div>
+            <li>キャラクター：{{ $member->introduction }}</li>
         </ul>
         <h2>参加楽曲</h2>
         <ul>
