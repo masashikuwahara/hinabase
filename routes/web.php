@@ -7,17 +7,19 @@ use App\Http\Controllers\SongController;
 use App\Http\Controllers\Admin\MemberController as AdminMemberController;
 use App\Http\Controllers\Admin\SongController as AdminSongController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('index');
-});
+//ホーム
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
+//メンバー、楽曲一覧
 Route::get('/songs', [SongController::class, 'index'])->name('songs.index'); // 楽曲一覧
 Route::get('/songs/{id}', [SongController::class, 'show'])->name('songs.show'); // 楽曲詳細
 Route::get('/members', [MemberController::class, 'index'])->name('members.index'); // メンバー一覧
 Route::get('/members/{id}', [MemberController::class, 'show'])->name('members.show'); // プロフィール詳細
 
+//認証関係
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -43,6 +45,7 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::post('/songs', [AdminSongController::class, 'store'])->name('admin.songs.store');
 });
 
+//検索結果ページへのルート
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 require __DIR__.'/auth.php';
