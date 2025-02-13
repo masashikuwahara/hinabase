@@ -11,19 +11,21 @@ class MemberSeeder extends Seeder
     public function run()
     {
         Member::create([
-            'name' => '平尾帆夏',
-            'birthday' => '2003-07-31',
-            'constellation' => 'しし座',
-            'height' => '158.5',
-            'blood_type' => 'A型',
-            'birthplace' => '鳥取県',
-            'grade' => '四期生',
-            'color1' => '#49BDF0br',
-            'colorname1' => 'パステルブルー',
-            'color2' => '#ffa500',
-            'colorname2' => 'オレンジ',
-            'graduation' => '0',
-            'image' => 'images/hiraho.jpg'
+            'name' => '長濱ねる',
+            'nickname' => 'ねる',
+            'birthday' => '1998-09-04',
+            'constellation' => 'おとめ座',
+            'height' => '159',
+            'blood_type' => 'O型',
+            'birthplace' => '長崎県',
+            'grade' => 'けやき坂46',
+            'color1' => '#9b72b0',
+            'colorname1' => 'パープル',
+            'color2' => '#9b72b0',
+            'colorname2' => 'パープル',
+            'graduation' => '1',
+            'introduction' => '全てはここから始まった！ねるのためにひらがなけやきが結成され、仲間が集まり、やがてねるは兼任を解除し、ひらがなけやきは新たなにスタートを切り、今に至る。',
+            'image' => 'images/neru.jpg'
         ]);
     }
 }
