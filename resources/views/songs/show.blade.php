@@ -80,12 +80,15 @@
             </section>
         
             <!-- ミュージックビデオ -->
+            @if ($song->youtube === "-")
+            @else
             <section class="bg-white p-6 shadow-md rounded-lg mt-6">
                 <h3 class="text-xl font-bold text-gray-800">ミュージックビデオ</h3>
                 <div class="mt-4 aspect-w-16 aspect-h-9 youtube-ratio">
                     {!! $song->youtube !!}
                 </div>
             </section>
+            @endif
         @endif
     </main>
     
