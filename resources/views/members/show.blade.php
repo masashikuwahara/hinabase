@@ -11,7 +11,7 @@
     <!-- ヘッダー -->
     <header class="bg-white shadow-md py-4">
         <div class="container mx-auto flex justify-between items-center px-4">
-            <h1 class="text-2xl font-bold text-gray-800">hinabase(仮)</h1>
+            <a href="{{ url('/') }}"><h1 class="text-2xl font-bold text-gray-800">hinabase(仮)</h1></a>
             <nav>
                 <ul class="flex space-x-6">
                     <li><a href="{{ route('members.index') }}" class="hover:text-blue-600">メンバー一覧</a></li>
@@ -62,10 +62,10 @@
                         <li class="bg-white p-4 shadow-md rounded-lg">
                             <a href="{{ route('songs.show', $song->id) }}" class="block text-lg font-semibold hover:text-blue-600">
                                 {{ $song->title }}
-                            </a>
                             @if ($song->pivot->is_center)
                                 <strong class="text-red-600">（センター）</strong>
                             @endif
+                            </a>
                         </li>
                     @endforeach
                 </ul>
