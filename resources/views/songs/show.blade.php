@@ -30,7 +30,7 @@
     <main class="container mx-auto mt-8 px-4">
         <h1 class="text-3xl font-bold">{{ $song->title }} の詳細</h1>
         
-        @if ($song->members->isEmpty())
+        @if ($song->members === "")
             <p class="mt-4 text-gray-700">この楽曲にはまだ参加メンバーが登録されていません。</p>
         @else
             <div class="bg-white p-6 shadow-md rounded-lg mt-4">
