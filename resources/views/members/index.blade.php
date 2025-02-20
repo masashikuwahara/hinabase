@@ -6,19 +6,17 @@
     <title>メンバー一覧</title>
     @vite('resources/css/app.css') <!-- Tailwind CSS 読み込み -->
 </head>
-<body class="bg-[#7cc7e8] text-gray-900">
+<body class="bg-[#f0f8ff] text-gray-800">
 
     <!-- ヘッダー -->
-    <header class="bg-white shadow-md py-4">
-        <div class="container mx-auto flex justify-between items-center px-4">
-            <a href="{{ url('/') }}"><h1 class="text-2xl font-bold text-gray-800">hinabase(仮)</h1></a>
-            <nav>
-                <ul class="flex space-x-6">
-                    <li><a href="{{ route('members.index') }}" class="hover:text-blue-600">メンバー一覧</a></li>
-                    <li><a href="{{ route('songs.index') }}" class="hover:text-blue-600">楽曲一覧</a></li>
-                </ul>
-            </nav>
-        </div>
+    <header class="bg-[#7cc7e8] text-white py-4 px-6 flex justify-between items-center">
+        <a href="{{ url('/') }}"><h1 class="text-2xl font-bold">hinabase(仮)</h1></a>
+        <nav>
+            <ul class="flex space-x-6 text-lg">
+                <li><a href="{{ route('members.index') }}" class="hover:underline">メンバー一覧</a></li>
+                <li><a href="{{ route('songs.index') }}" class="hover:underline">楽曲一覧</a></li>
+            </ul>
+        </nav>
     </header>
 
     <!-- メンバー一覧 -->
@@ -35,7 +33,7 @@
                     <h4 class="text-lg font-semibold mt-4">{{ $grade }}</h4>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
                         @foreach ($members as $member)
-                            <div class="bg-white p-4 shadow-md rounded-lg text-center">
+                            <div class="bg-white shadow-md rounded-lg text-center hover:scale-105 transition-transform">
                                 <a href="{{ route('members.show', $member->id) }}" class="block">
                                     <img src="{{ asset('storage/' . ($member->image ?? 'default.jpg')) }}" 
                                          alt="{{ $member->name }}" 
@@ -59,7 +57,7 @@
                     <h4 class="text-lg font-semibold mt-4">{{ $grade }}</h4>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
                         @foreach ($members as $member)
-                            <div class="bg-white p-4 shadow-md rounded-lg text-center">
+                            <div class="bg-white shadow-md rounded-lg text-center hover:scale-105 transition-transform">
                                 <a href="{{ route('members.show', $member->id) }}" class="block">
                                     <img src="{{ asset('storage/' . ($member->image ?? 'default.jpg')) }}" 
                                          alt="{{ $member->name }}" 
@@ -75,7 +73,7 @@
     </main>
 
     <!-- フッター -->
-    <footer class="bg-white text-gray-700 text-center py-4 mt-8">
+    <footer class="bg-[#7cc7e8] text-white text-center py-4 mt-8">
         <p class="text-sm">&copy; {{ date('Y') }} hinabase(仮). All rights reserved.</p>
         <div class="flex justify-center space-x-4 mt-2">
             <a href="#" class="hover:underline">Twitter</a>
