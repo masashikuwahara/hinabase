@@ -19,6 +19,10 @@
         </nav>
     </header>
 
+    <div class="text-center mt-8">
+        <p class="text-sm">日向坂46メンバーと楽曲のシンプルなデータベースサイトです。</p>
+    </div>
+
     <!-- 検索フォーム -->
     <div class="mt-6 text-center">
         @if (session('error'))
@@ -87,6 +91,6 @@
             <a href="#" class="hover:underline">YouTube</a>
         </div>
     </footer>
-
+{{-- version 1.0.0-beta --}}
 </body>
 </html>
