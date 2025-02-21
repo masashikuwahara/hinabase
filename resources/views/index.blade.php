@@ -91,6 +91,6 @@
             <a href="#" class="hover:underline">YouTube</a>
         </div>
     </footer>
-{{-- version 1.0.0-beta --}}
+<!-- version1.0.0-beta -->
 </body>
 </html>
