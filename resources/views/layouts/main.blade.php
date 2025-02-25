@@ -33,4 +33,4 @@
 
 </body>
 </html>
-<!-- version1.0.0-beta -->
+<!-- version1.0.0 -->
