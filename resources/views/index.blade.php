@@ -24,7 +24,7 @@
     <!-- メンバー一覧 -->
     <section class="mt-10 px-6">
         <h2 class="text-xl font-bold mb-4">メンバー</h2>
-        <div class="grid grid-cols-4 gap-4">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
             @foreach ($members as $member)
                 <div class="bg-white shadow-md rounded-lg p-3 text-center hover:scale-105 transition-transform">
                     <a href="{{ route('members.show', $member->id) }}">
@@ -37,7 +37,7 @@
             @endforeach
             <div class="flex items-center justify-center">
                 <a href="{{ route('members.index') }}" 
-                    class="bg-[#7cc7e8] text-white py-2 px-4 rounded-lg hover:bg-[#5aa6c4]">
+                    class="bg-[#7cc7e8] text-white text-lg font-semibold py-3 px-6 rounded-lg hover:bg-[#5aa6c4] transition-transform hover:scale-105">
                     and more...
                 </a>
             </div>
@@ -47,7 +47,7 @@
     <!-- 楽曲一覧（グリッド表示） -->
     <section class="mt-10 px-6">
         <h2 class="text-xl font-bold mb-4">楽曲</h2>
-        <div class="grid grid-cols-4 gap-4">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
             @foreach ($songs as $song)
                 <div class="bg-white shadow-md rounded-lg p-3 text-center hover:scale-105 transition-transform">
                     <a href="{{ route('songs.show', $song->id) }}">
@@ -60,7 +60,7 @@
             @endforeach
             <div class="flex items-center justify-center">
                 <a href="{{ route('songs.index') }}" 
-                    class="bg-[#7cc7e8] text-white py-2 px-4 rounded-lg hover:bg-[#5aa6c4]">
+                    class="bg-[#7cc7e8] text-white text-lg font-semibold py-3 px-6 rounded-lg hover:bg-[#5aa6c4] transition-transform hover:scale-105">
                     and more...
                 </a>
             </div>
