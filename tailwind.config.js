@@ -14,6 +14,9 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            screens: {
+                xs: '450px', // 430px以下で適用
+              },
         },
     },
     plugins: [],
