@@ -5,6 +5,7 @@
   <div x-data="{ open: false }" class="relative">
     <!-- メニューボタン -->
     <button @click="open = !open" class="md:hidden focus:outline-none flex flex-col space-y-1">
+      <span class="block w-1 h-1 bg-white rounded ml-6"></span>
       <span class="block w-3 h-1 bg-white rounded ml-4"></span>
       <span class="block w-5 h-1 bg-white rounded ml-2"></span>
       <span class="block w-7 h-1 bg-white rounded"></span>
