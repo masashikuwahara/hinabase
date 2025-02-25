@@ -13,7 +13,7 @@
             @if ($singles->isEmpty())
                 <p class="mt-2 text-gray-700">表題曲はまだありません。</p>
             @else
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
                     @foreach ($singles as $song)
                     <div class="bg-white shadow-md rounded-lg p-3 text-center hover:scale-105 transition-transform">
                         <a href="{{ route('songs.show', $song->id) }}" class="block">
@@ -34,7 +34,7 @@
             @if ($others->isEmpty())
                 <p class="mt-2 text-gray-700">c/wやその他の楽曲はまだありません。</p>
             @else
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
                     @foreach ($others as $song)
                         <div class="bg-white shadow-md rounded-lg p-3 text-center hover:scale-105 transition-transform">
                             <a href="{{ route('songs.show', $song->id) }}" class="block">
