@@ -5,25 +5,29 @@
 @section('content')
     <!-- 楽曲詳細 -->
     <main class="container mx-auto mt-8 px-4">
-        <h1 class="text-3xl font-bold">{{ $song->title }} の詳細</h1>
+        <h1 class="text-3xl font-bold">{{ $song->title }}</h1>
         
         @if ($song->members === "")
             <p class="mt-4 text-gray-700">この楽曲にはまだ参加メンバーが登録されていません。</p>
         @else
-            <div class="bg-white p-6 shadow-md rounded-lg mt-4">
-                    <div class="md:w-1/3">
-                        <img src="{{ asset('storage/' . $song->photo) }}" alt="ジャケット" class="w-full rounded-lg">
-                    </div>
-                    
-                    <!-- 楽曲情報 -->
-                    <div class="md:w-2/3 md:pl-6">
-                        <p class="text-lg mt-2 md:mt-0">リリース日: {{ \Carbon\Carbon::parse($song->release)->format('Y年m月d日') }}</p>
-                        <p class="text-lg">作詞: {{ $song->lyricist }}</p>
-                        <p class="text-lg">作曲: {{ $song->composer }}</p>
-                        <p class="text-lg">編曲: {{ $song->arranger }}</p>
-                    </div>
-                </div>
+        <section class="flex flex-col md:flex-row mt-8 bg-white p-6 shadow-md rounded-lg">
+            <div class="flex-shrink-0">
+                <img src="{{ asset('storage/' . $song->photo) }}" 
+                     alt="{{ $song->title }}" 
+                     class="md:w-96 md:h-96 w-auto h-auto object-cover rounded-lg shadow-md ">
             </div>
+            
+            <!-- メンバー情報 -->
+            <div class="md:ml-8 mt-4 md:mt-0">
+                <h3 class="text-xl font-semibold">詳細</h3>
+                <ul class="mt-2 text-gray-800">
+                    <li><strong>リリース日:</strong> {{ \Carbon\Carbon::parse($song->release)->format('Y年m月d日') }}</li>
+                    <li><strong>作詞:</strong> {{ $song->lyricist }}</li>
+                    <li><strong>作曲:</strong> {{ $song->composer }}</li>
+                    <li><strong>編曲:</strong> {{ $song->arranger }}</li>
+                </ul>
+            </div>
+        </section>
         
             <!-- 収録楽曲一覧 -->
             @if (!$recordedSongs->isEmpty())
