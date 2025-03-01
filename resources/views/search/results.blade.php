@@ -12,7 +12,7 @@
         @else
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-6">
                 @foreach ($results as $result)
-                    <div class="bg-white p-4 shadow-md rounded-lg text-center">
+                    <div class="bg-white shadow-md rounded-lg p-3 text-center hover:scale-105 transition-transform">
                         <a href="{{ $result['url'] }}" class="block">
                             <img src="{{ asset('storage/' . ($result['image'] ?? 'default.jpg')) }}" 
                                  alt="{{ $result['name'] }}" 
