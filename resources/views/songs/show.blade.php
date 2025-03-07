@@ -17,7 +17,7 @@
                      class="md:w-96 md:h-96 w-auto h-auto object-cover rounded-lg shadow-md ">
             </div>
             
-            <!-- メンバー情報 -->
+            <!-- 楽曲情報 -->
             <div class="md:ml-8 mt-4 md:mt-0">
                 <h3 class="text-xl font-semibold">詳細</h3>
                 <ul class="mt-2 text-gray-800">
