@@ -66,4 +66,8 @@
             </div>
         </div>
     </section>
+    <div class="text-center mt-8">
+        <p class="text-sm">--更新履歴--</p>
+        <p class="text-sm">2025.03.09&nbsp;メンバー詳細ページレイアウト修正</p>
+    </div>
 @endsection
