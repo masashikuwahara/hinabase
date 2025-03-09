@@ -25,23 +25,26 @@
                     <li><strong>血液型:</strong> {{ $member->blood_type }}</li>
                     <li><strong>出身地:</strong> {{ $member->birthplace }}</li>
                     <li><strong>加入:</strong> {{ $member->grade }}</li>
-                    <li><strong>ペンライトカラー:</strong></li>
-                    <div class="flex items-center space-x-4 mt-2">
-                        <div class="w-26 h-6 rounded" style="background-color: {{ $member->color1 }};">{{ $member->colorname1 }}</div>
-                        <div class="w-26 h-6 rounded" style="background-color: {{ $member->color2 }};">{{ $member->colorname2 }}</div>
-                    </div>
-                    <li><strong>SNS:</strong>ここにアイコン</li>
+                    <li class="flex items-center">
+                        <strong class="mr-2">ペンライトカラー:</strong>
+                        <div class="inline-flex items-center space-x-4 mt-2 ">
+                            <div class="w-26 h-6 rounded" style="background-color: {{ $member->color1 }}">{{ $member->colorname1 }}</div>
+                            <div class="w-26 h-6 rounded" style="background-color: {{ $member->color2 }}">{{ $member->colorname2 }}</div>
+                        </div>
+                    </li>
+                    <li class="flex items-center">
+                        <strong>SNS:</strong>
+                        {{-- @if (!$sns->isEmpty())
+                        <a href="{{ route('members.show', $member->sns) }}">
+                            <img src="{{ asset('/storage/photos/insta.png') }}" 
+                            alt="insta" 
+                            class="w-10 object-cover rounded-lg shadow-md whitespace-nowrap">
+                        </a>
+                        @endif --}}
+                    </li>
                     <li><strong>キャラクター:</strong> {{ $member->introduction }}</li>
                 </ul>
             </div>
-        </section>
-
-        <!-- 参加楽曲リスト -->
-        <section class="flex flex-col md:flex-row items-center mt-8 bg-white p-6 shadow-md rounded-lg">
-            <h2 class="text-xl font-bold mb-4">ブログ</h2>
-            <p class="mt-2 text-gray-700">ここに最新のブログを載せる<br>
-                別ファイルで作成し、includeで表示するか、もしくは直接ここに表示するか？
-            </p>
         </section>
         
         <!-- 参加楽曲リスト -->
