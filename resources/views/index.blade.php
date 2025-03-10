@@ -66,8 +66,12 @@
             </div>
         </div>
     </section>
+
     <div class="text-center mt-8">
         <p class="text-sm">--更新履歴--</p>
-        <p class="text-sm">2025.03.09&nbsp;メンバー詳細ページレイアウト修正</p>
+        <div class="text-left inline-block">
+            <p class="text-sm">2025.03.09&nbsp;v1.1.0&nbsp;メンバー詳細ページにSNS情報追加</p>
+            <p class="text-sm">2025.03.01&nbsp;v1.0.0&nbsp;リリース</p>
+        </div>
     </div>
 @endsection
