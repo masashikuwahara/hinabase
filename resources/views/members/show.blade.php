@@ -32,16 +32,16 @@
                             <div class="w-26 h-6 rounded" style="background-color: {{ $member->color2 }}">{{ $member->colorname2 }}</div>
                         </div>
                     </li>
-                    <li class="flex items-center">
-                        <strong>SNS:</strong>
-                        {{-- @if (!$sns->isEmpty())
-                        <a href="{{ route('members.show', $member->sns) }}">
-                            <img src="{{ asset('/storage/photos/insta.png') }}" 
-                            alt="insta" 
-                            class="w-10 object-cover rounded-lg shadow-md whitespace-nowrap">
-                        </a>
-                        @endif --}}
-                    </li>
+                        @if ($member->sns)
+                        <li class="flex items-center">
+                            <strong>SNS:</strong>&nbsp;
+                            <a href="{{($member->sns) }}" target="_blank" rel="noopener noreferrer">
+                                <img src="{{ asset('/storage/photos/insta.png') }}"
+                                alt="insta" 
+                                class="w-7 object-cover rounded-lg shadow-md">
+                            </a>
+                        </li>
+                        @endif
                     <li><strong>キャラクター:</strong> {{ $member->introduction }}</li>
                 </ul>
             </div>
