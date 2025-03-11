@@ -25,7 +25,7 @@
                     <li><strong>血液型:</strong> {{ $member->blood_type }}</li>
                     <li><strong>出身地:</strong> {{ $member->birthplace }}</li>
                     <li><strong>加入:</strong> {{ $member->grade }}</li>
-                    <li class="flex items-center">
+                    <li>
                         <strong class="mr-2">ペンライトカラー:</strong>
                         <div class="inline-flex items-center space-x-4 mt-2 ">
                             <div class="w-26 h-6 rounded" style="background-color: {{ $member->color1 }}">{{ $member->colorname1 }}</div>
