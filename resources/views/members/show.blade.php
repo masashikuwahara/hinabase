@@ -46,12 +46,20 @@
                 </ul>
             </div>
         </section>
+
+        <!-- ここにブログ -->
+        <section class="flex flex-col md:flex-row items-start mt-8 bg-white p-6 shadow-md rounded-lg">
+            <h2 class="text-xl font-bold mb-4 md:mb-0 md:mr-4 md:flex-none">公式ブログ</h2>
+            <div class="mt-2 text-blue-700 font-semibold hover:text-indigo-600 md:mt-0 md:flex-1">
+                {!! $blogHtml !!}
+            </div>
+        </section>
         
         <!-- 参加楽曲リスト -->
         <section class="mt-8">
             <h3 class="text-2xl font-semibold">参加楽曲</h3>
             @if ($member->songs->isEmpty())
-                <p class="mt-2 text-gray-700">ただいま編集中です。</p>
+                <p class="mt-2 text-gray-700">まだ参加楽曲はありません。</p>
             @else
                 <ul class="mt-4 space-y-2">
                     @foreach ($member->songs as $song)

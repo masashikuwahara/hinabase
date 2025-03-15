@@ -20,7 +20,9 @@
             </button>
         </form>
     </div>
-
+    <div class="text-center mt-8">
+        <p class="text-sm">メンバー名、あだ名、楽曲名で検索できます。</p>
+    </div>
     <!-- メンバー一覧 -->
     <section class="mt-10 px-6">
         <h2 class="text-xl font-bold mb-4">メンバー</h2>
@@ -70,6 +72,8 @@
     <div class="text-center mt-8">
         <p class="text-sm">--更新履歴--</p>
         <div class="text-left inline-block">
+            <p class="text-sm">2025.03.15&nbsp;v1.3.0&nbsp;メンバー詳細ページにブログ情報追加</p>
+            <p class="text-sm">2025.03.14&nbsp;v1.2.0&nbsp;検索システム改修、ニックネーム検索に対応</p>
             <p class="text-sm">2025.03.09&nbsp;v1.1.0&nbsp;メンバー詳細ページにSNS情報追加</p>
             <p class="text-sm">2025.03.01&nbsp;v1.0.0&nbsp;リリース</p>
         </div>
