@@ -17,11 +17,11 @@ class SearchController extends Controller
         }
 
         // メンバー検索
-        $members = Member::where('name', 'like', "%{$query}%")->get();
+        $members = Member::where('name', 'like', "%{$query}%")
+        ->orWhere('nickname', 'like', "%{$query}%")->get();
 
         // 楽曲検索
-        $songs = Song::where('title', 'like', "%{$query}%")
-                     ->get(); // ここでEloquentコレクションを維持
+        $songs = Song::where('title', 'like', "%{$query}%")->get(); // ここでEloquentコレクションを維持
 
         // 結果を統合して並び替え
         $results = collect([]); // 空のコレクションを作成
