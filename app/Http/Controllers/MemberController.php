@@ -10,13 +10,37 @@ use Illuminate\Support\Facades\View;
 
 class MemberController extends Controller
 {
-    public function index()
-    {
+    public function index(Request $request)
+{
+    $sort = $request->input('sort', 'default');
+    $order = $request->input('order', 'asc');
+
+    if ($sort === 'default') {
+        // デフォルト: gradeごとに表示
         $currentMembers = Member::where('graduation', 0)->get()->groupBy('grade');
         $graduatedMembers = Member::where('graduation', 1)->get()->groupBy('grade');
-        return view('members.index', compact('currentMembers', 'graduatedMembers'));
+    } else {
+        // gradeを無視してソート
+        $currentMembers = Member::where('graduation', 0)->orderBy($sort, $order)->get()->map(function ($member) use ($sort) {
+            if ($sort === 'blood_type') {
+                $member->additional_info = $member->blood_type;
+            } elseif ($sort === 'birthday') {
+                $member->additional_info = \Carbon\Carbon::parse($member->birthday)->format('Y年m月d日');
+            }
+            return $member;
+        });
+        $graduatedMembers = Member::where('graduation', 1)->orderBy($sort, $order)->get()->map(function ($member) use ($sort) {
+            if ($sort === 'blood_type') {
+                $member->additional_info = $member->blood_type;
+            } elseif ($sort === 'birthday') {
+                $member->additional_info = \Carbon\Carbon::parse($member->birthday)->format('Y年m月d日');
+            }
+            return $member;
+        });
     }
 
+    return view('members.index', compact('currentMembers', 'graduatedMembers', 'sort', 'order'));
+}
     public function show($id)
     {
         $member = Member::with('songs')->findOrFail($id); // メンバー情報と参加楽曲を取得
