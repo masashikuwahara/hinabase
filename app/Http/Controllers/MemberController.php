@@ -26,6 +26,8 @@ class MemberController extends Controller
                 $member->additional_info = $member->blood_type;
             } elseif ($sort === 'birthday') {
                 $member->additional_info = \Carbon\Carbon::parse($member->birthday)->format('Y年m月d日');
+            } elseif ($sort === 'height') {
+                $member->additional_info = $member->height."cm";
             }
             return $member;
         });
@@ -34,6 +36,8 @@ class MemberController extends Controller
                 $member->additional_info = $member->blood_type;
             } elseif ($sort === 'birthday') {
                 $member->additional_info = \Carbon\Carbon::parse($member->birthday)->format('Y年m月d日');
+            } elseif ($sort === 'height') {
+                $member->additional_info = $member->height."cm";
             }
             return $member;
         });
