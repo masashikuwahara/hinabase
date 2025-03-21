@@ -72,6 +72,7 @@
     <div class="text-center mt-8">
         <p class="text-sm">--更新履歴--</p>
         <div class="text-left inline-block">
+            <p class="text-sm">2025.03.22&nbsp;v1.4.0&nbsp;メンバー一覧ページにソート機能追加</p>
             <p class="text-sm">2025.03.15&nbsp;v1.3.0&nbsp;メンバー詳細ページにブログ情報追加</p>
             <p class="text-sm">2025.03.14&nbsp;v1.2.0&nbsp;検索システム改修、ニックネーム検索に対応</p>
             <p class="text-sm">2025.03.09&nbsp;v1.1.0&nbsp;メンバー詳細ページにSNS情報追加</p>
