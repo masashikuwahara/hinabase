@@ -3,20 +3,74 @@
 @section('title', 'メンバー一覧')
 
 @section('content')
-    <!-- メンバー一覧 -->
     <main class="container mx-auto mt-8 px-4">
+        {{-- 現在の状態を表示 --}}
         <h2 class="text-2xl font-semibold">メンバー一覧</h2>
-    
-        <p>現在のソート: {{ $sort }} ({{ $order }})</p>
+        @if ($sort === 'height')
+            <p>現在のソート: {{ $sort = '身長順' }} </p>
+        @elseif($sort === 'blood_type')
+            <p>現在のソート: {{ $sort = '血液型順' }} </p>
+        @elseif($sort === 'birthday')
+            <p>現在のソート: {{ $sort = '生年月日順' }} </p>
+        @endif
     
         {{-- 切り替えボタン --}}
-        <a href="{{ route('members.index') }}">デフォルトに戻す</a>
-        <a href="{{ route('members.index', ['sort' => 'name', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}">名前順</a>
-        <a href="{{ route('members.index', ['sort' => 'grade', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}">学年順</a>
-        <a href="{{ route('members.index', ['sort' => 'graduation', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}">卒業/在籍順</a>
-        <a href="{{ route('members.index', ['sort' => 'height', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}">身長順</a>
-        <a href="{{ route('members.index', ['sort' => 'blood_type', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}">血液型順</a>
-        <a href="{{ route('members.index', ['sort' => 'birthday', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}">生年月日順</a>
+        <div x-data="{ open: false }" class="relative md:static">
+            {{-- モバイル表示時のプルダウンボタン --}}
+            <button @click="open = !open" class="md:hidden px-4 py-2 bg-gray-500 text-white rounded-lg shadow-md hover:bg-gray-600">
+                並び替え
+            </button>
+        
+            {{-- PC表示時のボタン（モバイルでは非表示） --}}
+            <div class="hidden md:flex justify-center space-x-4 mt-4">
+                <a href="{{ route('members.index') }}" class="px-4 py-2 bg-gray-500 text-white rounded-lg shadow-md hover:bg-gray-600">
+                    デフォルトに戻す
+                </a>
+                <a href="{{ route('members.index', ['sort' => 'height', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                    class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600">
+                    身長順
+                </a>
+                <a href="{{ route('members.index', ['sort' => 'blood_type', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                    class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600">
+                    血液型順
+                </a>
+                <a href="{{ route('members.index', ['sort' => 'birthday', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                    class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600">
+                    生年月日順
+                </a>
+            </div>
+        
+            {{-- モバイル表示時のプルダウンメニュー（初期状態では非表示） --}}
+            <div x-show="open" 
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 transform scale-y-95"
+            x-transition:enter-end="opacity-100 transform scale-y-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 transform scale-y-100"
+            x-transition:leave-end="opacity-0 transform scale-y-95"
+            class="absolute left-0 mt-2 w-full rounded-md shadow-lg bg-blue-100 z-10 md:hidden">
+                <div class="py-1">
+                    <a href="{{ route('members.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        デフォルトに戻す
+                    </a>
+                    <a href="{{ route('members.index', ['sort' => 'height', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        身長順
+                    </a>
+                    <a href="{{ route('members.index', ['sort' => 'blood_type', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        血液型順
+                    </a>
+                    <a href="{{ route('members.index', ['sort' => 'birthday', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        生年月日順
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-6">
+            <p class="text-sm">ボタンを繰り返し押すと昇順、降順を切り替えることができます</p>
+        </div>
     
         @if ($sort === 'default')
             {{-- デフォルト: gradeごとに表示 --}}
@@ -106,9 +160,12 @@
                             <div class="bg-white shadow-md rounded-lg text-center hover:scale-105 transition-transform">
                                 <a href="{{ route('members.show', $member->id) }}" class="block">
                                     <img src="{{ asset('storage/' . ($member->image ?? 'default.jpg')) }}"
-                                         alt="{{ $member->name }}"
-                                         class="w-32 h-32 object-cover mx-auto rounded-full">
+                                        alt="{{ $member->name }}"
+                                        class="w-32 h-32 object-cover mx-auto rounded-full">
                                     <p class="mt-2 font-semibold">{{ $member->name }}</p>
+                                    @if (isset($member->additional_info))
+                                    <p class="text-sm text-gray-600">{{ $member->additional_info }}</p>
+                                    @endif
                                 </a>
                             </div>
                         @endforeach
