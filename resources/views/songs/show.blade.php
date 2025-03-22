@@ -57,6 +57,16 @@
                     @endforeach
                 </ul>
             </section>
+
+            <!-- 歌詞へのリンク -->
+            @if ($song->lyric)
+            <section class="flex flex-col md:flex-row mt-8 bg-white p-6 shadow-md rounded-lg">
+                <div class="md:ml-8 mt-4 md:mt-0 ">
+                    <h3 class="text-xl font-semibold">歌詞はコチラ</h3>
+                    <a href="{{($song->lyric) }}" target="_blank" rel="noopener noreferrer" class= "hover:text-blue-600">別リンクへ飛びます</a>
+                </div>
+            </section>
+            @endif
         
             <!-- ミュージックビデオ -->
             @if ($song->youtube === "-")
