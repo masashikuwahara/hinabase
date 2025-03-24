@@ -49,6 +49,16 @@ class MemberController extends Controller
     {
         $member = Member::with('songs')->findOrFail($id); // メンバー情報と参加楽曲を取得
         
+        // レーダーチャート用データ（例: 各スキル 100 点満点）
+        $radarData = [
+            'singing' => $member->singing ?? 50, // デフォルト値 50
+            'dancing' => $member->dancing ?? 50,
+            'variety' => $member->talking ?? 50,
+            'intelligence' => $member->variety ?? 50,
+            'sport' => $member->looks ?? 50,
+            'burikko' => $member->looks ?? 50,
+        ];
+        
         if ($member->blog_url) {
             $client = new Client();
             try {
@@ -68,6 +78,6 @@ class MemberController extends Controller
             $blogHtml = 'ブログがありません。';
         }
 
-        return view('members.show', compact('member', 'blogHtml'));
+        return view('members.show', compact('member', 'blogHtml', 'radarData'));
     }
 }
