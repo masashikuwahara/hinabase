@@ -13,7 +13,7 @@
                      alt="{{ $member->name }}" 
                      class="w-56 h-72 object-cover rounded-lg shadow-md">
             </div>
-            
+
             <!-- メンバー情報 -->
             <div class="md:ml-8 mt-4 md:mt-0">
                 <h3 class="text-xl font-semibold">プロフィール</h3>
@@ -45,6 +45,10 @@
                     <li><strong>キャラクター:</strong> {{ $member->introduction }}</li>
                 </ul>
             </div>
+            <!-- レーダーチャート -->
+            <div class="md:ml-8 w-72 h-72">
+                <canvas id="radarChart"></canvas>
+            </div>
         </section>
 
         <!-- ここにブログ -->
@@ -75,5 +79,36 @@
                 </ul>
             @endif
         </section>
+        <!-- Chart.js のスクリプト -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const ctx = document.getElementById('radarChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['歌唱力', 'ダンス', 'バラエティ', '学力', 'スポーツ', 'ぶりっ子'],
+                        datasets: [{
+                            label: '{{ $member->name }} のスキル',
+                            data: [{{ $radarData['singing'] }}, {{ $radarData['dancing'] }}, 
+                                {{ $radarData['variety'] }}, {{ $radarData['intelligence'] }}, 
+                                {{ $radarData['sport'] }},{{ $radarData['burikko'] }},],
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            r: {
+                                suggestedMin: 0,
+                                suggestedMax: 100
+                                }
+                            }
+                        }
+                    });
+                });
+        </script>
     </main>
 @endsection
