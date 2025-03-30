@@ -10,8 +10,8 @@
     <header>
         <nav>
             <ul>
-                {{-- <li><a href="{{ route('admin.members.create') }}">メンバー追加</a></li>
-                <li><a href="{{ route('admin.songs.create') }}">楽曲追加</a></li> --}}
+                <li><a href="{{ route('admin.members.create') }}">メンバー追加</a></li>
+                <li><a href="{{ route('admin.songs.create') }}">楽曲追加</a></li>
             </ul>
         </nav>
     </header>
