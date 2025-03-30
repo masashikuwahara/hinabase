@@ -17,4 +17,9 @@ class Member extends Model
         return $this->belongsToMany(Song::class, 'song_members')
         ->withPivot('is_center'); // 中間テーブルのデータを取得
     }
+
+    public function skill()
+    {
+        return $this->hasOne(Skill::class, 'member_id');
+    }
 }
