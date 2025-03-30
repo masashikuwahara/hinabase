@@ -6,6 +6,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\Admin\MemberController as AdminMemberController;
 use App\Http\Controllers\Admin\SongController as AdminSongController;
+use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -35,14 +36,15 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/members', [AdminController::class, 'members'])->name('admin.members');
     Route::get('/songs', [AdminController::class, 'songs'])->name('admin.songs');
+    Route::get('/skills', [AdminController::class, 'skills'])->name('admin.skills');
 });
 
 Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/members/create', [AdminMemberController::class, 'create'])->name('admin.members.create');
     Route::post('/members', [AdminMemberController::class, 'store'])->name('admin.members.store');
-    
     Route::get('/songs/create', [AdminSongController::class, 'create'])->name('admin.songs.create');
     Route::post('/songs', [AdminSongController::class, 'store'])->name('admin.songs.store');
+    Route::post('/skills', [SkillController::class, 'store'])->name('admin.skills.store');
 });
 
 //検索結果ページへのルート
