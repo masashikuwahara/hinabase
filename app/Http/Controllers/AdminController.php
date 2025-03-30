@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Member;
 use App\Models\Song;
+use App\Models\Skill;
 
 class AdminController extends Controller
 {
@@ -26,5 +27,12 @@ class AdminController extends Controller
     {
         $songs = Song::all();
         return view('admin.songs.index', compact('songs'));
+    }
+
+    //スキル管理
+    public function skills()
+    {
+        $members = Skill::all();
+        return view('admin.skills.index', compact('members'));
     }
 }
