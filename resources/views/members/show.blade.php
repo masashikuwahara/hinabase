@@ -25,8 +25,7 @@
                     <li><strong>血液型:</strong> {{ $member->blood_type }}</li>
                     <li><strong>出身地:</strong> {{ $member->birthplace }}</li>
                     <li><strong>加入:</strong> {{ $member->grade }}</li>
-                    <li>
-                        <strong class="mr-2">ペンライトカラー:</strong>
+                    <li><strong class="mr-2">ペンライトカラー:</strong>
                         <div class="inline-flex items-center space-x-4 mt-2 ">
                             <div class="w-26 h-6 rounded" style="background-color: {{ $member->color1 }}">{{ $member->colorname1 }}</div>
                             <div class="w-26 h-6 rounded" style="background-color: {{ $member->color2 }}">{{ $member->colorname2 }}</div>
@@ -45,6 +44,7 @@
                     <li><strong>キャラクター:</strong> {{ $member->introduction }}</li>
                 </ul>
             </div>
+            
             <!-- レーダーチャート -->
             <div class="md:ml-8 w-72 h-72">
                 <canvas id="radarChart"></canvas>
@@ -79,6 +79,7 @@
                 </ul>
             @endif
         </section>
+        
         <!-- Chart.js のスクリプト -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
@@ -90,9 +91,9 @@
                         labels: ['歌唱力', 'ダンス', 'バラエティ', '学力', 'スポーツ', 'ぶりっ子'],
                         datasets: [{
                             label: '{{ $member->name }} のスキル',
-                            data: [{{ $radarData['singing'] }}, {{ $radarData['dancing'] }}, 
-                                {{ $radarData['variety'] }}, {{ $radarData['intelligence'] }}, 
-                                {{ $radarData['sport'] }},{{ $radarData['burikko'] }},],
+                            data: [{{ $radar->skill->singing }}, {{ $radar->skill->dancing }}, 
+                                {{ $radar->skill->variety }}, {{ $radar->skill->intelligence }}, 
+                                {{ $radar->skill->sport }},{{ $radar->skill->burikko }},],
                             backgroundColor: 'rgba(54, 162, 235, 0.2)',
                             borderColor: 'rgba(54, 162, 235, 1)',
                             borderWidth: 2
