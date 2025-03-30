@@ -32,7 +32,7 @@
             <div class="text-red-600 font-semibold mb-2">{{ session('error') }}</div>
         @endif
         <form action="{{ route('search') }}" method="GET" class="inline-block bg-white p-3 rounded shadow-md">
-            <input type="text" name="query" placeholder="メンバー名、楽曲名で検索" 
+            <input type="text" name="query" placeholder="小坂菜緒 天才 キュン" 
                 class="border p-2 rounded-l-md focus:outline-none focus:ring focus:ring-[#7cc7e8]">
             <button type="submit" class="bg-[#7cc7e8] text-white p-2 rounded-r-md hover:bg-[#5aa6c4]">
                 検索
