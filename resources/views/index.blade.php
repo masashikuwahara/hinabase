@@ -75,6 +75,7 @@
     </div>
     <div class="text-center w-100 max-h-40 overflow-y-scroll bg-white p-4 rounded-lg shadow-md">
         <div class="text-left inline-block">
+            <p class="text-sm">2025.03.28&nbsp;v.1.7.0&nbsp;メンバー詳細ページにふりがな追加</p>
             <p class="text-sm">2025.03.31&nbsp;五期生メンバーを追加</p>
             <p class="text-sm">2025.03.28&nbsp;v.1.6.1&nbsp;メンバー詳細ページにスキル表追加</p>
             <p class="text-sm">2025.03.26&nbsp;v.1.5.0&nbsp;楽曲詳細ページに歌詞リンク追加</p>
@@ -85,5 +86,5 @@
             <p class="text-sm">2025.03.01&nbsp;v.1.0.0&nbsp;リリース</p>
         </div>
     </div>
-{{-- v.1.6.1 --}}
+{{-- v.1.7.0 --}}
 @endsection
