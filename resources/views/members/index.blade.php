@@ -100,6 +100,9 @@
                 @endif
             </section>
     
+            <div class="text-center text-blue-700 mt-8">
+                <a href="https://hinatazaka5th.netlify.app/" target="_blank" rel="noopener noreferrer" class="hover:underline">五期生推しメンチェッカー</a>
+            </div>
             <!-- 卒業メンバー -->
             <section class="mt-8">
                 <h3 class="text-xl font-bold text-gray-800">卒業メンバー</h3>
@@ -149,7 +152,7 @@
                     </div>
                 @endif
             </section>
-    
+            
             <section class="mt-8">
                 <h3 class="text-xl font-bold text-gray-800">卒業メンバー</h3>
                 @if ($graduatedMembers->isEmpty())
