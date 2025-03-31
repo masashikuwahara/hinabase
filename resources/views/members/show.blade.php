@@ -6,6 +6,7 @@
     <!-- メンバー詳細 -->
     <main class="container mx-auto mt-8 px-4">
         <h2 class="text-3xl font-bold text-center">{{ $member->name }}</h2>
+        <p class="text-xl text-center mt-2">{{ $member->furigana }}</p>
         
         <section class="flex flex-col md:flex-row items-center mt-8 bg-white p-6 shadow-md rounded-lg">
             <div class="flex-shrink-0">
@@ -27,8 +28,8 @@
                     <li><strong>加入:</strong> {{ $member->grade }}</li>
                     <li><strong class="mr-2">ペンライトカラー:</strong>
                         <div class="inline-flex items-center space-x-4 mt-2 ">
-                            <div class="w-26 h-6 rounded" style="background-color: {{ $member->color1 }}">{{ $member->colorname1 }}</div>
-                            <div class="w-26 h-6 rounded" style="background-color: {{ $member->color2 }}">{{ $member->colorname2 }}</div>
+                            <div class="rounded" style="background-color: {{ $member->color1 }}">{{ $member->colorname1 }}</div>
+                            <div class="rounded" style="background-color: {{ $member->color2 }}">{{ $member->colorname2 }}</div>
                         </div>
                     </li>
                         @if ($member->sns)
