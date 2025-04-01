@@ -28,6 +28,10 @@ class MemberController extends Controller
                 $member->additional_info = \Carbon\Carbon::parse($member->birthday)->format('Y年m月d日');
             } elseif ($sort === 'height') {
                 $member->additional_info = $member->height."cm";
+            } elseif ($sort === 'furigana') {
+                $member->additional_info = $member->furigana;
+            } elseif ($sort === 'birthplace') {
+                $member->additional_info = $member->birthplace;
             }
             return $member;
         });
@@ -38,6 +42,10 @@ class MemberController extends Controller
                 $member->additional_info = \Carbon\Carbon::parse($member->birthday)->format('Y年m月d日');
             } elseif ($sort === 'height') {
                 $member->additional_info = $member->height."cm";
+            } elseif ($sort === 'furigana') {
+                $member->additional_info = $member->furigana;
+            } elseif ($sort === 'birthplace') {
+                $member->additional_info = $member->birthplace;
             }
             return $member;
         });
@@ -48,6 +56,9 @@ class MemberController extends Controller
     public function show($id)
     {
         $member = Member::with('songs')->findOrFail($id); // メンバー情報と参加楽曲を取得
+        $songCount = $member->songs->count();
+        $centerCount = $member->songs->where('pivot.is_center', true)->count(); // センター回数を取得
+        $titlesongCount = $member->songs->where('titlesong', 1)->count(); // 選抜回数を取得
         $radar = Member::with('skill')->find($id);
         
         // レーダーチャート用データ（例: 各スキル 100 点満点）
@@ -83,6 +94,6 @@ class MemberController extends Controller
             $blogHtml = 'ブログがありません。';
         }
 
-        return view('members.show', compact('member', 'blogHtml', 'radarData', 'radar'));
+        return view('members.show', compact('member',  'centerCount','titlesongCount', 'songCount', 'blogHtml', 'radarData', 'radar'));
     }
 }
