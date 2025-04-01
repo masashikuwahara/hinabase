@@ -26,6 +26,9 @@
                     <li><strong>血液型:</strong> {{ $member->blood_type }}</li>
                     <li><strong>出身地:</strong> {{ $member->birthplace }}</li>
                     <li><strong>加入:</strong> {{ $member->grade }}</li>
+                    <li><strong>参加楽曲数:</strong> {{ $songCount }}</li>
+                    <li><strong>選抜回数:</strong> {{ $titlesongCount }}</li>
+                    <li><strong>センター曲数:</strong> {{ $centerCount }}</li>
                     <li><strong class="mr-2">ペンライトカラー:</strong>
                         <div class="inline-flex items-center space-x-4 mt-2 ">
                             <div class="rounded" style="background-color: {{ $member->color1 }}">{{ $member->colorname1 }}</div>
@@ -66,6 +69,10 @@
             @if ($member->songs->isEmpty())
                 <p class="mt-2 text-gray-700">まだ参加楽曲はありません。</p>
             @else
+            {{-- @php
+                $songCount = count($member->songs);
+            @endphp
+            <p>参加曲数: {{ $songCount }}</p> --}}
                 <ul class="mt-4 space-y-2">
                     @foreach ($member->songs as $song)
                         <li class="bg-white p-4 shadow-md rounded-lg">
