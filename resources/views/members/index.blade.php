@@ -6,12 +6,16 @@
     <main class="container mx-auto mt-8 px-4">
         {{-- 現在の状態を表示 --}}
         <h2 class="text-2xl font-semibold">メンバー一覧</h2>
-        @if ($sort === 'height')
-            <p>現在のソート: {{ $sort = '身長順' }} </p>
+        @if ($sort === 'furigana')
+            <p>現在のソート: {{ $sort = '50音順' }} </p>
         @elseif($sort === 'blood_type')
             <p>現在のソート: {{ $sort = '血液型順' }} </p>
         @elseif($sort === 'birthday')
-            <p>現在のソート: {{ $sort = '生年月日順' }} </p>
+            <p>現在のソート: {{ $sort = '誕生日順' }} </p>
+        @elseif($sort === 'height')
+            <p>現在のソート: {{ $sort = '身長順' }} </p>
+        @elseif($sort === 'birthplace')
+            <p>現在のソート: {{ $sort = '出身地順' }} </p>
         @endif
     
         {{-- 切り替えボタン --}}
@@ -26,9 +30,9 @@
                 <a href="{{ route('members.index') }}" class="px-4 py-2 bg-gray-500 text-white rounded-lg shadow-md hover:bg-gray-600">
                     デフォルトに戻す
                 </a>
-                <a href="{{ route('members.index', ['sort' => 'height', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                <a href="{{ route('members.index', ['sort' => 'furigana', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
                     class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600">
-                    身長順
+                    50音順
                 </a>
                 <a href="{{ route('members.index', ['sort' => 'blood_type', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
                     class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600">
@@ -36,7 +40,15 @@
                 </a>
                 <a href="{{ route('members.index', ['sort' => 'birthday', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
                     class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600">
-                    生年月日順
+                    誕生日順
+                </a>
+                <a href="{{ route('members.index', ['sort' => 'height', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                    class="px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-md hover:bg-yellow-600">
+                    身長順
+                </a>
+                <a href="{{ route('members.index', ['sort' => 'birthplace', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                    class="px-4 py-2 bg-pink-500 text-white rounded-lg shadow-md hover:bg-pink-600">
+                    出身地順
                 </a>
             </div>
         
@@ -53,9 +65,9 @@
                     <a href="{{ route('members.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                         デフォルトに戻す
                     </a>
-                    <a href="{{ route('members.index', ['sort' => 'height', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                    <a href="{{ route('members.index', ['sort' => 'furigana', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        身長順
+                        50音順
                     </a>
                     <a href="{{ route('members.index', ['sort' => 'blood_type', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
@@ -63,7 +75,15 @@
                     </a>
                     <a href="{{ route('members.index', ['sort' => 'birthday', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                        生年月日順
+                        誕生日順
+                    </a>
+                    <a href="{{ route('members.index', ['sort' => 'height', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        身長順
+                    </a>
+                    <a href="{{ route('members.index', ['sort' => 'birthplace', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        出身地順
                     </a>
                 </div>
             </div>
