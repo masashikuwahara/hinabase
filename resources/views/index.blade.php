@@ -75,6 +75,9 @@
     </div>
     <div class="text-center w-100 max-h-40 overflow-y-scroll bg-white p-4 rounded-lg shadow-md">
         <div class="text-left inline-block">
+            <p class="text-sm">2025.04.08&nbsp;清水理央と渡辺莉奈のサイリウムカラーを変更しました</p>
+            <p class="text-sm">2025.04.08&nbsp;五期生のブログを追加しました</p>
+            <p class="text-sm">2025.04.08&nbsp;五期生のプロフィールを更新しました</p>
             <p class="text-sm">2025.04.03&nbsp;v.1.9.0&nbsp;メンバー詳細に参加曲数、選抜回数、センター曲数を追加</p>
             <p class="text-sm">2025.04.02&nbsp;v.1.8.0&nbsp;ソート機能に50音順、出身地順を追加</p>
             <p class="text-sm">2025.04.01&nbsp;v.1.7.0&nbsp;メンバー詳細ページにふりがな追加</p>
