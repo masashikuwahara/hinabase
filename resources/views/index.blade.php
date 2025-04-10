@@ -30,6 +30,9 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
             @foreach ($members as $member)
                 <div class="bg-white shadow-md rounded-lg p-3 text-center hover:scale-105 transition-transform">
+                    @if ($member->is_recently_updated)
+                        <span class="text-red-600 font-bold">NEW!</span>
+                    @endif
                     <a href="{{ route('members.show', $member->id) }}">
                         <img src="{{ asset('storage/' . $member->image) }}" 
                         alt="{{ $member->name }}" 
@@ -75,6 +78,8 @@
     </div>
     <div class="text-center w-100 max-h-40 overflow-y-scroll bg-white p-4 rounded-lg shadow-md">
         <div class="text-left inline-block">
+            <p class="text-sm">2025.04.11&nbsp;五期生のプロフィールを更新しました</p>
+            <p class="text-sm">2025.04.11&nbsp;佐々木久美、佐々木美玲を卒業メンバーに移動しました</p>
             <p class="text-sm">2025.04.08&nbsp;清水理央と渡辺莉奈のサイリウムカラーを変更しました</p>
             <p class="text-sm">2025.04.08&nbsp;五期生のブログを追加しました</p>
             <p class="text-sm">2025.04.08&nbsp;五期生のプロフィールを更新しました</p>
@@ -91,5 +96,5 @@
             <p class="text-sm">2025.03.01&nbsp;v.1.0.0&nbsp;リリース</p>
         </div>
     </div>
-{{-- v.1.9.0 --}}
+{{-- v.1.9.1 --}}
 @endsection
