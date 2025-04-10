@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Member extends Model
 {
@@ -21,5 +22,10 @@ class Member extends Model
     public function skill()
     {
         return $this->hasOne(Skill::class, 'member_id');
+    }
+
+    public function getIsRecentlyUpdatedAttribute()
+    {
+        return $this->updated_at->gt(Carbon::now()->subDays(5));
     }
 }
