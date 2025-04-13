@@ -22,7 +22,7 @@ Route::get('/members/{id}', [MemberController::class, 'show'])->name('members.sh
 
 //認証関係
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -33,17 +33,14 @@ Route::middleware('auth')->group(function () {
 
 // 認証が必要な管理ページ用ルート
 Route::prefix('admin')->middleware('auth')->group(function () {
-    Route::get('/', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/members', [AdminController::class, 'members'])->name('admin.members');
-    Route::get('/songs', [AdminController::class, 'songs'])->name('admin.songs');
-    Route::get('/skills', [AdminController::class, 'skills'])->name('admin.skills');
-});
-
-Route::prefix('admin')->middleware(['auth'])->group(function () {
-    Route::get('/members/create', [AdminMemberController::class, 'create'])->name('admin.members.create');
     Route::post('/members', [AdminMemberController::class, 'store'])->name('admin.members.store');
-    Route::get('/songs/create', [AdminSongController::class, 'create'])->name('admin.songs.create');
+    Route::get('/members/{member}/edit', [AdminMemberController::class, 'edit'])->name('admin.members.edit');
+    Route::put('/members/{member}', [AdminMemberController::class, 'update'])->name('admin.members.update');
+    Route::get('/songs', [AdminController::class, 'songs'])->name('admin.songs');
     Route::post('/songs', [AdminSongController::class, 'store'])->name('admin.songs.store');
+    Route::get('/skills', [AdminController::class, 'skills'])->name('admin.skills');
     Route::post('/skills', [SkillController::class, 'store'])->name('admin.skills.store');
 });
 
