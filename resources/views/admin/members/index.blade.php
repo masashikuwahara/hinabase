@@ -2,11 +2,15 @@
 
 @section('content')
     <h1>メンバー管理</h1>
-    <a href="{{ route('admin.members.create') }}">メンバー登録</a>
+
     <ul>
         @foreach ($members as $member)
-            <li>{{ $member->name }}</li>
+            <li>
+                {{ $member->name }}
+                <a href="{{ route('admin.members.edit', $member->id)}}" class="text-blue-600 hover:underline ml-2">編集</a>
+            </li>
         @endforeach
     </ul>
-    <a href="{{ route('admin.dashboard') }}">戻る</a>
+
+    <a href="{{ route('admin.index') }}">戻る</a>
 @endsection
