@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>楽曲管理</h1>
-    <a href="{{ route('admin.songs.create') }}">楽曲登録</a>
+    <h1>楽曲登録←まだ未作成</h1>
     <ul>
         @foreach ($songs as $song)
             <li>{{ $song->title }}</li>
