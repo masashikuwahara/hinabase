@@ -1,16 +1,26 @@
 @extends('layouts.app')
 
-@section('content')
-    <h1>メンバー管理</h1>
+@section('title', 'メンバー編集')
 
-    <ul>
+@section('content')
+<div class="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold mb-4 text-center">メンバー管理</h1>
+
+    @if (session('success'))
+        <p class="text-green-600 text-center mb-4">{{ session('success') }}</p>
+    @endif
+
+    <ul class="space-y-4">
         @foreach ($members as $member)
-            <li>
-                {{ $member->name }}
-                <a href="{{ route('admin.members.edit', $member->id)}}" class="text-blue-600 hover:underline ml-2">編集</a>
+            <li class="flex justify-between items-center border-b pb-2">
+                <span class="text-lg">{{ $member->name }}</span>
+                <a href="{{ route('admin.members.edit', $member->id)}}" class="text-blue-600 hover:underline">編集</a>
             </li>
         @endforeach
     </ul>
-
-    <a href="{{ route('admin.index') }}">戻る</a>
+    {{ $members->links() }}
+    <div class="mt-6 text-center">
+        <a href="{{ route('admin.index') }}" class="text-sm text-gray-600 hover:text-gray-800 underline">← 管理メニューに戻る</a>
+    </div>
+</div>
 @endsection

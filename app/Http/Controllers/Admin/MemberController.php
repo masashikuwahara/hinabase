@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Models\Member;
 
@@ -10,8 +11,7 @@ class MemberController extends Controller
 {
     public function index()
     {
-        $members = Member::all();
-        return view('admin.members.index', compact('members'));
+        //
     }
     public function edit($id)
     {
@@ -38,8 +38,20 @@ class MemberController extends Controller
             'introduction' => 'nullable|string',
             'sns' => 'nullable|url',
         ]);
-        $member->update($request->all());
+
+        if ($request->hasFile('image')) {
+            if ($member->image && Storage::disk('public')->exists($member->image)) {
+                Storage::disk('public')->delete($member->image);
+            }
+
+            $file = $request->file('image');
+            $filename = $file->getClientOriginalName();
+            $path = $request->file('image')->storeAs('images', $filename,'public');
+            $member->image = $path;
+        }
+
+        $member->save();
         
-        return redirect()->route('members.show', $member)->with('success', 'メンバー情報を更新しました。');
+        return redirect()->route('admin.members')->with('success', 'メンバー情報を更新しました。');
     }
 }
