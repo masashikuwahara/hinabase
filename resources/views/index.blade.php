@@ -80,7 +80,7 @@
         <div class="text-left inline-block">
             <p class="text-sm">2025.04.11&nbsp;五期生のプロフィールを更新しました</p>
             <p class="text-sm">2025.04.11&nbsp;佐々木久美、佐々木美玲を卒業メンバーに移動しました</p>
-            <p class="text-sm">2025.04.08&nbsp;清水理央と渡辺莉奈のサイリウムカラーを変更しました</p>
+            <p class="text-sm">2025.04.08&nbsp;清水理央と渡辺莉奈のペンライトカラーを変更しました</p>
             <p class="text-sm">2025.04.08&nbsp;五期生のブログを追加しました</p>
             <p class="text-sm">2025.04.08&nbsp;五期生のプロフィールを更新しました</p>
             <p class="text-sm">2025.04.03&nbsp;v.1.9.0&nbsp;メンバー詳細に参加曲数、選抜回数、センター曲数を追加</p>
@@ -96,5 +96,5 @@
             <p class="text-sm">2025.03.01&nbsp;v.1.0.0&nbsp;リリース</p>
         </div>
     </div>
-{{-- v.1.9.1 --}}
+{{-- v.1.10.0 --}}
 @endsection

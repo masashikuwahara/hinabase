@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>@yield('title')</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -28,9 +28,15 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
+            <main class="pt-6 px-4">
                 @yield('content')
             </main>
+            <!-- Footer -->
+            <footer class="bg-white dark:bg-gray-800 shadow mt-8">
+                <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-600 dark:text-gray-300">
+                    &copy; {{ date('Y') }} 管理ページ. All rights reserved.
+                </div>
+            </footer>
         </div>
     </body>
 </html>
