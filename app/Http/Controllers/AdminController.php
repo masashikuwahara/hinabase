@@ -18,7 +18,7 @@ class AdminController extends Controller
     // メンバー管理
     public function members()
     {
-        $members = Member::all();
+        $members = Member::paginate(10);
         return view('admin.members.index', compact('members'));
     }
 
