@@ -39,6 +39,8 @@ class MemberController extends Controller
             'sns' => 'nullable|url',
         ]);
 
+        $member->update($request->all());
+        
         if ($request->hasFile('image')) {
             if ($member->image && Storage::disk('public')->exists($member->image)) {
                 Storage::disk('public')->delete($member->image);
