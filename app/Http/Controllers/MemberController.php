@@ -13,7 +13,7 @@ class MemberController extends Controller
     public function index(Request $request)
 {
     $sort = $request->input('sort', 'default');
-    $order = $request->input('order', 'asc');
+    $order = $request->input('order', 'desc');
 
     if ($sort === 'default') {
         // デフォルト: gradeごとに表示
@@ -22,9 +22,7 @@ class MemberController extends Controller
     } else {
         // gradeを無視してソート
         $currentMembers = Member::where('graduation', 0)->orderBy($sort, $order)->get()->map(function ($member) use ($sort) {
-            if ($sort === 'blood_type') {
-                $member->additional_info = $member->blood_type;
-            } elseif ($sort === 'birthday') {
+            if ($sort === 'birthday') {
                 $member->additional_info = \Carbon\Carbon::parse($member->birthday)->format('Y年m月d日');
             } elseif ($sort === 'height') {
                 $member->additional_info = $member->height."cm";
@@ -35,10 +33,17 @@ class MemberController extends Controller
             }
             return $member;
         });
+        if ($sort === 'blood_type') {
+            $currentMembers = Member::where('graduation', 0)
+                ->orderByRaw("FIELD(blood_type, 'A型', 'B型', 'O型', 'AB型', '不明')")
+                ->get()
+                ->map(function ($member) {
+                    $member->additional_info = $member->blood_type;
+                    return $member;
+                });
+        }
         $graduatedMembers = Member::where('graduation', 1)->orderBy($sort, $order)->get()->map(function ($member) use ($sort) {
-            if ($sort === 'blood_type') {
-                $member->additional_info = $member->blood_type;
-            } elseif ($sort === 'birthday') {
+            if ($sort === 'birthday') {
                 $member->additional_info = \Carbon\Carbon::parse($member->birthday)->format('Y年m月d日');
             } elseif ($sort === 'height') {
                 $member->additional_info = $member->height."cm";
@@ -49,6 +54,15 @@ class MemberController extends Controller
             }
             return $member;
         });
+        if ($sort === 'blood_type') {
+            $graduatedMembers = Member::where('graduation', 1)
+                ->orderByRaw("FIELD(blood_type, 'A型', 'B型', 'O型', 'AB型', '不明')")
+                ->get()
+                ->map(function ($member) {
+                    $member->additional_info = $member->blood_type;
+                    return $member;
+                });
+        }
     }
 
     return view('members.index', compact('currentMembers', 'graduatedMembers', 'sort', 'order'));
