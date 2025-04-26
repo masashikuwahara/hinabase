@@ -18,6 +18,7 @@ class SearchController extends Controller
 
         // メンバー検索
         $members = Member::where('name', 'like', "%{$query}%")
+        ->orWhere('furigana', 'like', "%{$query}%")
         ->orWhere('nickname', 'like', "%{$query}%")->get();
 
         // 楽曲検索
