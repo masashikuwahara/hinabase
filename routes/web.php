@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SongController;
 use App\Http\Controllers\Admin\MemberController as AdminMemberController;
+use App\Http\Controllers\Admin\ImageController as AdminImageController;
 use App\Http\Controllers\Admin\SongController as AdminSongController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\SearchController;
@@ -35,9 +36,12 @@ Route::middleware('auth')->group(function () {
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/members', [AdminController::class, 'members'])->name('admin.members');
-    Route::post('/members', [AdminMemberController::class, 'store'])->name('admin.members.store');
+    // Route::post('/members', [AdminMemberController::class, 'store'])->name('admin.members.store');
     Route::get('/members/{member}/edit', [AdminMemberController::class, 'edit'])->name('admin.members.edit');
     Route::put('/members/{member}', [AdminMemberController::class, 'update'])->name('admin.members.update');
+    Route::get('/images', [AdminController::class, 'images'])->name('admin.images');
+    Route::get('/images/{member}/edit', [AdminImageController::class, 'edit'])->name('admin.images.edit');
+    Route::put('/images/{member}', [AdminImageController::class, 'update'])->name('admin.images.update');
     Route::get('/songs', [AdminController::class, 'songs'])->name('admin.songs');
     Route::post('/songs', [AdminSongController::class, 'store'])->name('admin.songs.store');
     Route::get('/skills', [AdminController::class, 'skills'])->name('admin.skills');
