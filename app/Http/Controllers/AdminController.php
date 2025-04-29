@@ -22,6 +22,13 @@ class AdminController extends Controller
         return view('admin.members.index', compact('members'));
     }
 
+    // メンバー画像管理
+    public function images()
+    {
+        $members = Member::paginate(10);
+        return view('admin.images.index', compact('members'));
+    }
+
     // 楽曲管理
     public function songs()
     {
