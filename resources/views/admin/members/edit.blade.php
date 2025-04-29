@@ -49,7 +49,7 @@
             <label class="block font-bold mb-1">出身地</label>
             <input type="text" name="birthplace" value="{{ old('birthplace', $member->birthplace) }}" class="w-full border rounded p-2">
         </div>
-        <div class="mb-4">
+        {{-- <div class="mb-4">
             <label class="block font-bold mb-1">何期生</label>
             <select name="grade" class="w-full border rounded p-2">
                 <option value="けやき坂46" >けやき坂46</option>
@@ -59,7 +59,7 @@
                 <option value="四期生" >四期生</option>
                 <option value="五期生" >五期生</option>
             </select>
-        </div>
+        </div> --}}
         <div class="mb-4">
             <label class="block font-bold mb-1">ペンライトカラーコード1</label>
             <input type="text" name="color1" value="{{ old('color1', $member->color1) }}" class="w-full border rounded p-2">
@@ -80,13 +80,13 @@
             <label class="block font-bold mb-1">SNS</label>
             <input type="text" name="sns" value="{{ old('sns', $member->sns) }}" class="w-full border rounded p-2">
         </div>
-        <div class="mb-4">
+        {{-- <div class="mb-4">
             <label class="block font-bold mb-1">顔写真</label>
             <input type="file" name="image" id="image" accept="images/*">
         </div>
         @if ($member->image)
             <img src="{{ asset('storage/' . $member->image) }}" alt="顔写真" class="w-32 h-32 object-cover rounded">
-        @endif
+        @endif --}}
         <div class="mb-4">
             <label class="block font-bold mb-1">在籍or卒業</label>
             <select name="graduation" class="w-full border rounded p-2">
