@@ -52,6 +52,7 @@
             <!-- レーダーチャート -->
             <div class="md:ml-8 w-72 h-72">
                 <canvas id="radarChart"></canvas>
+                注：ぶりっ子は㋳も含む
             </div>
         </section>
 
