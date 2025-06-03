@@ -78,7 +78,7 @@
     </div>
     <div class="text-center w-100 max-h-40 overflow-y-scroll bg-white p-4 rounded-lg shadow-md">
         <div class="text-left inline-block">
-            <p class="text-sm">2025.06.04&nbsp;v.1.13.0&nbsp;作曲者での検索に対応</p>
+            <p class="text-sm">2025.06.04&nbsp;v.1.13.1&nbsp;作曲者での検索に対応</p>
             <p class="text-sm">2025.04.26&nbsp;v.1.11.0&nbsp;ふりがな検索に対応、ソート機能改修</p>
             <p class="text-sm">2025.04.11&nbsp;五期生のプロフィールを更新しました</p>
             <p class="text-sm">2025.04.11&nbsp;佐々木久美、佐々木美玲を卒業メンバーに移動しました</p>
@@ -98,5 +98,5 @@
             <p class="text-sm">2025.03.01&nbsp;v.1.0.0&nbsp;リリース</p>
         </div>
     </div>
-{{-- v.1.13.0 --}}
+{{-- v.1.13.1 --}}
 @endsection
