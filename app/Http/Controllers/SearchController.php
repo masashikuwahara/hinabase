@@ -22,7 +22,8 @@ class SearchController extends Controller
         ->orWhere('nickname', 'like', "%{$query}%")->get();
 
         // 楽曲検索
-        $songs = Song::where('title', 'like', "%{$query}%")->get(); // ここでEloquentコレクションを維持
+        $songs = Song::where('title', 'like', "%{$query}%")
+        ->orWhere('composer', 'like', "%{$query}%")->get();
 
         // 結果を統合して並び替え
         $results = collect([]); // 空のコレクションを作成
