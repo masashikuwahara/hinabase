@@ -36,7 +36,7 @@
         </div>
         <div class="mb-4">
             <label class="block font-bold mb-1">血液型</label>
-            <input type="text" name="height" value="{{ old('height', $member->blood_type) }}" class="w-full border rounded p-2">
+            <input type="text" name="blood" value="{{ old('blood', $member->blood_type) }}" class="w-full border rounded p-2">
         </div>
         <div class="mb-4">
             <label class="block font-bold mb-1">出身地</label>
