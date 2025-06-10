@@ -36,14 +36,7 @@
         </div>
         <div class="mb-4">
             <label class="block font-bold mb-1">血液型</label>
-            <select name="blood_type" class="w-full border rounded p-2">
-                <option value="A型" >A型</option>
-                <option value="B型" >B型</option>
-                <option value="O型" >O型</option>
-                <option value="AB型" >AB型</option>
-                <option value="不明" >不明</option>
-            </select>
-
+            <input type="text" name="height" value="{{ old('height', $member->blood_type) }}" class="w-full border rounded p-2">
         </div>
         <div class="mb-4">
             <label class="block font-bold mb-1">出身地</label>
