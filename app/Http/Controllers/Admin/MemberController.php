@@ -28,7 +28,7 @@ class MemberController extends Controller
             'birthday' => 'nullable|date',
             'constellation' => 'nullable|string|max:255',
             'height' => 'nullable|numeric',
-            'blood_type' => 'nullable|string|max:3',
+            'blood_type' => 'nullable|string|max:255',
             'birthplace' => 'nullable|string|max:255',
             'grade' => 'nullable|string|max:255',
             'color1' => 'nullable|string|max:20',
