@@ -32,7 +32,7 @@ class AdminController extends Controller
     // 楽曲管理
     public function songs()
     {
-        $songs = Song::all();
+        $songs = Song::paginate(10);
         return view('admin.songs.index', compact('songs'));
     }
 
