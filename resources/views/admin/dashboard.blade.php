@@ -8,7 +8,7 @@
     <ul class="space-y-4">
         <li class="flex justify-between items-center border-b pb-2"><a href="{{ route('admin.members') }}" class="text-blue-600 hover:underline">メンバー管理</a></li>
         <li class="flex justify-between items-center border-b pb-2"><a href="{{ route('admin.images') }}" class="text-blue-600 hover:underline">メンバー画像変更</a></li>
-        <li class="flex justify-between items-center border-b pb-2"><a href="{{ route('admin.songs') }}" style="pointer-events: none;">楽曲管理 工事中</a></li>
+        <li class="flex justify-between items-center border-b pb-2"><a href="{{ route('admin.songs') }}" class="text-blue-600 hover:underline">楽曲管理</a></li>
         <li class="flex justify-between items-center border-b pb-2"><a href="{{ route('admin.skills') }}" style="pointer-events: none;">スキル管理 工事中</a></li>
 </div>
 @endsection
