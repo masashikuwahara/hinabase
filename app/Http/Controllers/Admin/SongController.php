@@ -8,11 +8,11 @@ use App\Models\Song;
 
 class SongController extends Controller
 {
-    public function create()
+    public function edit($id)
     {
-        return view('admin.songs.create');
+        $song = Song::findOrFail($id);
+        return view('admin.songs.edit', compact('song'));
     }
-
     public function store(Request $request)
     {
         $photoPath = null;
