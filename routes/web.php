@@ -43,6 +43,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/images/{member}/edit', [AdminImageController::class, 'edit'])->name('admin.images.edit');
     Route::put('/images/{member}', [AdminImageController::class, 'update'])->name('admin.images.update');
     Route::get('/songs', [AdminController::class, 'songs'])->name('admin.songs');
+    Route::get('/songs/{song}/edit', [AdminSongController::class, 'edit'])->name('admin.songs.edit');
     Route::get('/skills', [AdminController::class, 'skills'])->name('admin.skills');
     Route::post('/skills', [SkillController::class, 'store'])->name('admin.skills.store');
 });
