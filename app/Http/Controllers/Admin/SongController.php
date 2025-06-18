@@ -13,12 +13,10 @@ class SongController extends Controller
         $song = Song::findOrFail($id);
         return view('admin.songs.edit', compact('song'));
     }
-    public function store(Request $request)
+    public function update(Request $request, $id)
     {
-        $photoPath = null;
-        if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('photos', 'public');
-        }
+        $song = Song::findOrFail($id);
+
         $request->validate([
             'title' => 'required|string|max:255',
             'release' => 'required|date',
@@ -28,21 +26,11 @@ class SongController extends Controller
             'is_recorded' => 'nullable|string|max:255',
             'titlesong' => 'required|boolean',
             'youtube' => 'nullable|string|max:510',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        Song::create([
-            'title' => $request->title,
-            'release' => $request->release,
-            'lyricist' => $request->lyricist,
-            'composer' => $request->composer,
-            'arranger' => $request->arranger,
-            'is_recorded' => $request->is_recorded,
-            'titlesong' => $request->titlesong,
-            'youtube' => $request->youtube,
-            'photo' => $photoPath,
-        ]);
+        $song->update($request->all());
+        $song->save();
 
-        return redirect()->route('admin.songs.create')->with('success', '楽曲を追加しました！');
+        return redirect()->route('admin.songs')->with('success', '楽曲を更新しました！');
     }
 }
