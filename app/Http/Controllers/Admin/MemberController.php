@@ -9,10 +9,6 @@ use App\Models\Member;
 
 class MemberController extends Controller
 {
-    public function index()
-    {
-        //
-    }
     public function edit($id)
     {
         $member = Member::findOrFail($id);
