@@ -2,6 +2,7 @@
   <p class="text-sm">&copy; {{ date('Y') }} HINABASE. All rights reserved.</p>
   <div class="flex justify-center space-x-4 mt-2">
       <a href="https://x.com/sakamichiiwlu4e" target="_blank" rel="noopener noreferrer" class="hover:underline">X</a>
+      <a href="https://x.gd/xqf5z" target="_blank" rel="noopener noreferrer" class="hover:underline">SAKURAAC</a>
       {{-- <a href="#" class="hover:underline">Instagram</a> --}}
       {{-- <a href="#" class="hover:underline">YouTube</a> --}}
   </div>
