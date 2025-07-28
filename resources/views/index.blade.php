@@ -5,6 +5,11 @@
 @section('content')
     <div class="text-center mt-8">
         <p class="text-base">日向坂46のメンバーと楽曲のシンプルなデータベースサイトです。</p>
+        <p class="text-base text-red-600">
+            <a href="https://x.gd/xqf5z" target="_blank" rel="noopener noreferrer" class="hover:underline">
+                櫻坂46のデータベースサイトはこちらから
+            </a>
+        </p>
     </div>
 
     <!-- 検索フォーム -->
@@ -21,7 +26,7 @@
         </form>
     </div>
     <div class="text-center mt-8">
-        <p class="text-sm">メンバー名、あだ名、楽曲名で検索できます。</p>
+        <p class="text-sm">メンバー名、あだ名、楽曲名、作曲者名で検索できます。</p>
     </div>
     
     <!-- メンバー一覧 -->
@@ -98,5 +103,5 @@
             <p class="text-sm">2025.03.01&nbsp;v.1.0.0&nbsp;リリース</p>
         </div>
     </div>
-{{-- v.1.15.0 --}}
+{{-- v.1.15.1 --}}
 @endsection
