@@ -103,5 +103,5 @@
             <p class="text-sm">2025.03.01&nbsp;v.1.0.0&nbsp;リリース</p>
         </div>
     </div>
-{{-- v.1.15.1 --}}
+{{-- v.1.16.0 --}}
 @endsection
