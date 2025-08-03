@@ -35,14 +35,15 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
             @foreach ($members as $member)
                 <div class="bg-white shadow-md rounded-lg p-3 text-center hover:scale-105 transition-transform">
-                    @if ($member->is_recently_updated)
-                        <span class="text-red-600 font-bold">NEW!</span>
-                    @endif
                     <a href="{{ route('members.show', $member->id) }}">
                         <img src="{{ asset('storage/' . $member->image) }}" 
                         alt="{{ $member->name }}" 
                         class="w-20 h-20 sm:w-32 sm:h-32 object-cover rounded-full mx-auto">
-                        <p class="mt-2 font-semibold">{{ $member->name }}</p>
+                        <span class="mt-2 font-semibold">{{ $member->name }}
+                            @if ($member->is_recently_updated)
+                            <span class="text-red-600 font-bold">NEW!</span>
+                            @endif
+                        </span>
                     </a>
                 </div>
             @endforeach
@@ -103,5 +104,5 @@
             <p class="text-sm">2025.03.01&nbsp;v.1.0.0&nbsp;リリース</p>
         </div>
     </div>
-{{-- v.1.16.0 --}}
+{{-- v.1.16.1 --}}
 @endsection
