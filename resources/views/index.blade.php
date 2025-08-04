@@ -84,6 +84,7 @@
     </div>
     <div class="text-center w-100 max-h-40 overflow-y-scroll bg-white p-4 rounded-lg shadow-md">
         <div class="text-left inline-block">
+            <p class="text-sm">2025.08.04&nbsp;v.1.17.0&nbsp;メンバー参加楽曲の切り替えボタン実装</p>
             <p class="text-sm">2025.06.04&nbsp;v.1.13.1&nbsp;作曲者での検索に対応</p>
             <p class="text-sm">2025.04.26&nbsp;v.1.11.0&nbsp;ふりがな検索に対応、ソート機能改修</p>
             <p class="text-sm">2025.04.11&nbsp;五期生のプロフィールを更新しました</p>
@@ -104,5 +105,5 @@
             <p class="text-sm">2025.03.01&nbsp;v.1.0.0&nbsp;リリース</p>
         </div>
     </div>
-{{-- v.1.16.1 --}}
+{{-- v.1.17.0 --}}
 @endsection
