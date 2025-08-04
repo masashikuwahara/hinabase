@@ -88,38 +88,7 @@
                 </ul>
             @endif
         </section>
-        
-        <!-- Chart.js のスクリプト -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const ctx = document.getElementById('radarChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'radar',
-                    data: {
-                        labels: ['歌唱力', 'ダンス', 'バラエティ', '学力', 'スポーツ', 'ぶりっ子'],
-                        datasets: [{
-                            label: '{{ $member->name }} のスキル',
-                            data: [{{ $radar->skill->singing }}, {{ $radar->skill->dancing }}, 
-                                {{ $radar->skill->variety }}, {{ $radar->skill->intelligence }}, 
-                                {{ $radar->skill->sport }},{{ $radar->skill->burikko }},],
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 2
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            r: {
-                                suggestedMin: 0,
-                                suggestedMax: 100
-                                }
-                            }
-                        }
-                    });
-                });
-        </script>
+
     </main>
     {{-- トップに戻るボタン --}}
     <button
@@ -133,6 +102,39 @@
             <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
         </svg>
     </button>
+
+    <!-- Chart.js のスクリプト -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['歌唱力', 'ダンス', 'バラエティ', '学力', 'スポーツ', 'ぶりっ子'],
+                    datasets: [{
+                        label: '{{ $member->name }} のスキル',
+                        data: [{{ $radar->skill->singing }}, {{ $radar->skill->dancing }}, 
+                            {{ $radar->skill->variety }}, {{ $radar->skill->intelligence }}, 
+                            {{ $radar->skill->sport }},{{ $radar->skill->burikko }},],
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        r: {
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                            }
+                        }
+                    }
+                });
+            });
+    </script>
+    {{-- トップに戻る --}}
     <script>
         const backToTop = document.getElementById('backToTop');
 
