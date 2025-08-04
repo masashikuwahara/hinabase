@@ -63,6 +63,20 @@
                 {!! $blogHtml !!}
             </div>
         </section>
+
+        <!-- 表示切り替えボタン -->
+        <div class="mt-6 space-x-4">
+            <button 
+                onclick="showAllSongs()" 
+                class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition">
+                すべて表示
+            </button>
+            <button 
+                onclick="showCenterOnly()" 
+                class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 transition">
+                センター曲のみ表示
+            </button>
+        </div>
         
         <!-- 参加楽曲リスト -->
         <section class="mt-8">
@@ -74,14 +88,18 @@
                 $songCount = count($member->songs);
             @endphp
             <p>参加曲数: {{ $songCount }}</p> --}}
-                <ul class="mt-4 space-y-2">
+                <ul id="songList" class="mt-4 space-y-2">
                     @foreach ($member->songs as $song)
-                        <li class="bg-white p-4 shadow-md rounded-lg">
-                            <a href="{{ route('songs.show', $song->id) }}" class="block text-lg font-semibold hover:text-blue-600">
+                        <li 
+                            class="bg-white p-4 shadow-md rounded-lg"
+                            data-center="{{ $song->pivot->is_center ? '1' : '0' }}"
+                        >
+                            <a href="{{ route('songs.show', $song->id) }}" 
+                                class="block text-lg font-semibold hover:text-blue-600">
                                 {{ $song->title }}
-                            @if ($song->pivot->is_center)
-                                <strong class="text-red-600">（センター）</strong>
-                            @endif
+                                @if ($song->pivot->is_center)
+                                    <strong class="text-red-600">（センター）</strong>
+                                @endif
                             </a>
                         </li>
                     @endforeach
@@ -152,4 +170,24 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     </script>
+
+    {{-- 表示を制御 --}}
+    <script>
+        function showAllSongs() {
+            const listItems = document.querySelectorAll('#songList li');
+            listItems.forEach(item => item.style.display = 'block');
+        }
+
+        function showCenterOnly() {
+            const listItems = document.querySelectorAll('#songList li');
+            listItems.forEach(item => {
+                if (item.dataset.center === '1') {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+
 @endsection
