@@ -25,8 +25,18 @@
             </button>
         </form>
     </div>
-    <div class="text-center mt-8">
+    <div class="text-center mt-3">
         <p class="text-sm">メンバー名、あだ名、楽曲名、作曲者名で検索できます。</p>
+    </div>
+    
+    <div class="text-center text-blue-700 font-bold mt-8">
+        <a href="https://hinaselect2.netlify.app/" target="_blank" rel="noopener noreferrer" class="hover:underline">日向坂46推しメンチェッカー</a>
+    </div>
+    <div class="text-center mt-2">
+        <p class="text-base">
+            五期生も加入しますます推しメン選びに迷っているアナタ！<br>
+            試してみてください。
+        </p>
     </div>
     
     <!-- メンバー一覧 -->
@@ -105,5 +115,5 @@
             <p class="text-sm">2025.03.01&nbsp;v.1.0.0&nbsp;リリース</p>
         </div>
     </div>
-{{-- v.1.17.1 --}}
+{{-- v.1.17.2 --}}
 @endsection
