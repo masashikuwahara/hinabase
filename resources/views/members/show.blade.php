@@ -1,7 +1,15 @@
 @extends('layouts.main')
 
 @section('title', $member->name)
-
+<style>
+.text-shadow {
+    text-shadow:
+        -1px -1px 0 #fff,
+         1px -1px 0 #fff,
+        -1px  1px 0 #fff,
+         1px  1px 0 #fff;
+}
+</style>
 @section('content')
     <!-- メンバー詳細 -->
     <main class="container mx-auto mt-8 px-4">
@@ -30,9 +38,13 @@
                     <li><strong>選抜回数:</strong> {{ $titlesongCount }}</li>
                     <li><strong>センター曲数:</strong> {{ $centerCount }}</li>
                     <li><strong class="mr-2">ペンライトカラー:</strong>
-                        <div class="inline-flex items-center space-x-4 mt-2 ">
-                            <div class="rounded" style="background-color: {{ $member->color1 }}">{{ $member->colorname1 }}</div>
-                            <div class="rounded" style="background-color: {{ $member->color2 }}">{{ $member->colorname2 }}</div>
+                        <div class="inline-flex items-center space-x-4 mt-2">
+                            <div class="rounded px-2 py-1 text-black font-bold text-shadow" style="background-color: {{ $member->color1 }}">
+                                {{ $member->colorname1 }}
+                            </div>
+                            <div class="rounded px-2 py-1 text-black font-bold text-shadow" style="background-color: {{ $member->color2 }}">
+                                {{ $member->colorname2 }}
+                            </div>
                         </div>
                     </li>
                         @if ($member->sns)
