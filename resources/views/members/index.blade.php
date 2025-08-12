@@ -165,9 +165,6 @@
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
                         @foreach ($currentMembers as $member)
                             <div class="bg-white shadow-md rounded-lg text-center hover:scale-105 transition-transform">
-                                @if ($member->is_recently_updated)
-                                    <span class="text-red-600 font-bold">NEW!</span>
-                                @endif
                                 <a href="{{ route('members.show', $member->id) }}" class="block">
                                     <img src="{{ asset('storage/' . ($member->image ?? 'default.jpg')) }}"
                                          alt="{{ $member->name }}"
@@ -176,6 +173,11 @@
                                     @if (isset($member->additional_info))
                                     <p class="text-sm text-gray-600">{{ $member->additional_info }}</p>
                                     @endif
+                                    <span class="mt-2 font-semibold">{{ $member->name }}
+                                        @if ($member->is_recently_updated)
+                                        <span class="text-red-600 font-bold">NEW!</span>
+                                        @endif
+                                    </span>
                                 </a>
                             </div>
                         @endforeach
