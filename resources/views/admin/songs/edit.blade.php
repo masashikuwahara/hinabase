@@ -36,7 +36,7 @@
         </div>
         <div class="mb-4">
             <label class="block font-bold mb-1">歌詞</label>
-            <input type="text" name="lyric" value="{{ old('name', $song->lyric) }}" class="w-full border rounded p-2" required>
+            <input type="text" name="lyric" value="{{ old('name', $song->lyric) }}" class="w-full border rounded p-2">
         </div>
         <div class="mb-4">
             <label class="block font-bold mb-1">タイトル曲</label>

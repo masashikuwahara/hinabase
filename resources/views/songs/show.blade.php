@@ -60,7 +60,8 @@
             @endif
 
             <!-- 歌詞へのリンク -->
-            @if ($song->lyric)
+            @if ($song->lyric === "-")
+            @else
             <section class="flex flex-col md:flex-row mt-8 bg-white p-6 shadow-md rounded-lg">
                 <div class="md:ml-8 mt-4 md:mt-0 ">
                     <h3 class="text-xl font-semibold">歌詞はコチラ</h3>
