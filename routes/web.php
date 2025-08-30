@@ -10,6 +10,10 @@ use App\Http\Controllers\Admin\SongController as AdminSongController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HomeController;
+use Spatie\Sitemap\Sitemap;
+use Spatie\Sitemap\Tags\Url;
+use App\Models\Member;
+use App\Models\Song;
 use Illuminate\Support\Facades\Route;
 
 //ホーム
@@ -51,5 +55,58 @@ Route::prefix('admin')->middleware('auth')->group(function () {
 
 //検索結果ページへのルート
 Route::get('/search', [SearchController::class, 'search'])->name('search');
+
+// サイトマップ生成
+Route::get('/_make-sitemap', function () {
+    $sitemap = Sitemap::create()
+        // 固定ページ
+        ->add(
+            Url::create(route('home'))        // 例：トップ
+                ->setLastModificationDate(now())
+                ->setChangeFrequency(Url::CHANGE_FREQUENCY_DAILY)
+                ->setPriority(1.0)
+        )
+        ->add(
+            Url::create(route('members.index'))
+                ->setLastModificationDate(now())
+                ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
+                ->setPriority(0.8)
+        )
+        ->add(
+            Url::create(route('songs.index'))
+                ->setLastModificationDate(now())
+                ->setChangeFrequency(Url::CHANGE_FREQUENCY_WEEKLY)
+                ->setPriority(0.8)
+        );
+
+    // メンバー詳細
+    Member::select('id','updated_at')->chunk(500, function($chunk) use (&$sitemap){
+        foreach ($chunk as $m) {
+            $sitemap->add(
+                Url::create(route('members.show', $m->id))
+                    ->setLastModificationDate($m->updated_at ?? now())
+                    ->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY)
+                    ->setPriority(0.7)
+            );
+        }
+    });
+
+    // 楽曲詳細
+    Song::select('id','updated_at')->chunk(500, function($chunk) use (&$sitemap){
+        foreach ($chunk as $s) {
+            $sitemap->add(
+                Url::create(route('songs.show', $s->id))
+                    ->setLastModificationDate($s->updated_at ?? now())
+                    ->setChangeFrequency(Url::CHANGE_FREQUENCY_MONTHLY)
+                    ->setPriority(0.7)
+            );
+        }
+    });
+
+    // public/sitemap.xml に書き出し
+    $sitemap->writeToFile(public_path('sitemap.xml'));
+
+    return 'sitemap.xml generated';
+})->middleware('auth'); // 生成ルートは保護しておく
 
 require __DIR__.'/auth.php';
