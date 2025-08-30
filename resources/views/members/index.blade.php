@@ -173,7 +173,7 @@
                                     @if (isset($member->additional_info))
                                     <p class="text-sm text-gray-600">{{ $member->additional_info }}</p>
                                     @endif
-                                    <span class="mt-2 font-semibold">{{ $member->name }}
+                                    <span class="mt-2 font-semibold">
                                         @if ($member->is_recently_updated)
                                         <span class="text-red-600 font-bold">NEW!</span>
                                         @endif
