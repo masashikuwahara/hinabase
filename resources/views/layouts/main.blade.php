@@ -6,6 +6,7 @@
     森本茉莉,山口陽世,石塚瑶季,小西夏菜実,清水理央,正源司陽子,竹内希来里,平尾帆夏,平岡海月,藤嶌果歩,宮地すみれ,山下葉留花,渡辺莉奈" />
     <meta name="description" content="日向坂46のシンプルなデータベースサイトです。メンバー情報、楽曲情報を載せています。">
     <meta name="format-detection" content="email=no,telephone=no,address=no">
+    <meta name="google-site-verification" content="dgN96_4bDes1EkWctdSfcV04ySWa5zsXnT_F4Aki23Y" />
     <meta property="og:title" content="HINABASE">
     <meta property="og:description" content="日向坂46のシンプルなデータベースサイトです。メンバー情報、楽曲情報を載せています。">
     <meta property="og:image" content="https://kasumizaka46.com/storage/images/logo.png">
