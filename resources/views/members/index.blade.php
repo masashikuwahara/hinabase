@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'メンバー一覧')
+@section('title', '日向坂46メンバー一覧')
 
 @section('content')
     <main class="container mx-auto mt-8 px-4">

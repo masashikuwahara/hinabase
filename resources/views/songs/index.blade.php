@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', '楽曲一覧')
+@section('title', '日向坂46楽曲一覧')
 
 @section('content')
     <!-- 楽曲一覧 -->

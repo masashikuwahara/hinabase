@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'HINABASE')
+@section('title', 'HINABASE - 日向坂46データベースサイト')
 
 @section('content')
     <div class="text-center mt-8">
@@ -115,5 +115,5 @@
             <p class="text-sm">2025.03.01&nbsp;v.1.0.0&nbsp;リリース</p>
         </div>
     </div>
-{{-- v.1.17.3 --}}
+{{-- v.1.17.4 --}}
 @endsection
