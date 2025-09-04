@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Member;
 use App\Models\Song;
 use App\Models\Skill;
+use App\Models\Changelog;
 
 class AdminController extends Controller
 {
@@ -41,5 +42,12 @@ class AdminController extends Controller
     {
         $members = Skill::all();
         return view('admin.skills.index', compact('members'));
+    }
+
+    //更新履歴
+    public function changelog()
+    {
+        $changelog = changelog::all();
+        return view('admin.changelogs.index', compact('changelog'));
     }
 }

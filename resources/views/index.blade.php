@@ -92,8 +92,30 @@
     <div class="text-center mt-8">
         <p class="text-sm">--更新履歴--</p>
     </div>
+
     <div class="text-center w-100 max-h-40 overflow-y-scroll bg-white p-4 rounded-lg shadow-md">
         <div class="text-left inline-block">
+            @forelse ($logs as $log)
+            <p class="text-sm leading-6">
+                <span class="tabular-nums">{{ $log->date->format('Y.m.d') }}</span>
+                @if($log->version)
+                &nbsp;<span class="font-mono">v.{{ ltrim($log->version, 'v.') }}</span>
+                @endif
+                &nbsp;{!! $log->is_new ? '<span class="text-red-600 font-bold">NEW!</span>&nbsp;' : '' !!}
+                @if($log->link)
+                <a href="{{ $log->link }}" target="_blank" rel="noopener" class="hover:underline">{{ $log->title }}</a>
+                @else
+                {{ $log->title }}
+                @endif
+            </p>
+            @empty
+            <p class="text-sm text-gray-500">まだ更新履歴はありません。</p>
+            @endforelse
+        </div>
+    </div>
+    {{-- <div class="text-center w-100 max-h-40 overflow-y-scroll bg-white p-4 rounded-lg shadow-md">
+        <div class="text-left inline-block">
+            <p class="text-sm">2025.09.03&nbsp;富田鈴花を卒業メンバーに移動しました</p>
             <p class="text-sm">2025.08.04&nbsp;v.1.17.0&nbsp;メンバー参加楽曲の切り替えボタン実装</p>
             <p class="text-sm">2025.06.04&nbsp;v.1.13.1&nbsp;作曲者での検索に対応</p>
             <p class="text-sm">2025.04.26&nbsp;v.1.11.0&nbsp;ふりがな検索に対応、ソート機能改修</p>
@@ -114,6 +136,6 @@
             <p class="text-sm">2025.03.09&nbsp;v.1.1.0&nbsp;メンバー詳細ページにSNS情報追加</p>
             <p class="text-sm">2025.03.01&nbsp;v.1.0.0&nbsp;リリース</p>
         </div>
-    </div>
+    </div> --}}
 {{-- v.1.17.4 --}}
 @endsection

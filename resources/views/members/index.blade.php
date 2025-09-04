@@ -14,8 +14,8 @@
             <p>現在のソート: {{ $sort = '誕生日順' }} </p>
         @elseif($sort === 'height')
             <p>現在のソート: {{ $sort = '身長順' }} </p>
-        @elseif($sort === 'birthplace')
-            <p>現在のソート: {{ $sort = '出身地順' }} </p>
+        {{-- @elseif($sort === 'birthplace')
+            <p>現在のソート: {{ $sort = '出身地順' }} </p> --}}
         @endif
     
         {{-- 切り替えボタン --}}
@@ -46,10 +46,10 @@
                     class="px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-md hover:bg-yellow-600">
                     身長順
                 </a>
-                <a href="{{ route('members.index', ['sort' => 'birthplace', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                {{-- <a href="{{ route('members.index', ['sort' => 'birthplace', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
                     class="px-4 py-2 bg-pink-500 text-white rounded-lg shadow-md hover:bg-pink-600">
                     出身地順
-                </a>
+                </a> --}}
             </div>
         
             {{-- モバイル表示時のプルダウンメニュー（初期状態では非表示） --}}
@@ -81,10 +81,10 @@
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                         身長順
                     </a>
-                    <a href="{{ route('members.index', ['sort' => 'birthplace', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                    {{-- <a href="{{ route('members.index', ['sort' => 'birthplace', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                         出身地順
-                    </a>
+                    </a> --}}
                 </div>
             </div>
         </div>

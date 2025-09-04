@@ -7,6 +7,7 @@ use App\Http\Controllers\SongController;
 use App\Http\Controllers\Admin\MemberController as AdminMemberController;
 use App\Http\Controllers\Admin\ImageController as AdminImageController;
 use App\Http\Controllers\Admin\SongController as AdminSongController;
+use App\Http\Controllers\Admin\ChangelogController as AdminChangelogController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HomeController;
@@ -37,21 +38,21 @@ Route::middleware('auth')->group(function () {
 });
 
 // 認証が必要な管理ページ用ルート
-Route::prefix('admin')->middleware('auth')->group(function () {
-    Route::get('/', [AdminController::class, 'index'])->name('admin.index');
-    Route::get('/members', [AdminController::class, 'members'])->name('admin.members');
-    // Route::post('/members', [AdminMemberController::class, 'store'])->name('admin.members.store');
-    Route::get('/members/{member}/edit', [AdminMemberController::class, 'edit'])->name('admin.members.edit');
-    Route::put('/members/{member}', [AdminMemberController::class, 'update'])->name('admin.members.update');
-    Route::get('/images', [AdminController::class, 'images'])->name('admin.images');
-    Route::get('/images/{member}/edit', [AdminImageController::class, 'edit'])->name('admin.images.edit');
-    Route::put('/images/{member}', [AdminImageController::class, 'update'])->name('admin.images.update');
-    Route::get('/songs', [AdminController::class, 'songs'])->name('admin.songs');
-    Route::get('/songs/{song}/edit', [AdminSongController::class, 'edit'])->name('admin.songs.edit');
-    Route::put('/songs/{song}', [AdminSongController::class, 'update'])->name('admin.songs.update');
-    Route::get('/skills', [AdminController::class, 'skills'])->name('admin.skills');
-    Route::post('/skills', [SkillController::class, 'store'])->name('admin.skills.store');
-});
+Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('index');
+    Route::get('/members', [AdminController::class, 'members'])->name('members');
+    Route::get('/members/{member}/edit', [AdminMemberController::class, 'edit'])->name('members.edit');
+    Route::put('/members/{member}', [AdminMemberController::class, 'update'])->name('members.update');
+    Route::resource('changelogs', AdminChangelogController::class)->only(['index','create','store','destroy']);
+    Route::get('/images', [AdminController::class, 'images'])->name('images');
+    Route::get('/images/{member}/edit', [AdminImageController::class, 'edit'])->name('images.edit');
+    Route::put('/images/{member}', [AdminImageController::class, 'update'])->name('images.update');
+    Route::get('/songs', [AdminController::class, 'songs'])->name('songs');
+    Route::get('/songs/{song}/edit', [AdminSongController::class, 'edit'])->name('songs.edit');
+    Route::put('/songs/{song}', [AdminSongController::class, 'update'])->name('songs.update');
+    Route::get('/skills', [AdminController::class, 'skills'])->name('skills');
+    Route::post('/skills', [SkillController::class, 'store'])->name('skills.store');
+    });
 
 //検索結果ページへのルート
 Route::get('/search', [SearchController::class, 'search'])->name('search');
