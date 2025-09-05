@@ -1,4 +1,6 @@
-@extends('layouts.admin')
+@extends('layouts.app')
+
+@section('title', '更新履歴一覧')
 
 @section('content')
 <div class="container mx-auto p-6">
@@ -52,6 +54,10 @@
 
     <div class="mt-4">
         {{ $logs->links() }} {{-- ページネーション --}}
+    </div>
+
+    <div class="mt-6 text-center">
+        <a href="{{ route('admin.index') }}" class="text-sm text-gray-600 hover:text-gray-800 underline">← 管理メニューに戻る</a>
     </div>
 </div>
 @endsection

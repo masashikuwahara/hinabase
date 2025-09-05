@@ -113,29 +113,5 @@
             @endforelse
         </div>
     </div>
-    {{-- <div class="text-center w-100 max-h-40 overflow-y-scroll bg-white p-4 rounded-lg shadow-md">
-        <div class="text-left inline-block">
-            <p class="text-sm">2025.09.03&nbsp;富田鈴花を卒業メンバーに移動しました</p>
-            <p class="text-sm">2025.08.04&nbsp;v.1.17.0&nbsp;メンバー参加楽曲の切り替えボタン実装</p>
-            <p class="text-sm">2025.06.04&nbsp;v.1.13.1&nbsp;作曲者での検索に対応</p>
-            <p class="text-sm">2025.04.26&nbsp;v.1.11.0&nbsp;ふりがな検索に対応、ソート機能改修</p>
-            <p class="text-sm">2025.04.11&nbsp;五期生のプロフィールを更新しました</p>
-            <p class="text-sm">2025.04.11&nbsp;佐々木久美、佐々木美玲を卒業メンバーに移動しました</p>
-            <p class="text-sm">2025.04.08&nbsp;清水理央と渡辺莉奈のペンライトカラーを変更しました</p>
-            <p class="text-sm">2025.04.08&nbsp;五期生のブログを追加しました</p>
-            <p class="text-sm">2025.04.08&nbsp;五期生のプロフィールを更新しました</p>
-            <p class="text-sm">2025.04.03&nbsp;v.1.9.0&nbsp;メンバー詳細に参加曲数、選抜回数、センター曲数を追加</p>
-            <p class="text-sm">2025.04.02&nbsp;v.1.8.0&nbsp;ソート機能に50音順、出身地順を追加</p>
-            <p class="text-sm">2025.04.01&nbsp;v.1.7.0&nbsp;メンバー詳細ページにふりがな追加</p>
-            <p class="text-sm">2025.03.31&nbsp;五期生メンバーを追加</p>
-            <p class="text-sm">2025.03.28&nbsp;v.1.6.1&nbsp;メンバー詳細ページにスキル表追加</p>
-            <p class="text-sm">2025.03.26&nbsp;v.1.5.0&nbsp;楽曲詳細ページに歌詞リンク追加</p>
-            <p class="text-sm">2025.03.22&nbsp;v.1.4.0&nbsp;メンバー一覧ページにソート機能追加</p>
-            <p class="text-sm">2025.03.15&nbsp;v.1.3.0&nbsp;メンバー詳細ページにブログ情報追加</p>
-            <p class="text-sm">2025.03.14&nbsp;v.1.2.0&nbsp;検索システム改修、あだ名検索に対応</p>
-            <p class="text-sm">2025.03.09&nbsp;v.1.1.0&nbsp;メンバー詳細ページにSNS情報追加</p>
-            <p class="text-sm">2025.03.01&nbsp;v.1.0.0&nbsp;リリース</p>
-        </div>
-    </div> --}}
-{{-- v.1.17.4 --}}
+{{-- v.1.18.4 --}}
 @endsection
