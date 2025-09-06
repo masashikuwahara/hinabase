@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ChangelogController as AdminChangelogController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\AccountController;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 use App\Models\Member;
@@ -52,6 +53,12 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
     Route::get('/skills', [AdminController::class, 'skills'])->name('skills');
     Route::post('/skills', [SkillController::class, 'store'])->name('skills.store');
     });
+
+Route::middleware(['auth'])->prefix('admin/account')->name('admin.account.')->group(function () {
+    Route::get('/', [AccountController::class, 'edit'])->name('edit');
+    Route::put('/password', [AccountController::class, 'updatePassword'])->name('password.update');
+    Route::put('/email', [AccountController::class, 'updateEmail'])->name('email.update');
+});
 
 //検索結果ページへのルート
 Route::get('/search', [SearchController::class, 'search'])->name('search');
