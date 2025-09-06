@@ -25,6 +25,7 @@ Route::get('/songs', [SongController::class, 'index'])->name('songs.index'); // 
 Route::get('/songs/{id}', [SongController::class, 'show'])->name('songs.show'); // 楽曲詳細
 Route::get('/members', [MemberController::class, 'index'])->name('members.index'); // メンバー一覧
 Route::get('/members/{id}', [MemberController::class, 'show'])->name('members.show'); // プロフィール詳細
+Route::get('/search', [SearchController::class, 'search'])->name('search'); //検索結果ページへのルート
 Route::view('/others', 'others.index', [
     'links' => [
         ['title' => '日向坂46推しメンチェッカーです。', 'url' => 'https://x.gd/8sT9P'],
@@ -43,7 +44,6 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
     Route::get('/members', [AdminController::class, 'members'])->name('members');
     Route::get('/members/{member}/edit', [AdminMemberController::class, 'edit'])->name('members.edit');
     Route::put('/members/{member}', [AdminMemberController::class, 'update'])->name('members.update');
-    Route::resource('changelogs', AdminChangelogController::class)->only(['index','create','store','destroy']);
     Route::get('/images', [AdminController::class, 'images'])->name('images');
     Route::get('/images/{member}/edit', [AdminImageController::class, 'edit'])->name('images.edit');
     Route::put('/images/{member}', [AdminImageController::class, 'update'])->name('images.update');
@@ -52,23 +52,20 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
     Route::put('/songs/{song}', [AdminSongController::class, 'update'])->name('songs.update');
     Route::get('/skills', [AdminController::class, 'skills'])->name('skills');
     Route::post('/skills', [SkillController::class, 'store'])->name('skills.store');
+    Route::resource('changelogs', AdminChangelogController::class)->only(['index','create','store','destroy']);
+    Route::prefix('account')->name('account.')->group(function () {
+        Route::get('/', [AccountController::class, 'edit'])->name('edit');
+        Route::put('/password', [AccountController::class, 'updatePassword'])->name('password.update');
+        Route::put('/email', [AccountController::class, 'updateEmail'])->name('email.update');
     });
-
-Route::middleware(['auth'])->prefix('admin/account')->name('admin.account.')->group(function () {
-    Route::get('/', [AccountController::class, 'edit'])->name('edit');
-    Route::put('/password', [AccountController::class, 'updatePassword'])->name('password.update');
-    Route::put('/email', [AccountController::class, 'updateEmail'])->name('email.update');
 });
-
-//検索結果ページへのルート
-Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 // サイトマップ生成
 Route::get('/_make-sitemap', function () {
     $sitemap = Sitemap::create()
         // 固定ページ
         ->add(
-            Url::create(route('home'))        // 例：トップ
+            Url::create(route('home'))
                 ->setLastModificationDate(now())
                 ->setChangeFrequency(Url::CHANGE_FREQUENCY_DAILY)
                 ->setPriority(1.0)
@@ -114,6 +111,6 @@ Route::get('/_make-sitemap', function () {
     $sitemap->writeToFile(public_path('sitemap.xml'));
 
     return 'sitemap.xml generated';
-})->middleware('auth'); // 生成ルートは保護しておく
+})->middleware('auth');
 
 require __DIR__.'/auth.php';
