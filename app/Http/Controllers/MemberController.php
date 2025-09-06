@@ -105,7 +105,7 @@ class MemberController extends Controller
                 $blogHtml = 'ブログ情報の取得に失敗しました。';
             }
         } else {
-            $blogHtml = 'ブログがありません。';
+            $blogHtml = 'ブログは終了しました。';
         }
 
         return view('members.show', compact('member',  'centerCount','titlesongCount', 'songCount', 'blogHtml', 'radarData', 'radar'));
