@@ -31,7 +31,7 @@
             <!-- 収録楽曲一覧 -->
             @if (!$recordedSongs->isEmpty())
                 <section class="bg-white p-6 shadow-md rounded-lg mt-6">
-                    <h3 class="text-xl font-bold text-gray-800">この楽曲に収録されている楽曲</h3>
+                    <h3 class="text-xl font-bold text-gray-800">同じ作品に収録されている楽曲</h3>
                     <ul class="mt-2">
                         @foreach ($recordedSongs as $recordedSong)
                             <li class="block text-lg font-semibold hover:text-blue-600">
