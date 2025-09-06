@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SongController;
@@ -25,17 +24,17 @@ Route::get('/songs', [SongController::class, 'index'])->name('songs.index'); // 
 Route::get('/songs/{id}', [SongController::class, 'show'])->name('songs.show'); // 楽曲詳細
 Route::get('/members', [MemberController::class, 'index'])->name('members.index'); // メンバー一覧
 Route::get('/members/{id}', [MemberController::class, 'show'])->name('members.show'); // プロフィール詳細
+Route::view('/others', 'others.index', [
+    'links' => [
+        ['title' => '日向坂46推しメンチェッカーです。', 'url' => 'https://x.gd/8sT9P'],
+        ['title' => '櫻坂46のデータベースサイトです。', 'url' => 'https://x.gd/xqf5z'],
+    ]
+])->name('others.index');
 
 //認証関係
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
 // 認証が必要な管理ページ用ルート
 Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
