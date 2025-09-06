@@ -4,11 +4,8 @@
 
 @section('content')
     <div class="text-center mt-8">
-        <p class="text-base">日向坂46のメンバーと楽曲のシンプルなデータベースサイトです。</p>
-        <p class="text-base text-red-600">
-            <a href="https://x.gd/xqf5z" target="_blank" rel="noopener noreferrer" class="hover:underline">
-                櫻坂46のデータベースサイトはこちらから
-            </a>
+        <p class="text-base">日向坂46のメンバーと楽曲のデータを載せています。<br>
+            今後も増やしていく予定です。
         </p>
     </div>
 
@@ -27,16 +24,6 @@
     </div>
     <div class="text-center mt-3">
         <p class="text-sm">メンバー名、あだ名、楽曲名、作曲者名で検索できます。</p>
-    </div>
-    
-    <div class="text-center text-blue-700 font-bold mt-8">
-        <a href="https://hinaselect2.netlify.app/" target="_blank" rel="noopener noreferrer" class="hover:underline">日向坂46推しメンチェッカー</a>
-    </div>
-    <div class="text-center mt-2">
-        <p class="text-base">
-            五期生も加入しますます推しメン選びに迷っているアナタ！<br>
-            試してみてください。
-        </p>
     </div>
     
     <!-- メンバー一覧 -->
@@ -113,5 +100,5 @@
             @endforelse
         </div>
     </div>
-{{-- v.1.18.4 --}}
+{{-- v.1.19.0 --}}
 @endsection
