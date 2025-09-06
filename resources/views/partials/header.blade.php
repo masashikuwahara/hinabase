@@ -26,6 +26,7 @@
       <ul class="flex flex-col space-y-2 p-4">
         <li><a href="{{ route('members.index') }}" class="block hover:bg-gray-200 p-2 rounded">メンバー一覧</a></li>
         <li><a href="{{ route('songs.index') }}" class="block hover:bg-gray-200 p-2 rounded">楽曲一覧</a></li>
+        <li><a href="{{ route('others.index') }}" class="block hover:bg-gray-200 p-2 rounded">その他</a></li>
       </ul>
     </nav>
   </div>
@@ -35,6 +36,7 @@
     <ul class="flex space-x-6 text-lg">
       <li><a href="{{ route('members.index') }}" class="hover:underline">メンバー一覧</a></li>
       <li><a href="{{ route('songs.index') }}" class="hover:underline">楽曲一覧</a></li>
+      <li><a href="{{ route('others.index') }}" class="hover:underline">その他</a></li>
     </ul>
   </nav>
 </header>
