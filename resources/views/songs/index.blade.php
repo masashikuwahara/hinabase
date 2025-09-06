@@ -21,6 +21,11 @@
                                 alt="{{ $song->title }}" 
                                 class="w-20 h-20 sm:w-32 sm:h-32 object-cover rounded-lg mx-auto"">
                             <p class="mt-2 font-semibold">{{ $song->title }}</p>
+                            <span class="mt-2 font-semibold">
+                                @if ($song->is_recently_updated)
+                                <span class="text-red-600 font-bold">NEW!</span>
+                                @endif
+                            </span>
                         </a>
                     </div>
                     @endforeach
@@ -42,6 +47,11 @@
                                     alt="{{ $song->title }}" 
                                     class="w-20 h-20 sm:w-32 sm:h-32 object-cover rounded-lg mx-auto"">
                                 <p class="mt-2 font-semibold">{{ $song->title }}</p>
+                                <span class="mt-2 font-semibold">
+                                    @if ($song->is_recently_updated)
+                                    <span class="text-red-600 font-bold">NEW!</span>
+                                    @endif
+                                </span>
                             </a>
                         </div>
                     @endforeach
