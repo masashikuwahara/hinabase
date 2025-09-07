@@ -29,6 +29,7 @@ Route::get('/search', [SearchController::class, 'search'])->name('search'); //�
 Route::view('/others', 'others.index', [
     'links' => [
         ['title' => '日向坂46推しメンチェッカーです。', 'url' => 'https://x.gd/8sT9P'],
+        ['title' => '日向坂46のペンライトカラーが検索できます。', 'url' => 'https://x.gd/0RLv3'],
         ['title' => '櫻坂46のデータベースサイトです。', 'url' => 'https://x.gd/xqf5z'],
     ]
 ])->name('others.index');
