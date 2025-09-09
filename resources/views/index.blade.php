@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', 'HINABASE - 日向坂46データベースサイト')
+@section('title', '')
 
 @section('content')
     <div class="text-center mt-8">

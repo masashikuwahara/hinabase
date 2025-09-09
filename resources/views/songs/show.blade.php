@@ -1,6 +1,15 @@
 @extends('layouts.main')
 
-@section('title', $song->title )
+{{-- @section('title', $song->title ) --}}
+@section('title', $song->title . ' の楽曲情報')
+@section('meta_description', Str::limit(strip_tags($song->description ?? $song->title.'の情報'), 120))
+@push('head_meta')
+    <meta property="og:type" content="music.song">
+@endpush
+
+@section('og_title', $song->title . ' | HINABASE')
+@section('og_description', Str::limit(strip_tags($song->description ?? $song->title.'の情報'), 120))
+@section('og_image', $song->jacket_image_url ?? 'https://kasumizaka46.com/storage/images/logo.png')
 
 @section('content')
     <!-- 楽曲詳細 -->

@@ -1,15 +1,15 @@
 @extends('layouts.main')
 
-@section('title', $member->name)
-<style>
-.text-shadow {
-    text-shadow:
-        -1px -1px 0 #fff,
-         1px -1px 0 #fff,
-        -1px  1px 0 #fff,
-         1px  1px 0 #fff;
-}
-</style>
+{{-- @section('title', $member->name) --}}
+@section('title', $member->name . ' のプロフィール')
+@section('meta_description', Str::limit(strip_tags($member->bio ?? $member->name.'のプロフィール'), 120))
+@push('head_meta')
+    <meta property="og:type" content="article">
+@endpush
+@section('og_title', $member->name . ' | HINABASE')
+@section('og_description', Str::limit(strip_tags($member->bio ?? $member->name.'のプロフィール'), 120))
+@section('og_image', $member->image_url ?? 'https://kasumizaka46.com/storage/images/logo.png')
+
 @section('content')
     <!-- メンバー詳細 -->
     <main class="container mx-auto mt-8 px-4">
