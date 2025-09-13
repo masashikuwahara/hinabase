@@ -4,7 +4,28 @@
 @section('title', $member->name . ' のプロフィール')
 @section('meta_description', Str::limit(strip_tags($member->bio ?? $member->name.'のプロフィール'), 120))
 @push('head_meta')
-    <meta property="og:type" content="article">
+    {{-- <meta property="og:type" content="article"> --}}
+    <meta property="og:type" content="profile">
+    <meta property="profile:username" content="{{ $member->name }}">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Person",
+            "name": "{{ $member->name }}",
+            "alternateName": "{{ $member->furigana }}",
+            "url": "{{ url()->current() }}",
+            "image": "{{ asset('storage/' . $member->image) }}",
+            "birthDate": "{{ \Carbon\Carbon::parse($member->birthday)->toDateString() }}",
+            "height": "{{ (int) $member->height }} cm",
+            "memberOf": {
+                "@type": "MusicGroup",
+                "name": "日向坂46"
+            },
+            "sameAs": [
+                @if ($member->sns) "{{ $member->sns }}" @endif
+            ]
+        }
+</script>
 @endpush
 @section('og_title', $member->name . ' | HINABASE')
 @section('og_description', Str::limit(strip_tags($member->bio ?? $member->name.'のプロフィール'), 120))
@@ -19,8 +40,11 @@
         <section class="flex flex-col md:flex-row items-center mt-8 bg-white p-6 shadow-md rounded-lg">
             <div class="flex-shrink-0">
                 <img src="{{ asset('storage/' . $member->image) }}" 
-                     alt="{{ $member->name }}" 
-                     class="w-56 h-72 object-cover rounded-lg shadow-md">
+                     alt="{{ $member->name }} （日向坂46）" 
+                     class="w-56 h-72 object-cover rounded-lg shadow-md"
+                     loading="lazy"
+                     width="384" height="512"
+                     />
             </div>
 
             <!-- メンバー情報 -->

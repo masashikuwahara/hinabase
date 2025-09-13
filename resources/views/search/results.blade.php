@@ -1,7 +1,9 @@
 @extends('layouts.main')
 
 @section('title', '検索結果')
-
+@push('head_meta')
+  <meta name="robots" content="noindex,follow">
+@endpush
 @section('content')
     <!-- 検索結果 -->
     <main class="container mx-auto mt-8 px-4">
