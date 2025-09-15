@@ -1,12 +1,98 @@
 @extends('layouts.main')
 
 @section('title', '日向坂46メンバー一覧')
+@section('meta_description', '日向坂46のメンバー一覧。プロフィール、あだ名、生年月日、身長、血液型、参加楽曲などのリンクを整理。期別の在籍メンバーと卒業メンバーを確認できます。')
+
+@push('head_meta')
+  @if(request('sort') || request('order'))
+    <meta name="robots" content="noindex,follow">
+    <link rel="canonical" href="{{ route('members.index') }}">
+  @else
+    <link rel="canonical" href="{{ url()->current() }}">
+  @endif
+
+  @php
+    $hasSort = request()->has('sort') || request()->has('order');
+    $hasPage = (int)request('page') > 1;
+  @endphp
+
+  @if($hasSort)
+    <meta name="robots" content="noindex,follow">
+    <link rel="canonical" href="{{ route('members.index') }}">
+  @else
+    <link rel="canonical" href="{{ $hasPage ? request()->fullUrl() : url()->current() }}">
+  @endif
+  <script type="application/ld+json">
+    {
+        "@context":"https://schema.org",
+        "@type":"CollectionPage",
+        "name":"日向坂46メンバー一覧 | HINABASE",
+        "url":"{{ request()->fullUrl() }}",
+        "isPartOf":{"@type":"WebSite","name":"HINABASE","url":"{{ url('/') }}"},
+        "mainEntity":{
+            "@type":"ItemList",
+            "itemListElement":[
+            @php
+                // 在籍メンバーを配列化 → 配列の配列なら flatten
+                $currentData =
+                $sort === 'default'
+                    ? collect($currentMembers)->flatten(1)                       // 期ごと配列ケース
+                    : (method_exists($currentMembers, 'items')                   // LengthAwarePaginatorなど
+                        ? collect($currentMembers->items())
+                        : collect($currentMembers));                              // すでにコレクション/配列
+
+                // 卒業メンバーも含めたい場合はここで merge
+                // $graduatedData = $sort === 'default'
+                //    ? collect($graduatedMembers)->flatten(1)
+                //    : (method_exists($graduatedMembers, 'items') ? collect($graduatedMembers->items()) : collect($graduatedMembers));
+                // $list = $currentData->merge($graduatedData);
+
+                $list = $currentData; // 今回は在籍のみ。両方入れるなら上のmergeを使用
+                $pos = 1;
+            @endphp
+            @foreach($list as $m)
+                {
+                "@type":"ListItem",
+                "position": {{ $pos++ }},
+                "url": "{{ route('members.show', $m->id) }}",
+                "name": "{{ $m->name }}"
+                }@if(!$loop->last),@endif
+            @endforeach
+            ]
+        }
+        "@context":"https://schema.org",
+        "@type":"BreadcrumbList",
+        "itemListElement":[
+            {"@type":"ListItem","position":1,"name":"ホーム","item":"{{ url('/') }}"},
+            {"@type":"ListItem","position":2,"name":"メンバー一覧","item":"{{ request()->fullUrl() }}"}
+        ]
+    }
+  </script>
+@endpush
 
 @section('content')
+    <nav class="text-sm text-gray-600 mt-2" aria-label="パンくず">
+    <ol class="flex space-x-2">
+        <li><a href="{{ url('/') }}" class="hover:underline">ホーム</a></li>
+        <li>›</li>
+        <li aria-current="page">メンバー一覧</li>
+    </ol>
+    </nav>
     <main class="container mx-auto mt-8 px-4">
         {{-- 現在の状態を表示 --}}
-        <h2 class="text-2xl font-semibold">メンバー一覧</h2>
-        @if ($sort === 'furigana')
+        <h1 class="text-2xl font-semibold">日向坂46メンバー一覧</h1>
+        @php
+        $labels = [
+            'default'    => 'デフォルト',
+            'furigana'   => '50音順',
+            'blood_type' => '血液型順',
+            'birthday'   => '誕生日順',
+            'height'     => '身長順',
+        ];
+        @endphp
+
+        <p>現在のソート: {{ $labels[$sort] ?? 'デフォルト' }}</p>
+        {{-- @if ($sort === 'furigana')
             <p>現在のソート: {{ $sort = '50音順' }} </p>
         @elseif($sort === 'blood_type')
             <p>現在のソート: {{ $sort = '血液型順' }} </p>
@@ -14,12 +100,13 @@
             <p>現在のソート: {{ $sort = '誕生日順' }} </p>
         @elseif($sort === 'height')
             <p>現在のソート: {{ $sort = '身長順' }} </p>
-        {{-- @elseif($sort === 'birthplace')
-            <p>現在のソート: {{ $sort = '出身地順' }} </p> --}}
-        @endif
+        @elseif($sort === 'birthplace')
+            <p>現在のソート: {{ $sort = '出身地順' }} </p>
+        @endif --}}
     
         {{-- 切り替えボタン --}}
-        <div x-data="{ open: false }" class="relative md:static">
+        <div x-data="{ open:false }" x-cloak class="relative md:static">
+        {{-- <div x-data="{ open: false }" class="relative md:static"> --}}
             {{-- モバイル表示時のプルダウンボタン --}}
             <button @click="open = !open" class="md:hidden px-4 py-2 bg-gray-500 text-white rounded-lg shadow-md hover:bg-gray-600">
                 並び替え
@@ -96,20 +183,22 @@
             {{-- デフォルト: gradeごとに表示 --}}
             <!-- 在籍メンバー -->
             <section class="mt-6">
-                <h3 class="text-xl font-bold text-gray-800">在籍メンバー</h3>
+                <h2 class="text-xl font-bold text-gray-800">在籍メンバー</h2>
                 @if (is_array($currentMembers) || is_object($currentMembers))
                     @if (empty((array)$currentMembers))
                         <p class="mt-2 text-gray-700">在籍メンバーはいません。</p>
                     @else
                         @foreach ($currentMembers as $grade => $members)
-                            <h4 class="text-lg font-semibold mt-4">{{ $grade }}</h4>
+                            <h3 class="text-lg font-semibold mt-4">{{ $grade }}</h3>
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
                                 @foreach ($members as $member)
                                     <div class="bg-white shadow-md rounded-lg text-center hover:scale-105 transition-transform">
                                         <a href="{{ route('members.show', $member->id) }}" class="block">
                                             <img src="{{ asset('storage/' . ($member->image ?? 'default.jpg')) }}"
-                                                 alt="{{ $member->name }}"
-                                                 class="w-32 h-32 object-cover mx-auto rounded-full">
+                                                 alt="{{ $member->name }}（日向坂46）"
+                                                 class="w-32 h-32 object-cover mx-auto rounded-full"
+                                                 loading="lazy"
+                                                 width="128" height="128"/>
                                             <span class="mt-2 font-semibold">{{ $member->name }}
                                                 @if ($member->is_recently_updated)
                                                 <span class="text-red-600 font-bold">NEW!</span>
@@ -129,20 +218,22 @@
             </div> --}}
             <!-- 卒業メンバー -->
             <section class="mt-8">
-                <h3 class="text-xl font-bold text-gray-800">卒業メンバー</h3>
+                <h2 class="text-xl font-bold text-gray-800">卒業メンバー</h2>
                 @if (is_array($graduatedMembers) || is_object($graduatedMembers))
                     @if (empty((array)$graduatedMembers))
                         <p class="mt-2 text-gray-700">卒業メンバーはいません。</p>
                     @else
                         @foreach ($graduatedMembers as $grade => $members)
-                            <h4 class="text-lg font-semibold mt-4">{{ $grade }}</h4>
+                            <h3 class="text-lg font-semibold mt-4">{{ $grade }}</h3>
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
                                 @foreach ($members as $member)
                                     <div class="bg-white shadow-md rounded-lg text-center hover:scale-105 transition-transform">
                                         <a href="{{ route('members.show', $member->id) }}" class="block">
                                             <img src="{{ asset('storage/' . ($member->image ?? 'default.jpg')) }}"
-                                                 alt="{{ $member->name }}"
-                                                 class="w-32 h-32 object-cover mx-auto rounded-full">
+                                                 alt="{{ $member->name }}（日向坂46）"
+                                                 class="w-32 h-32 object-cover mx-auto rounded-full"
+                                                 loading="lazy"
+                                                 width="128" height="128"/>
                                             <span class="mt-2 font-semibold">{{ $member->name }}</span>
                                             @if ($member->is_recently_updated)
                                             <span class="text-red-600 font-bold">NEW!</span>
@@ -158,7 +249,7 @@
         @else
             {{-- gradeを無視してソート --}}
             <section class="mt-6">
-                <h3 class="text-xl font-bold text-gray-800">在籍メンバー</h3>
+                <h2 class="text-xl font-bold text-gray-800">在籍メンバー</h2>
                 @if ($currentMembers->isEmpty())
                     <p class="mt-2 text-gray-700">在籍メンバーはいません。</p>
                 @else
@@ -167,8 +258,10 @@
                             <div class="bg-white shadow-md rounded-lg text-center hover:scale-105 transition-transform">
                                 <a href="{{ route('members.show', $member->id) }}" class="block">
                                     <img src="{{ asset('storage/' . ($member->image ?? 'default.jpg')) }}"
-                                         alt="{{ $member->name }}"
-                                         class="w-32 h-32 object-cover mx-auto rounded-full">
+                                         alt="{{ $member->name }}（日向坂46）"
+                                         class="w-32 h-32 object-cover mx-auto rounded-full"
+                                         loading="lazy"
+                                         width="128" height="128"/>
                                     <p class="mt-2 font-semibold">{{ $member->name }}</p>
                                     @if (isset($member->additional_info))
                                     <p class="text-sm text-gray-600">{{ $member->additional_info }}</p>
@@ -186,7 +279,7 @@
             </section>
             
             <section class="mt-8">
-                <h3 class="text-xl font-bold text-gray-800">卒業メンバー</h3>
+                <h2 class="text-xl font-bold text-gray-800">卒業メンバー</h2>
                 @if ($graduatedMembers->isEmpty())
                     <p class="mt-2 text-gray-700">卒業メンバーはいません。</p>
                 @else
@@ -195,8 +288,10 @@
                             <div class="bg-white shadow-md rounded-lg text-center hover:scale-105 transition-transform">
                                 <a href="{{ route('members.show', $member->id) }}" class="block">
                                     <img src="{{ asset('storage/' . ($member->image ?? 'default.jpg')) }}"
-                                        alt="{{ $member->name }}"
-                                        class="w-32 h-32 object-cover mx-auto rounded-full">
+                                        alt="{{ $member->name }}（日向坂46）"
+                                        class="w-32 h-32 object-cover mx-auto rounded-full"
+                                        loading="lazy"
+                                        width="128" height="128"/>
                                     <p class="mt-2 font-semibold">{{ $member->name }}</p>
                                     @if (isset($member->additional_info))
                                     <p class="text-sm text-gray-600">{{ $member->additional_info }}</p>
