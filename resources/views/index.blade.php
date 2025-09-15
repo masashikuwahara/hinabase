@@ -3,11 +3,19 @@
 @section('title', '')
 
 @section('content')
-    <div class="text-center mt-8">
+    <section class="text-center mt-8">
+        <h1 class="text-2xl font-bold mb-2">日向坂46データベース HINABASE</h1>
+        <p class="text-base leading-relaxed">
+            日向坂46データベース「HINABASE」では、メンバーのプロフィールやあだ名、生年月日、血液型、身長などの詳細情報に加え、<br>
+            楽曲データ（シングル・アルバム・参加メンバー・フォーメーション・センター回数・作詞作曲者）をわかりやすく整理しています。<br>
+            最新のシングル情報や卒業メンバーのデータも日々更新中です。
+        </p>
+    </section>
+    {{-- <div class="text-center mt-8">
         <p class="text-base">日向坂46のメンバーと楽曲のデータを載せています。<br>
             今後も増やしていく予定です。
         </p>
-    </div>
+    </div> --}}
 
     <!-- 検索フォーム -->
     <div class="mt-6 text-center">
@@ -105,5 +113,5 @@
             @endforelse
         </div>
     </div>
-{{-- v.1.20.1 --}}
+{{-- v.1.21.0 --}}
 @endsection
