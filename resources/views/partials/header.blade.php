@@ -1,5 +1,5 @@
 <header class="bg-[#7cc7e8] text-white py-4 px-6 flex justify-between items-center">
-  <a href="{{ url('/') }}"><h1 class="text-2xl font-bold">HINABASE</h1></a>
+  <a href="{{ url('/') }}"><div class="text-2xl font-bold">HINABASE</div></a>
   
   <!-- ハンバーガーメニュー -->
   <div x-data="{ open: false }" class="relative">
