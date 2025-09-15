@@ -17,9 +17,9 @@ class BuildSitemap extends Command
 
         // 固定ページ
         $urls[] = ['loc' => url('/'), 'lastmod' => now()->toAtomString()];
-        $urls[] = ['loc' => url('/about'), 'lastmod' => now()->toAtomString()];
+        $urls[] = ['loc' => url('/members'), 'lastmod' => now()->toAtomString()];
+        $urls[] = ['loc' => url('/songs'), 'lastmod' => now()->toAtomString()];
 
-        // 例）メンバー・楽曲（あなたのサイト構成に合わせて）
         foreach (\App\Models\Member::cursor() as $m) {
             $urls[] = [
                 'loc'     => route('members.show', $m->id),
