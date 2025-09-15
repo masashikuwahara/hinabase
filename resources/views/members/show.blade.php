@@ -1,10 +1,8 @@
 @extends('layouts.main')
 
-{{-- @section('title', $member->name) --}}
 @section('title', $member->name . ' のプロフィール')
 @section('meta_description', Str::limit(strip_tags($member->bio ?? $member->name.'のプロフィール'), 120))
 @push('head_meta')
-    {{-- <meta property="og:type" content="article"> --}}
     <meta property="og:type" content="profile">
     <meta property="profile:username" content="{{ $member->name }}">
     <script type="application/ld+json">
@@ -15,26 +13,64 @@
             "alternateName": "{{ $member->furigana }}",
             "url": "{{ url()->current() }}",
             "image": "{{ asset('storage/' . $member->image) }}",
-            "birthDate": "{{ \Carbon\Carbon::parse($member->birthday)->toDateString() }}",
-            "height": "{{ (int) $member->height }} cm",
-            "memberOf": {
-                "@type": "MusicGroup",
-                "name": "日向坂46"
-            },
-            "sameAs": [
-                @if ($member->sns) "{{ $member->sns }}" @endif
-            ]
+            "birthDate": "{{ optional(\Carbon\Carbon::parse($member->birthday))->toDateString() }}",
+            "height": { "@type": "QuantitativeValue", "value": {{ (int) $member->height }}, "unitText": "cm" },
+            "memberOf": { "@type": "MusicGroup", "name": "日向坂46" }
+            @if ($member->sns),
+            "sameAs": ["{{ $member->sns }}"]
+            @endif
         }
-</script>
+    </script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "{{ $member->name }} - 日向坂46プロフィール | HINABASE",
+            "url": "{{ url()->current() }}",
+            "mainEntity": {
+            "@type": "Person",
+            "name": "{{ $member->name }}",
+            "url": "{{ url()->current() }}"
+            },
+            "isPartOf": { "@type": "WebSite", "name": "HINABASE", "url": "{{ url('/') }}" }
+        }
+    </script>
 @endpush
 @section('og_title', $member->name . ' | HINABASE')
-@section('og_description', Str::limit(strip_tags($member->bio ?? $member->name.'のプロフィール'), 120))
+@section('og_description', Str::limit(strip_tags($member->bio ?? ($member->name.'のプロフィール')), 120))
+@section('og_image', asset('storage/' . $member->image))
+@push('head_meta')
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+@endpush
 @section('og_image', $member->image_url ?? 'https://kasumizaka46.com/storage/images/logo.png')
 
 @section('content')
+<nav class="text-sm text-gray-600 mt-4" aria-label="パンくず">
+  <ol class="flex space-x-2">
+    <li><a href="{{ url('/') }}" class="hover:underline">ホーム</a></li>
+    <li>›</li>
+    <li><a href="{{ route('members.index') }}" class="hover:underline">メンバー</a></li>
+    <li>›</li>
+    <li aria-current="page">{{ $member->name }}</li>
+  </ol>
+</nav>
+@push('head_meta')
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"BreadcrumbList",
+ "itemListElement":[
+  {"@type":"ListItem","position":1,"name":"ホーム","item":"{{ url('/') }}"},
+  {"@type":"ListItem","position":2,"name":"メンバー","item":"{{ route('members.index') }}"},
+  {"@type":"ListItem","position":3,"name":"{{ $member->name }}","item":"{{ url()->current() }}"}
+ ]
+}
+</script>
+@endpush
     <!-- メンバー詳細 -->
     <main class="container mx-auto mt-8 px-4">
-        <h2 class="text-3xl font-bold text-center">{{ $member->name }}</h2>
+        <h1 class="text-3xl font-bold text-center">{{ $member->name }}</h1>
         <p class="text-xl text-center mt-2">{{ $member->furigana }}</p>
         
         <section class="flex flex-col md:flex-row items-center mt-8 bg-white p-6 shadow-md rounded-lg">
@@ -49,7 +85,7 @@
 
             <!-- メンバー情報 -->
             <div class="md:ml-8 mt-4 md:mt-0">
-                <h3 class="text-xl font-semibold">プロフィール</h3>
+                <h2 class="text-xl font-semibold">プロフィール</h2>
                 <ul class="mt-2 text-gray-800">
                     <li><strong>ニックネーム:</strong> {{ $member->nickname }}</li>
                     <li><strong>生年月日:</strong> {{ \Carbon\Carbon::parse($member->birthday)->format('Y年m月d日') }}</li>
@@ -116,7 +152,7 @@
         
         <!-- 参加楽曲リスト -->
         <section class="mt-8">
-            <h3 class="text-2xl font-semibold">参加楽曲</h3>
+            <h2 class="text-2xl font-semibold">参加楽曲</h2>
             @if ($member->songs->isEmpty())
                 <p class="mt-2 text-gray-700">まだ参加楽曲はありません。</p>
             @else
