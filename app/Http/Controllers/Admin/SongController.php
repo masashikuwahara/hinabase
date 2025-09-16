@@ -24,6 +24,7 @@ class SongController extends Controller
             'composer' => 'nullable|string|max:255',
             'arranger' => 'nullable|string|max:255',
             'is_recorded' => 'nullable|string|max:255',
+            'lyric' => 'nullable|string|max:255',
             'titlesong' => 'required|boolean',
             'youtube' => 'nullable|string|max:510',
         ]);
