@@ -25,7 +25,7 @@
         {
             "@context": "https://schema.org",
             "@type": "WebPage",
-            "name": "{{ $member->name }} - 日向坂46プロフィール | HINABASE",
+            "name": "{{ $member->name }} - 日向坂46プロフィール | 日向坂46データベース | HINABASE",
             "url": "{{ url()->current() }}",
             "mainEntity": {
             "@type": "Person",

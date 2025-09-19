@@ -26,7 +26,7 @@
     {
         "@context":"https://schema.org",
         "@type":"CollectionPage",
-        "name":"日向坂46メンバー一覧 | HINABASE",
+        "name":"日向坂46メンバー一覧 | 日向坂46データベース | HINABASE",
         "url":"{{ request()->fullUrl() }}",
         "isPartOf":{"@type":"WebSite","name":"HINABASE","url":"{{ url('/') }}"},
         "mainEntity":{
