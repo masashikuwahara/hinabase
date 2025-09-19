@@ -18,7 +18,7 @@ class HomeController extends Controller
         $songs = Song::inRandomOrder()->take(7)->get();
 
         // 更新履歴を50件取得
-        $logs = Changelog::ordered()->limit(50)->get();
+        $logs = Changelog::ordered()->limit(20)->get();
 
         // ビューにデータを渡す
         return view('index', compact('members', 'songs' ,'logs'));
