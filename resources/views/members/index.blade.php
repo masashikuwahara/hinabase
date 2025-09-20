@@ -92,21 +92,9 @@
         @endphp
 
         <p>現在のソート: {{ $labels[$sort] ?? 'デフォルト' }}</p>
-        {{-- @if ($sort === 'furigana')
-            <p>現在のソート: {{ $sort = '50音順' }} </p>
-        @elseif($sort === 'blood_type')
-            <p>現在のソート: {{ $sort = '血液型順' }} </p>
-        @elseif($sort === 'birthday')
-            <p>現在のソート: {{ $sort = '誕生日順' }} </p>
-        @elseif($sort === 'height')
-            <p>現在のソート: {{ $sort = '身長順' }} </p>
-        @elseif($sort === 'birthplace')
-            <p>現在のソート: {{ $sort = '出身地順' }} </p>
-        @endif --}}
     
         {{-- 切り替えボタン --}}
         <div x-data="{ open:false }" x-cloak class="relative md:static">
-        {{-- <div x-data="{ open: false }" class="relative md:static"> --}}
             {{-- モバイル表示時のプルダウンボタン --}}
             <button @click="open = !open" class="md:hidden px-4 py-2 bg-gray-500 text-white rounded-lg shadow-md hover:bg-gray-600">
                 並び替え
