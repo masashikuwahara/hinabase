@@ -1,10 +1,72 @@
 @extends('layouts.main')
 
-{{-- @section('title', $song->title ) --}}
-@section('title', $song->title . ' の楽曲情報')
-@section('meta_description', Str::limit(strip_tags($song->description ?? $song->title.'の情報'), 120))
+@section('title', $song->title . ' - 日向坂46の楽曲情報')
+@section('og_description', Str::limit(strip_tags($song->description ?? $song->title.'の情報'), 120))
+@section('og_image', $song->photo ?? 'https://kasumizaka46.com/storage/images/logo.png')
 @push('head_meta')
-    <meta property="og:type" content="music.song">
+<link rel="canonical" href="{{ url()->current() }}">
+
+{{-- OGP 最適化（layoutで@yield受け側がある前提） --}}
+<meta property="og:type" content="music.song">
+{{-- <meta property="og:title" content="{{ $song->title }} | HINABASE">
+<meta property="og:description" content="{{ Str::limit($song->description ?? ($song->title.'の詳細情報'), 120) }}">
+<meta property="og:image" content="{{ asset('storage/' . ($song->photo ?? 'images/logo.png')) }}"> --}}
+<meta property="og:url" content="{{ url()->current() }}">
+<meta name="twitter:card" content="summary_large_image">
+
+{{-- パンくず(JSON-LD) --}}
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"BreadcrumbList",
+ "itemListElement":[
+  {"@type":"ListItem","position":1,"name":"ホーム","item":"{{ url('/') }}"},
+  {"@type":"ListItem","position":2,"name":"楽曲一覧","item":"{{ route('songs.index') }}"},
+  {"@type":"ListItem","position":3,"name":"{{ $song->title }}","item":"{{ url()->current() }}"}
+ ]
+}
+</script>
+
+{{-- MusicRecording(JSON-LD) --}}
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"MusicRecording",
+  "name":"{{ $song->title }}",
+  "url":"{{ url()->current() }}",
+  "image":"{{ asset('storage/' . ($song->photo ?? 'images/logo.png')) }}",
+  "byArtist":{"@type":"MusicGroup","name":"日向坂46"},
+  @if(!empty($song->album_title))
+  "inAlbum":{"@type":"MusicAlbum","name":"{{ $song->album_title }}"},
+  @endif
+  @if(!empty($song->release))
+  "datePublished":"{{ \Carbon\Carbon::parse($song->release)->toDateString() }}",
+  @endif
+  @if(!empty($song->genre))
+  "genre":"{{ $song->genre }}",
+  @endif
+  @if(!empty($song->duration))
+  "duration":"{{ $song->duration }}",
+  @endif
+  @if(!empty($song->lyricist))
+  "lyrics":{"@type":"CreativeWork","author":{"@type":"Person","name":"{{ $song->lyricist }}" }},
+  @endif
+  @if(!empty($song->composer))
+  "composer":{"@type":"Person","name":"{{ $song->composer }}"},
+  @endif
+  @if(!empty($song->arranger))
+  "recordingOf":{"@type":"MusicComposition","name":"{{ $song->title }}","musicArrangement":"{{ $song->arranger }}"},
+  @endif
+  @if(!empty($song->center_members))
+  "creditedTo":[
+    @foreach($song->center_members as $cm)
+      {"@type":"Person","name":"{{ $cm }}"}@if(!$loop->last),@endif
+    @endforeach
+  ],
+  @endif
+  "publisher":{"@type":"Organization","name":"Sony Music Labels"}
+}
+</script>
 @endpush
 
 @section('og_title', $song->title . ' | HINABASE')
@@ -12,18 +74,28 @@
 @section('og_image', $song->jacket_image_url ?? 'https://kasumizaka46.com/storage/images/logo.png')
 
 @section('content')
+<nav class="text-sm text-gray-600 mt-2" aria-label="パンくず">
+    <ol class="flex space-x-2">
+        <li><a href="{{ url('/') }}" class="hover:underline">ホーム</a></li>
+        <li>›</li>
+        <li><a href="{{ route('songs.index') }}" class="hover:underline">楽曲一覧</a></li>
+        <li>›</li>
+        <li aria-current="page">{{ $song->title }}</li>
+    </ol>
+</nav>
     <!-- 楽曲詳細 -->
     <main class="container mx-auto mt-8 px-4">
         <h1 class="text-3xl font-bold">{{ $song->title }}</h1>
         
-        @if ($song->members === "")
+        @if ($song->members->isEmpty())
             <p class="mt-4 text-gray-700">この楽曲にはまだ参加メンバーが登録されていません。</p>
             @else
             <section class="flex flex-col md:flex-row mt-8 bg-white p-6 shadow-md rounded-lg">
                 <div class="flex-shrink-0">
-                    <img src="{{ asset('storage/' . $song->photo) }}" 
-                        alt="{{ $song->title }}" 
-                        class="md:w-96 md:h-96 w-auto h-auto object-cover rounded-lg shadow-md ">
+                    <img src="{{ asset('storage/' . ($song->photo ?? 'default.jpg')) }}"
+                    alt="{{ $song->title }}（日向坂46）"
+                    class="md:w-96 md:h-96 w-auto h-auto object-cover rounded-lg shadow-md"
+                    loading="lazy" width="384" height="384">
                 </div>
                 
                 <div class="md:ml-8 mt-4 md:mt-0">
