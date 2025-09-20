@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
-@section('title', '')
+@section('title', '日向坂46データベース | HINABASE - メンバー・楽曲のプロフィールとデータ')
+{{-- @section('title', '') --}}
 
 @section('content')
     <section class="text-center mt-8">
@@ -38,7 +39,8 @@
                     <a href="{{ route('members.show', $member->id) }}">
                         <img src="{{ asset('storage/' . $member->image) }}" 
                         alt="{{ $member->name }}" 
-                        class="w-20 h-20 sm:w-32 sm:h-32 object-cover rounded-full mx-auto">
+                        class="w-20 h-20 sm:w-32 sm:h-32 object-cover rounded-full mx-auto"
+                        loading="lazy" width="128" height="128">
                         <span class="mt-2 font-semibold">{{ $member->name }}
                             @if ($member->is_recently_updated)
                             <span class="text-red-600 font-bold">NEW!</span>
@@ -65,7 +67,8 @@
                     <a href="{{ route('songs.show', $song->id) }}">
                         <img src="{{ asset('storage/' . $song->photo) }}" 
                         alt="{{ $song->title }}" 
-                        class="w-20 h-20 sm:w-32 sm:h-32 object-cover rounded-lg mx-auto">
+                        class="w-20 h-20 sm:w-32 sm:h-32 object-cover rounded-lg mx-auto"
+                        loading="lazy" width="128" height="128">
                         <p class="mt-2 font-semibold">{{ $song->title }}</p>
                         <span class="mt-2 font-semibold">
                             @if ($song->is_recently_updated)
@@ -84,10 +87,21 @@
         </div>
     </section>
 
+    <!-- 閲覧履歴 -->
+    <section class="mt-10 px-6">
+        <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-bold">最近見たページ</h2>
+            <button id="clearRecent"
+            class="text-sm text-gray-600 hover:text-gray-900 underline">履歴をクリア</button>
+        </div>
+        <div id="recently-viewed" class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2"></div>
+    </section>
+
     <div class="text-center mt-8">
         <p class="text-sm">--更新履歴--</p>
     </div>
 
+    <!-- 更新履歴 -->
     <div class="text-center w-100 max-h-40 overflow-y-scroll bg-white p-4 rounded-lg shadow-md">
         <div class="text-left inline-block">
             @forelse ($logs as $log)
@@ -108,5 +122,40 @@
             @endforelse
         </div>
     </div>
-{{-- v.1.22.0 --}}
+
+    <!-- 閲覧履歴の処理  -->
+    <script>
+    (() => {
+    const KEY = 'recentlyViewed';
+    const container = document.getElementById('recently-viewed');
+    if (!container) return;
+
+    const raw = localStorage.getItem(KEY);
+    const list = raw ? JSON.parse(raw) : [];
+
+    if (!list.length) {
+        container.innerHTML = '<p class="text-gray-600">まだ履歴はありません。</p>';
+        return;
+    }
+
+    container.innerHTML = list.map(item => `
+        <div class="bg-white shadow-md rounded-lg p-3 text-center hover:scale-105 transition-transform">
+        <a href="${item.url}">
+            ${item.image ? `<img src="${item.image}" alt="${item.title}" width="128" height="128" loading="lazy" 
+            class="w-20 h-20 sm:w-32 sm:h-32 object-cover rounded-lg mx-auto">` : ''}
+            <p class="mt-2 font-semibold">${item.title}</p>
+            <p class="text-xs text-gray-500">${item.type === 'member' ? 'メンバー' : '楽曲'}</p>
+        </a>
+        </div>
+    `).join('');
+
+    // クリアボタン
+    const clearBtn = document.getElementById('clearRecent');
+    clearBtn?.addEventListener('click', () => {
+        localStorage.removeItem(KEY);
+        container.innerHTML = '<p class="text-gray-600">履歴をクリアしました。</p>';
+    });
+    })();
+    </script>
+<!-- v.1.23.0 -->
 @endsection

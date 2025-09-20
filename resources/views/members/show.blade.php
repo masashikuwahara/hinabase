@@ -2,6 +2,7 @@
 
 @section('title', $member->name . ' のプロフィール')
 @section('meta_description', Str::limit(strip_tags($member->bio ?? $member->name.'のプロフィール'), 120))
+@section('og_image', $song->photo ?? 'https://kasumizaka46.com/storage/images/logo.png')
 @push('head_meta')
     <meta property="og:type" content="profile">
     <meta property="profile:username" content="{{ $member->name }}">
@@ -156,10 +157,6 @@
             @if ($member->songs->isEmpty())
                 <p class="mt-2 text-gray-700">まだ参加楽曲はありません。</p>
             @else
-            {{-- @php
-                $songCount = count($member->songs);
-            @endphp
-            <p>参加曲数: {{ $songCount }}</p> --}}
                 <ul id="songList" class="mt-4 space-y-2">
                     @foreach ($member->songs as $song)
                         <li 
@@ -260,6 +257,35 @@
                 }
             });
         }
+    </script>
+
+    {{-- 閲覧記録 --}}
+    <script>
+    (() => {
+    const item = {
+        type: 'member',
+        id: {{ $member->id }},
+        title: @json($member->name),
+        url: @json(route('members.show', $member->id)),
+        image: @json($member->image ? asset('storage/'.$member->image) : null),
+        viewedAt: Date.now()
+    };
+
+    const KEY = 'recentlyViewed';
+    const MAX = 12;
+
+    const raw = localStorage.getItem(KEY);
+    let list = raw ? JSON.parse(raw) : [];
+
+    // 重複削除 → 先頭追加
+    list = list.filter(x => !(x.type === item.type && x.id === item.id));
+    list.unshift(item);
+
+    // 上限
+    if (list.length > MAX) list = list.slice(0, MAX);
+
+    localStorage.setItem(KEY, JSON.stringify(list));
+    })();
     </script>
 
 @endsection

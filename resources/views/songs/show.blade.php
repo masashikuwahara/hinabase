@@ -4,13 +4,8 @@
 @section('og_description', Str::limit(strip_tags($song->description ?? $song->title.'の情報'), 120))
 @section('og_image', $song->photo ?? 'https://kasumizaka46.com/storage/images/logo.png')
 @push('head_meta')
-<link rel="canonical" href="{{ url()->current() }}">
 
-{{-- OGP 最適化（layoutで@yield受け側がある前提） --}}
 <meta property="og:type" content="music.song">
-{{-- <meta property="og:title" content="{{ $song->title }} | HINABASE">
-<meta property="og:description" content="{{ Str::limit($song->description ?? ($song->title.'の詳細情報'), 120) }}">
-<meta property="og:image" content="{{ asset('storage/' . ($song->photo ?? 'images/logo.png')) }}"> --}}
 <meta property="og:url" content="{{ url()->current() }}">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -163,4 +158,32 @@
             @endif
         @endif
     </main>
+
+    {{-- 閲覧記録 --}}
+    <script>
+    (() => {
+    const item = {
+        type: 'song',
+        id: {{ $song->id }},
+        title: @json($song->title),
+        url: @json(route('songs.show', $song->id)),
+        image: @json($song->photo ? asset('storage/'.$song->photo) : null),
+        viewedAt: Date.now()
+    };
+
+    const KEY = 'recentlyViewed';
+    const MAX = 12;
+
+    const raw = localStorage.getItem(KEY);
+    let list = raw ? JSON.parse(raw) : [];
+
+    list = list.filter(x => !(x.type === item.type && x.id === item.id));
+    list.unshift(item);
+
+    if (list.length > MAX) list = list.slice(0, MAX);
+
+    localStorage.setItem(KEY, JSON.stringify(list));
+    })();
+    </script>
+
 @endsection
