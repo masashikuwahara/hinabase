@@ -6,7 +6,7 @@
 @push('head_meta')
     <meta property="og:type" content="profile">
     <meta property="profile:username" content="{{ $member->name }}">
-    <script type="application/ld+json">
+    {{-- <script type="application/ld+json">
         {
             "@context": "https://schema.org",
             "@type": "Person",
@@ -21,7 +21,26 @@
             "sameAs": ["{{ $member->sns }}"]
             @endif
         }
-    </script>
+    </script> --}}
+    @php
+    $person = [
+        '@context' => 'https://schema.org',
+        '@type'    => 'Person',
+        'name'     => $member->name,
+        'alternateName' => $member->furigana,
+        'url'      => url()->current(),
+        'image'    => asset('storage/'.$member->image),
+        'memberOf' => ['@type' => 'MusicGroup', 'name' => '日向坂46'],
+        'height'   => ['@type'=>'QuantitativeValue','value'=>(int)$member->height,'unitText'=>'cm'],
+    ];
+
+    if (!empty($member->birthday)) {
+        $person['birthDate'] = \Carbon\Carbon::parse($member->birthday)->toDateString(); // ISO 8601
+    }
+    if (!empty($member->sns)) {
+        $person['sameAs'] = [$member->sns];
+    }
+    @endphp
     <script type="application/ld+json">
         {
             "@context": "https://schema.org",
