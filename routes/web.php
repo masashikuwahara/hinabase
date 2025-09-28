@@ -21,17 +21,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 //メンバー、楽曲一覧
-Route::get('/songs', [SongController::class, 'index'])->name('songs.index'); // 楽曲一覧
-Route::get('/songs/{id}', [SongController::class, 'show'])->name('songs.show'); // 楽曲詳細
-Route::get('/members', [MemberController::class, 'index'])->name('members.index'); // メンバー一覧
-Route::get('/members/{id}', [MemberController::class, 'show'])->name('members.show'); // プロフィール詳細
-Route::get('/search', [SearchController::class, 'search'])->name('search'); //検索結果ページへのルート
+Route::get('/songs', [SongController::class, 'index'])->name('songs.index');
+Route::get('/songs/{id}', [SongController::class, 'show'])->name('songs.show');
+Route::get('/members', [MemberController::class, 'index'])->name('members.index');
+Route::get('/members/{id}', [MemberController::class, 'show'])->name('members.show');
+Route::get('/search', [SearchController::class, 'search'])->name('search');
 Route::view('/others', 'others.index', [
     'links' => [
         ['title' => '日向坂46推しメンチェッカーです。', 'url' => 'https://x.gd/8sT9P'],
         ['title' => '日向坂46のペンライトカラーが検索できます。', 'url' => 'https://x.gd/0RLv3'],
         ['title' => '工事中', 'url' => ''],
-        ['title' => '櫻坂46のデータベースサイトです。', 'url' => 'https://x.gd/xqf5z'],
+        ['title' => '櫻坂46のデータベースサイトです。', 'url' => 'https://x.gd/edKLP'],
     ]
 ])->name('others.index');
 
