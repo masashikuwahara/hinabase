@@ -21,6 +21,6 @@ class HomeController extends Controller
         $logs = Changelog::ordered()->limit(20)->get();
 
         // ビューにデータを渡す
-        return view('index', compact('members', 'songs' ,'logs'));
+        return view('index', compact('members','songs' ,'logs' ,'topSongs' ,'topMembers'));
     }
 }
