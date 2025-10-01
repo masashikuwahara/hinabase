@@ -11,11 +11,10 @@ class PopularController extends Controller
 {
     public function index()
     {
-        // Top8（累積ビュー）を取得
         $items = Cache::remember('popular_top8', 600, function () {
             return Popularity::whereIn('type', ['member','song'])
                 ->orderByDesc('views')
-                ->limit(12)
+                ->limit(20)
                 ->get(['type','entity_id','updated_at']);
         });
 
@@ -26,7 +25,6 @@ class PopularController extends Controller
         $members = Member::whereIn('id', $memberIds)->get()->keyBy('id');
         $songs   = Song::whereIn('id', $songIds)->get()->keyBy('id');
 
-        // ビュー用の“カード”配列に整形
         $cards = $items->map(function ($pop) use ($members, $songs) {
             if ($pop->type === 'member') {
                 $m = $members[$pop->entity_id] ?? null;
