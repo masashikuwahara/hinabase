@@ -1,7 +1,6 @@
 @extends('layouts.main')
 
 @section('title', '日向坂46データベース | HINABASE - メンバー・楽曲のプロフィールとデータ')
-{{-- @section('title', '') --}}
 
 @section('content')
     <section class="text-center mt-8">
@@ -123,7 +122,7 @@
         </div>
     </div>
     <div class="mt-6 text-center">
-        <a href="{{ route('popular.index') }}" class="text-sm text-gray-600 hover:text-gray-800 underline">人気ページTOP12</a>
+        <a href="{{ route('popular.index') }}" class="text-sm text-gray-600 hover:text-gray-800 underline">人気ページTOP20</a>
     </div>
     <!-- 閲覧履歴の処理  -->
     <script>
@@ -159,5 +158,5 @@
     });
     })();
     </script>
-<!-- v.1.24.1 -->
+<!-- v.1.24.2 -->
 @endsection

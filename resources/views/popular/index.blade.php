@@ -1,16 +1,15 @@
 @extends('layouts.main')
 
-@section('title', 'HINABASE人気ページTOP12')
+@section('title', 'HINABASE人気ページTOP20')
 @push('head_meta')
-  <meta name="description" content="HINABASEで今人気のメンバー・楽曲ページTOP8。直近の閲覧データをもとにしたランキングを毎日更新。気になるプロフィールや楽曲情報にすぐアクセスできます。">
+  <meta name="description" content="HINABASEで今人気のメンバー・楽曲ページTOP20。直近の閲覧データをもとにしたランキングを毎日更新。気になるプロフィールや楽曲情報にすぐアクセスできます。">
   <link rel="canonical" href="{{ url()->current() }}">
 
-  {{-- CollectionPage + ItemList --}}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "name": "人気ページTOP8 | HINABASE",
+    "name": "人気ページTOP20 | HINABASE",
     "url": "{{ url()->current() }}",
     "isPartOf": { "@type": "WebSite", "name": "HINABASE", "url": "{{ url('/') }}" },
     "mainEntity": {
@@ -52,7 +51,7 @@
 
 @section('content')
 <div class="max-w-6xl mx-auto p-6">
-  <h1 class="text-2xl font-bold mb-4">人気ページ TOP12</h1>
+  <h1 class="text-2xl font-bold mb-4">人気ページ TOP20</h1>
 
   @if ($cards->isEmpty())
     <p>集計データがまだありません。</p>
@@ -69,7 +68,6 @@
                 loading="lazy"
                 width="128" height="128"
               />
-              {{-- 種別タグ（左上） --}}
               <span class="absolute -top-2 -left-2 bg-gray-100 text-gray-700 text-xs px-2 py-0.5 rounded">
                 {{ $card['tag'] }}
               </span>
