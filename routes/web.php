@@ -8,9 +8,10 @@ use App\Http\Controllers\Admin\ImageController as AdminImageController;
 use App\Http\Controllers\Admin\SongController as AdminSongController;
 use App\Http\Controllers\Admin\ChangelogController as AdminChangelogController;
 use App\Http\Controllers\Admin\SkillController;
+use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Admin\AccountController;
+use App\Http\Controllers\PopularController;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 use App\Models\Member;
@@ -22,9 +23,15 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 //メンバー、楽曲一覧
 Route::get('/songs', [SongController::class, 'index'])->name('songs.index');
-Route::get('/songs/{id}', [SongController::class, 'show'])->name('songs.show');
+// Route::get('/songs/{id}', [SongController::class, 'show'])->name('songs.show');
+Route::get('/songs/{song}', [SongController::class, 'show'])
+    ->name('songs.show')
+    ->middleware('count.popularity');
 Route::get('/members', [MemberController::class, 'index'])->name('members.index');
-Route::get('/members/{id}', [MemberController::class, 'show'])->name('members.show');
+// Route::get('/members/{id}', [MemberController::class, 'show'])->name('members.show');
+Route::get('/members/{member}', [MemberController::class, 'show'])
+    ->name('members.show')
+    ->middleware('count.popularity');
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 Route::view('/others', 'others.index', [
     'links' => [
@@ -34,6 +41,8 @@ Route::view('/others', 'others.index', [
         ['title' => '櫻坂46のデータベースサイトです。', 'url' => 'https://x.gd/edKLP'],
     ]
 ])->name('others.index');
+
+Route::get('/popular', [PopularController::class, 'index'])->name('popular.index');
 
 //認証関係
 Route::get('/dashboard', function () {
