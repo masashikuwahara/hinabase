@@ -3,7 +3,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use App\Models\PagePopularity;
+use App\Models\Popularity;
 use App\Models\Member;
 use App\Models\Song;
 
@@ -19,16 +19,16 @@ class CountPopularity
         if ($name === 'members.show') {
             $param = $request->route('member');
             $id = $param instanceof Member ? $param->getKey() : (int) $param;
-            $record = PagePopularity::firstOrCreate(
+            $record = Popularity::firstOrCreate(
                 ['type' => 'member', 'entity_id' => $id],
-                ['views' => 0]                 // ← 初回行を必ず作る
+                ['views' => 0]
             );
-            $record->increment('views');      // ← 存在が保証された上で+1
+            $record->increment('views');
 
         } else {
             $param = $request->route('song');
             $id = $param instanceof Song ? $param->getKey() : (int) $param;
-            $record = PagePopularity::firstOrCreate(
+            $record = Popularity::firstOrCreate(
                 ['type' => 'song', 'entity_id' => $id],
                 ['views' => 0]
             );

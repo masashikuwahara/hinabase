@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
-    // 必要に応じて入れる（最小構成なら空でもOK）
     protected $middleware = [
         // ...
     ];
