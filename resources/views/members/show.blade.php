@@ -149,12 +149,32 @@
         </section>
 
         <!-- ここにブログ -->
+        @if ($member->blog_url === "")
         <section class="flex flex-col md:flex-row items-start mt-8 bg-white p-6 shadow-md rounded-lg">
             <h2 class="text-xl font-bold mb-4 md:mb-0 md:mr-4 md:flex-none">公式ブログ</h2>
             <div class="mt-2 text-blue-700 font-semibold hover:text-indigo-600 md:mt-0 md:flex-1">
                 {!! $blogHtml !!}
             </div>
         </section>
+        @else
+        <section class="flex flex-col md:flex-row items-start mt-8 bg-white p-6 shadow-md rounded-lg">
+            <h2 class="text-xl font-bold mb-4 md:mb-0 md:mr-4 md:flex-none">公式ブログ</h2>
+            <div class="mt-2 text-blue-700 font-semibold hover:text-indigo-600 md:mt-0 md:flex-1">
+                {!! $blogHtml !!}
+            </div>
+        </section>
+        @endif
+
+        <!-- 個人PV-->
+        @if (!$member->promotion_video)
+        @else
+        <section class="bg-white p-6 shadow-md rounded-lg mt-6">
+            <h3 class="text-xl font-bold text-gray-800">個人PV</h3>
+            <div class="mt-4 aspect-w-16 aspect-h-9 youtube-ratio">
+                {!! $member->promotion_video !!}
+            </div>
+        </section>
+        @endif
 
         <!-- 表示切り替えボタン -->
         <div class="mt-6 space-x-4">
