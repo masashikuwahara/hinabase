@@ -70,6 +70,10 @@
             <input type="text" name="colorname2" value="{{ old('colorname2', $member->colorname2) }}" class="w-full border rounded p-2">
         </div>
         <div class="mb-4">
+            <label class="block font-bold mb-1">個人PV</label>
+            <textarea name="promotion_video" class="w-full border rounded p-2">{{ old('promotion_video', $member->promotion_video) }}</textarea>
+        </div>
+        <div class="mb-4">
             <label class="block font-bold mb-1">SNS</label>
             <input type="text" name="sns" value="{{ old('sns', $member->sns) }}" class="w-full border rounded p-2">
         </div>
