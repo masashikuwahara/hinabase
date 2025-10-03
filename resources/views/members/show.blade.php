@@ -2,60 +2,52 @@
 
 @section('title', $member->name . ' のプロフィール')
 @section('meta_description', Str::limit(strip_tags($member->bio ?? $member->name.'のプロフィール'), 120))
-@section('og_image', $song->photo ?? 'https://kasumizaka46.com/storage/images/logo.png')
-@push('head_meta')
-    <meta property="og:type" content="profile">
-    <meta property="profile:username" content="{{ $member->name }}">
-    {{-- <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Person",
-            "name": "{{ $member->name }}",
-            "alternateName": "{{ $member->furigana }}",
-            "url": "{{ url()->current() }}",
-            "image": "{{ asset('storage/' . $member->image) }}",
-            "birthDate": "{{ optional(\Carbon\Carbon::parse($member->birthday))->toDateString() }}",
-            "height": { "@type": "QuantitativeValue", "value": {{ (int) $member->height }}, "unitText": "cm" },
-            "memberOf": { "@type": "MusicGroup", "name": "日向坂46" }
-            @if ($member->sns),
-            "sameAs": ["{{ $member->sns }}"]
-            @endif
-        }
-    </script> --}}
-    @php
-    $person = [
-        '@context' => 'https://schema.org',
-        '@type'    => 'Person',
-        'name'     => $member->name,
-        'alternateName' => $member->furigana,
-        'url'      => url()->current(),
-        'image'    => asset('storage/'.$member->image),
-        'memberOf' => ['@type' => 'MusicGroup', 'name' => '日向坂46'],
-        'height'   => ['@type'=>'QuantitativeValue','value'=>(int)$member->height,'unitText'=>'cm'],
-    ];
 
+@push('head_meta')
+  @section('og_title', $member->name . ' | HINABASE')
+  @section('og_description', Str::limit(strip_tags($member->bio ?? ($member->name.'のプロフィール')), 120))
+  @section('og_image', $member->image_url ?? asset('storage/' . $member->image) ?? 'https://kasumizaka46.com/storage/images/logo.png')
+  <meta property="og:type" content="profile">
+  <meta property="profile:username" content="{{ $member->name }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  @php
+    $person = [
+      '@context' => 'https://schema.org',
+      '@type'    => 'Person',
+      'name'     => $member->name,
+      'alternateName' => $member->furigana,
+      'url'      => url()->current(),
+      'image'    => asset('storage/'.$member->image),
+      'memberOf' => ['@type' => 'MusicGroup', 'name' => '日向坂46'],
+      'height'   => ['@type'=>'QuantitativeValue','value'=>(int)$member->height,'unitText'=>'cm'],
+    ];
     if (!empty($member->birthday)) {
-        $person['birthDate'] = \Carbon\Carbon::parse($member->birthday)->toDateString(); // ISO 8601
+      $person['birthDate'] = \Carbon\Carbon::parse($member->birthday)->toDateString(); // ISO 8601
     }
     if (!empty($member->sns)) {
-        $person['sameAs'] = [$member->sns];
+      $person['sameAs'] = [$member->sns];
     }
-    @endphp
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            "name": "{{ $member->name }} - 日向坂46プロフィール | 日向坂46データベース | HINABASE",
-            "url": "{{ url()->current() }}",
-            "mainEntity": {
-            "@type": "Person",
-            "name": "{{ $member->name }}",
-            "url": "{{ url()->current() }}"
-            },
-            "isPartOf": { "@type": "WebSite", "name": "HINABASE", "url": "{{ url('/') }}" }
-        }
-    </script>
+  @endphp
+  <script type="application/ld+json">{!! json_encode($person, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) !!}</script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "{{ $member->name }} - 日向坂46プロフィール | 日向坂46データベース | HINABASE",
+    "url": "{{ url()->current() }}",
+    "mainEntity": {
+      "@type": "Person",
+      "name": "{{ $member->name }}",
+      "url": "{{ url()->current() }}"
+    },
+    "isPartOf": { "@type": "WebSite", "name": "HINABASE", "url": "{{ url('/') }}" }
+  }
+  </script>
 @endpush
+
 @section('og_title', $member->name . ' | HINABASE')
 @section('og_description', Str::limit(strip_tags($member->bio ?? ($member->name.'のプロフィール')), 120))
 @section('og_image', asset('storage/' . $member->image))
@@ -148,33 +140,53 @@
             </div>
         </section>
 
-        <!-- ここにブログ -->
-        @if ($member->blog_url === "")
-        <section class="flex flex-col md:flex-row items-start mt-8 bg-white p-6 shadow-md rounded-lg">
-            <h2 class="text-xl font-bold mb-4 md:mb-0 md:mr-4 md:flex-none">公式ブログ</h2>
-            <div class="mt-2 text-blue-700 font-semibold hover:text-indigo-600 md:mt-0 md:flex-1">
-                {!! $blogHtml !!}
-            </div>
-        </section>
+        {{-- 公式ブログ --}}
+        @if (!empty($member->blog_url))
+            <section class="flex flex-col md:flex-row items-start mt-8 bg-white p-6 shadow-md rounded-lg">
+                <h2 class="text-xl font-bold mb-4 md:mb-0 md:mr-4 md:flex-none">公式ブログ</h2>
+                <div class="mt-2 text-blue-700 font-semibold hover:text-indigo-600 md:mt-0 md:flex-1">
+                    {!! $blogHtml !!}
+                </div>
+            </section>
         @else
-        <section class="flex flex-col md:flex-row items-start mt-8 bg-white p-6 shadow-md rounded-lg">
-            <h2 class="text-xl font-bold mb-4 md:mb-0 md:mr-4 md:flex-none">公式ブログ</h2>
-            <div class="mt-2 text-blue-700 font-semibold hover:text-indigo-600 md:mt-0 md:flex-1">
-                {!! $blogHtml !!}
-            </div>
-        </section>
+            <section class="flex flex-col md:flex-row items-start mt-8 bg-white p-6 shadow-md rounded-lg">
+                <h2 class="text-xl font-bold mb-4 md:mb-0 md:mr-4 md:flex-none">公式ブログ</h2>
+                <div class="mt-2 text-blue-700 font-semibold hover:text-indigo-600 md:mt-0 md:flex-1">
+                    {!! $blogHtml !!}
+                </div>
+            </section>
         @endif
 
-        <!-- 個人PV-->
-        @if (!$member->promotion_video)
-        @else
-        <section class="bg-white p-6 shadow-md rounded-lg mt-6">
-            <h3 class="text-xl font-bold text-gray-800">個人PV</h3>
-            <div class="mt-4 aspect-w-16 aspect-h-9 youtube-ratio">
+        {{-- 個人PV --}}
+        @if (!empty($member->promotion_video))
+            <section class="bg-white p-6 shadow-md rounded-lg mt-6">
+                <h3 class="text-xl font-bold text-gray-800">個人PV</h3>
+                <div class="mt-4 youtube-ratio">
                 {!! $member->promotion_video !!}
-            </div>
-        </section>
+                </div>
+            </section>
         @endif
+            @push('head_meta')
+                @php
+                $videoLd = [
+                    '@context'     => 'https://schema.org',
+                    '@type'        => 'VideoObject',
+                    'name'         => $member->name . ' 個人PV（予告編）',
+                    'description'  => $member->name . 'の個人PV（YouTube公式）',
+                    'uploadDate'   => now()->toIso8601String(),
+                    'thumbnailUrl' => [$member->image_url ?? asset('storage/'.$member->image)],
+                    'embedUrl'     => null,
+                ];
+                if (preg_match('/src="([^"]+)"/', $member->promotion_video, $m)) {
+                    $videoLd['embedUrl'] = $m[1];
+                } else {
+                    unset($videoLd['embedUrl']);
+                }
+                @endphp
+                <script type="application/ld+json">
+                {!! json_encode($videoLd, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) !!}
+                </script>
+            @endpush
 
         <!-- 表示切り替えボタン -->
         <div class="mt-6 space-x-4">
