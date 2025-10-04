@@ -44,6 +44,8 @@ Route::view('/others', 'others.index', [
 
 Route::get('/popular', [PopularController::class, 'index'])->name('popular.index');
 
+Route::get('/youtube/ranking', [\App\Http\Controllers\YoutubeRankingController::class, 'index'])->name('youtube.ranking');
+
 //認証関係
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
