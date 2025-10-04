@@ -121,9 +121,7 @@
             @endforelse
         </div>
     </div>
-    <div class="mt-6 text-center">
-        <a href="{{ route('popular.index') }}" class="text-sm text-gray-600 hover:text-gray-800 underline">人気ページTOP20</a>
-    </div>
+    
     <!-- 閲覧履歴の処理  -->
     <script>
     (() => {
@@ -158,5 +156,5 @@
     });
     })();
     </script>
-<!-- v.1.25.0 -->
+<!-- v.1.26.0 -->
 @endsection

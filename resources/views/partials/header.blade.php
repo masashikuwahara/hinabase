@@ -22,12 +22,14 @@
     class="fixed inset-0 bg-white text-black flex flex-col items-center justify-center space-y-6 z-40"
   >
     <!-- ✕ボタン -->
-    <button 
-      @click="open = false" 
-      class="absolute top-4 right-4 text-3xl font-bold text-gray-700 hover:text-black focus:outline-none"
+    <button
+      @click="open = false"
+      class="absolute top-4 right-4 p-2 rounded hover:bg-gray-100 focus:outline-none"
       aria-label="Close menu"
     >
-      &times;
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-8 h-8">
+        <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
     </button>
 
     <!-- メニュー項目 -->
@@ -50,3 +52,13 @@
     </ul>
   </nav>
 </header>
+<div class="bg-[#a78bfa] text-white py-0 w-full text-center">
+  <a href="{{ route('youtube.ranking') }}" class="hover:text-blue-800 font-semibold">
+    日向坂ちゃんねる集計試験運用開始しました
+  </a>
+</div>
+<div class="bg-[#4ade80] text-white py-0 w-full text-center">
+  <a href="{{ route('popular.index') }}" class="hover:text-blue-800 font-semibold">
+    人気ページTOP20試験運用開始しました
+  </a>
+</div>

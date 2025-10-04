@@ -52,6 +52,7 @@
 @section('content')
 <div class="max-w-6xl mx-auto p-6">
   <h1 class="text-2xl font-bold mb-4">人気ページ TOP20</h1>
+  <p class="mb-4">ランキングは10分ごとに更新されます</p>
 
   @if ($cards->isEmpty())
     <p>集計データがまだありません。</p>
