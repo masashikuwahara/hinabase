@@ -4,7 +4,7 @@
 @section('meta_description', Str::limit(strip_tags($member->bio ?? $member->name.'のプロフィール'), 120))
 
 @push('head_meta')
-  @section('og_title', $member->name . ' | HINABASE')
+  @section('og_title', $member->name . ' | SAKURAAC')
   @section('og_description', Str::limit(strip_tags($member->bio ?? ($member->name.'のプロフィール')), 120))
   @section('og_image', $member->image_url ?? asset('storage/' . $member->image) ?? 'https://kasumizaka46.com/storage/images/logo.png')
   <meta property="og:type" content="profile">
@@ -20,7 +20,7 @@
       'alternateName' => $member->furigana,
       'url'      => url()->current(),
       'image'    => asset('storage/'.$member->image),
-      'memberOf' => ['@type' => 'MusicGroup', 'name' => '日向坂46'],
+      'memberOf' => ['@type' => 'MusicGroup', 'name' => '櫻坂46'],
       'height'   => ['@type'=>'QuantitativeValue','value'=>(int)$member->height,'unitText'=>'cm'],
     ];
     if (!empty($member->birthday)) {
@@ -36,19 +36,19 @@
   {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "{{ $member->name }} - 日向坂46プロフィール | 日向坂46データベース | HINABASE",
+    "name": "{{ $member->name }} - 櫻坂46プロフィール | 櫻坂46データベース | SAKURAAC",
     "url": "{{ url()->current() }}",
     "mainEntity": {
       "@type": "Person",
       "name": "{{ $member->name }}",
       "url": "{{ url()->current() }}"
     },
-    "isPartOf": { "@type": "WebSite", "name": "HINABASE", "url": "{{ url('/') }}" }
+    "isPartOf": { "@type": "WebSite", "name": "SAKURAAC", "url": "{{ url('/') }}" }
   }
   </script>
 @endpush
 
-@section('og_title', $member->name . ' | HINABASE')
+@section('og_title', $member->name . ' | SAKURAAC')
 @section('og_description', Str::limit(strip_tags($member->bio ?? ($member->name.'のプロフィール')), 120))
 @section('og_image', asset('storage/' . $member->image))
 @push('head_meta')
@@ -82,14 +82,14 @@
 @endpush
     <!-- メンバー詳細 -->
     <main class="container mx-auto mt-8 px-4">
-        <h1 class="text-3xl font-bold text-center">{{ $member->name }}</h1>
+        <h1 class="text-[2rem] text-[#c84e74] text-center mb-2 border-b-2 border-[#f19db5] pb-[0.3rem] font-bold">{{ $member->name }}</h1>
         <p class="text-xl text-center mt-2">{{ $member->furigana }}</p>
         
-        <section class="flex flex-col md:flex-row items-center mt-8 bg-white p-6 shadow-md rounded-lg">
+        <section class="flex flex-col md:flex-row items-center mt-8 bg-[#fcf3f6] p-6 shadow-md">
             <div class="flex-shrink-0">
-                <img src="{{ asset('storage/' . $member->image) }}" 
-                     alt="{{ $member->name }} （日向坂46）" 
-                     class="w-56 h-72 object-cover rounded-lg shadow-md"
+                <img src="{{ asset('storage/images/' . $member->image) }}" 
+                     alt="{{ $member->name }} （櫻坂46）" 
+                     class="w-56 h-72 object-cover shadow-md"
                      loading="lazy"
                      width="384" height="512"
                      />
@@ -100,10 +100,10 @@
                 <h2 class="text-xl font-semibold">プロフィール</h2>
                 <ul class="mt-2 text-gray-800">
                     <li><strong>ニックネーム:</strong> {{ $member->nickname }}</li>
-                    <li><strong>生年月日:</strong> {{ \Carbon\Carbon::parse($member->birthday)->format('Y年m月d日') }}</li>
+                    <li><strong>生年月日:</strong> {{ \Carbon\Carbon::parse($member->birth)->format('Y年m月d日') }}</li>
                     <li><strong>星座:</strong> {{ $member->constellation }}</li>
                     <li><strong>身長:</strong> {{ $member->height }}cm</li>
-                    <li><strong>血液型:</strong> {{ $member->blood_type }}</li>
+                    <li><strong>血液型:</strong> {{ $member->blood }}</li>
                     <li><strong>出身地:</strong> {{ $member->birthplace }}</li>
                     <li><strong>加入:</strong> {{ $member->grade }}</li>
                     <li><strong>参加楽曲数:</strong> {{ $songCount }}</li>
@@ -111,10 +111,10 @@
                     <li><strong>センター曲数:</strong> {{ $centerCount }}</li>
                     <li><strong class="mr-2">ペンライトカラー:</strong>
                         <div class="inline-flex items-center space-x-4 mt-2">
-                            <div class="rounded px-2 py-1 text-black font-bold text-shadow" style="background-color: {{ $member->color1 }}">
+                            <div class="px-2 py-1 text-black font-bold text-shadow" style="background-color: {{ $member->color1 }}">
                                 {{ $member->colorname1 }}
                             </div>
-                            <div class="rounded px-2 py-1 text-black font-bold text-shadow" style="background-color: {{ $member->color2 }}">
+                            <div class="px-2 py-1 text-black font-bold text-shadow" style="background-color: {{ $member->color2 }}">
                                 {{ $member->colorname2 }}
                             </div>
                         </div>
@@ -134,22 +134,15 @@
             </div>
             
             <!-- レーダーチャート -->
-            <div class="md:ml-8 w-72 h-72">
+            <!-- <div class="md:ml-8 w-72 h-72">
                 <canvas id="radarChart"></canvas>
                 注：ぶりっ子は㋳も含む
-            </div>
+            </div> -->
         </section>
 
         {{-- 公式ブログ --}}
         @if (!empty($member->blog_url))
-            <section class="flex flex-col md:flex-row items-start mt-8 bg-white p-6 shadow-md rounded-lg">
-                <h2 class="text-xl font-bold mb-4 md:mb-0 md:mr-4 md:flex-none">公式ブログ</h2>
-                <div class="mt-2 text-blue-700 font-semibold hover:text-indigo-600 md:mt-0 md:flex-1">
-                    {!! $blogHtml !!}
-                </div>
-            </section>
-        @else
-            <section class="flex flex-col md:flex-row items-start mt-8 bg-white p-6 shadow-md rounded-lg">
+            <section class="flex flex-col md:flex-row items-start mt-8 bg-[#fcf3f6] p-6 shadow-md">
                 <h2 class="text-xl font-bold mb-4 md:mb-0 md:mr-4 md:flex-none">公式ブログ</h2>
                 <div class="mt-2 text-blue-700 font-semibold hover:text-indigo-600 md:mt-0 md:flex-1">
                     {!! $blogHtml !!}
@@ -159,7 +152,7 @@
 
         {{-- 個人PV --}}
         @if (!empty($member->promotion_video))
-            <section class="bg-white p-6 shadow-md rounded-lg mt-6">
+            <section class="bg-[#fcf3f6] p-6 shadow-md mt-6">
                 <h3 class="text-xl font-bold text-gray-800">個人PV</h3>
                 <div class="mt-4 youtube-ratio">
                 {!! $member->promotion_video !!}
@@ -192,12 +185,12 @@
         <div class="mt-6 space-x-4">
             <button 
                 onclick="showAllSongs()" 
-                class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-700 transition">
+                class="bg-green-500 text-white py-2 px-4 hover:bg-green-700 transition">
                 すべて表示
             </button>
             <button 
                 onclick="showCenterOnly()" 
-                class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 transition">
+                class="bg-emerald-500 text-white py-2 px-4 hover:bg-emerald-700 transition">
                 センター曲のみ表示
             </button>
         </div>
@@ -211,7 +204,7 @@
                 <ul id="songList" class="mt-4 space-y-2">
                     @foreach ($member->songs as $song)
                         <li 
-                            class="bg-white p-4 shadow-md rounded-lg"
+                            class="bg-[#fcf3f6] p-4 shadow-md"
                             data-center="{{ $song->pivot->is_center ? '1' : '0' }}"
                         >
                             <a href="{{ route('songs.show', $song->id) }}" 
@@ -228,21 +221,9 @@
         </section>
 
     </main>
-    {{-- トップに戻るボタン --}}
-    <button
-        id="backToTop"
-        class="opacity-0 pointer-events-none fixed bottom-6 right-6 bg-orange-400 text-white p-4 rounded-full shadow-lg transition-opacity duration-500 hover:bg-orange-700 z-50"
-        aria-label="トップに戻る"
-    >
-        {{-- 上向き矢印（Heroicons） --}}
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
-        </svg>
-    </button>
 
     <!-- Chart.js のスクリプト -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const ctx = document.getElementById('radarChart').getContext('2d');
@@ -271,24 +252,22 @@
                     }
                 });
             });
-    </script>
-    {{-- トップに戻る --}}
+    </script> --}}
+    {{-- トップに戻るボタン --}}
+    <button id="back-to-top" title="トップへ戻る">TOP</button>
     <script>
-        const backToTop = document.getElementById('backToTop');
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTop.classList.remove('opacity-0', 'pointer-events-none');
-                backToTop.classList.add('opacity-100');
-            } else {
-                backToTop.classList.remove('opacity-100');
-                backToTop.classList.add('opacity-0', 'pointer-events-none');
-            }
-        });
-
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
+    const button = document.getElementById("back-to-top");
+    window.addEventListener("scroll", function () {
+        if (window.pageYOffset > 300) {
+            button.classList.add("show");
+        } else {
+            button.classList.remove("show");
+        }
+    });
+    
+    button.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
     </script>
 
     {{-- 表示を制御 --}}
@@ -312,6 +291,24 @@
 
     {{-- 閲覧記録 --}}
     <script>
+        (function () {
+        const KEY = 'recentlyViewed';
+        const list = JSON.parse(localStorage.getItem(KEY) || '[]');
+
+        const item = {
+            type: 'member',
+            url: '{{ route('members.show', $member->id) }}',
+            title: @json($member->name),
+            image: @json(asset('storage/images/' . ltrim($member->image, '/'))),
+        };
+
+        const filtered = list.filter(x => x.url !== item.url);
+        filtered.unshift(item);
+        localStorage.setItem(KEY, JSON.stringify(filtered.slice(0, 12)));
+        })();
+    </script>
+
+    {{-- <script>
     (() => {
     const item = {
         type: 'member',
@@ -328,15 +325,13 @@
     const raw = localStorage.getItem(KEY);
     let list = raw ? JSON.parse(raw) : [];
 
-    // 重複削除 → 先頭追加
     list = list.filter(x => !(x.type === item.type && x.id === item.id));
     list.unshift(item);
 
-    // 上限
     if (list.length > MAX) list = list.slice(0, MAX);
 
     localStorage.setItem(KEY, JSON.stringify(list));
     })();
-    </script>
+    </script> --}}
 
 @endsection

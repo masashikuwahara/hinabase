@@ -12,15 +12,16 @@ class SongController extends Controller
     {
         $others = Song::where('titlesong', 0)->get();
         $singles = Song::where('titlesong', 1)->get();
-        return view('songs.index', compact('others', 'singles'));
+        $albums = Song::where('titlesong', 3)->get();
+        return view('songs.index', compact('others', 'singles', 'albums'));
     }
 
     // 楽曲詳細ページ
     public function show($id)
     {
-        $song = Song::with('members')->findOrFail($id); // 楽曲の参加メンバーを取得
+        $song = Song::with('members')->findOrFail($id);
         $recordedSongs = Song::where('is_recorded', $song->is_recorded)
-        ->where('id', '!=', $song->id) // 自分自身は除外
+        ->where('id', '!=', $song->id)
         ->get();
         return view('songs.show', compact('song', 'recordedSongs'));
     }
