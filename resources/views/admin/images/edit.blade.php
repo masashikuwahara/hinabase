@@ -15,7 +15,7 @@
         </div>
         現在登録されている画像
         @if ($member->image)
-            <img src="{{ asset('storage/' . $member->image) }}" alt="顔写真" class="w-32 h-32 object-cover rounded">
+            <img src="{{ asset('storage/images/' . $member->image) }}" alt="顔写真" class="w-32 h-32 object-cover rounded">
         @endif
         <button type="submit" class="bg-blue-600 text-white mt-2 px-4 py-2 rounded hover:bg-blue-700">更新</button>
     </form>

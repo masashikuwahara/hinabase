@@ -38,7 +38,7 @@
                 <input type="password" name="password_confirmation" class="w-full border rounded p-2">
             </div>
 
-            <button class="bg-[#7cc7e8] hover:bg-[#5aa6c4] text-white px-4 py-2 rounded">更新</button>
+            <button class="bg-[#f19db5] hover:bg-[#e488a6] text-white px-4 py-2 rounded">更新</button>
         </form>
     </section>
 
@@ -63,7 +63,7 @@
                 @error('current_password') <p class="text-sm text-red-600 mt-1">{{ $message }}</p> @enderror
             </div>
 
-            <button class="bg-[#7cc7e8] hover:bg-[#5aa6c4] text-white px-4 py-2 rounded">更新</button>
+            <button class="bg-[#f19db5] hover:bg-[#e488a6] text-white px-4 py-2 rounded">更新</button>
         </form>
     </section>
 </div>
