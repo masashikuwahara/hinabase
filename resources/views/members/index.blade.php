@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
-@section('title', '櫻坂46メンバー一覧')
-@section('meta_description', '櫻坂46のメンバー一覧。プロフィール、あだ名、生年月日、身長、血液型、参加楽曲などのリンクを整理。期別の在籍メンバーと卒業メンバーを確認できます。')
+@section('title', '日向坂46メンバー一覧')
+@section('meta_description', '日向坂46のメンバー一覧。プロフィール、あだ名、生年月日、身長、血液型、参加楽曲などのリンクを整理。期別の在籍メンバーと卒業メンバーを確認できます。')
 
 @push('head_meta')
   @if(request('sort') || request('order'))
@@ -26,7 +26,7 @@
     {
         "@context":"https://schema.org",
         "@type":"CollectionPage",
-        "name":"櫻坂46メンバー一覧 | 櫻坂46データベース | HINABASE",
+        "name":"日向坂46メンバー一覧 | 日向坂46データベース | HINABASE",
         "url":"{{ request()->fullUrl() }}",
         "isPartOf":{"@type":"WebSite","name":"HINABASE","url":"{{ url('/') }}"},
         "mainEntity":{
@@ -85,13 +85,13 @@
     </nav>
     <main class="container mx-auto mt-8 px-4">
         {{-- 現在の状態を表示 --}}
-        <h1 class="text-2xl font-semibold">櫻坂46メンバー一覧</h1>
+        <h1 class="text-2xl font-semibold">日向坂46メンバー一覧</h1>
         @php
         $labels = [
             'default'    => 'デフォルト',
             'furigana'   => '50音順',
-            'blood' => '血液型順',
-            'birth'   => '誕生日順',
+            'blood_type' => '血液型順',
+            'birthday'   => '誕生日順',
             'height'     => '身長順',
         ];
         @endphp
@@ -100,84 +100,73 @@
     
         {{-- 切り替えボタン --}}
         <div x-data="{ open:false }" x-cloak class="relative md:static">
+            {{-- モバイル表示時のプルダウンボタン --}}
+            <button @click="open = !open" class="md:hidden px-4 py-2 bg-gray-500 text-white rounded-lg shadow-md hover:bg-gray-600">
+                並び替え
+            </button>
         
             {{-- PC表示時のボタン（モバイルでは非表示） --}}
             <div class="hidden md:flex justify-center space-x-4 mt-4">
-                <a href="{{ route('members.index') }}" class="px-4 py-2 bg-[#f19db5] text-white shadow-md hover:bg-[#e488a6]">
+                <a href="{{ route('members.index') }}" class="px-4 py-2 bg-gray-500 text-white rounded-lg shadow-md hover:bg-gray-600">
                     デフォルトに戻す
                 </a>
                 <a href="{{ route('members.index', ['sort' => 'furigana', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
-                    class="px-4 py-2 bg-[#f19db5] text-white shadow-md hover:bg-[#e488a6]">
+                    class="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600">
                     50音順
                 </a>
-                <a href="{{ route('members.index', ['sort' => 'blood', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
-                    class="px-4 py-2 bg-[#f19db5] text-white shadow-md hover:bg-[#e488a6]">
+                <a href="{{ route('members.index', ['sort' => 'blood_type', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                    class="px-4 py-2 bg-red-500 text-white rounded-lg shadow-md hover:bg-red-600">
                     血液型順
                 </a>
-                <a href="{{ route('members.index', ['sort' => 'birth', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
-                    class="px-4 py-2 bg-[#f19db5] text-white shadow-md hover:bg-[#e488a6]">
+                <a href="{{ route('members.index', ['sort' => 'birthday', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                    class="px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600">
                     誕生日順
                 </a>
                 <a href="{{ route('members.index', ['sort' => 'height', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
-                    class="px-4 py-2 bg-[#f19db5] text-white shadow-md hover:bg-[#e488a6]">
+                    class="px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-md hover:bg-yellow-600">
                     身長順
                 </a>
-                <a href="{{ route('members.index', ['sort' => 'songs', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
-                    class="px-4 py-2 bg-[#f19db5] text-white shadow-md hover:bg-[#e488a6]">
-                    参加楽曲順
-                </a>
-                <a href="{{ route('members.index', ['sort' => 'titlesongs', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
-                    class="px-4 py-2 bg-[#f19db5] text-white shadow-md hover:bg-[#e488a6]">
-                    表題曲参加順
-                </a>
-                <a href="{{ route('members.index', ['sort' => 'center', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
-                    class="px-4 py-2 bg-[#f19db5] text-white shadow-md hover:bg-[#e488a6]">
-                    センター回数順
-                </a>
+                {{-- <a href="{{ route('members.index', ['sort' => 'birthplace', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                    class="px-4 py-2 bg-pink-500 text-white rounded-lg shadow-md hover:bg-pink-600">
+                    出身地順
+                </a> --}}
             </div>
         
             {{-- モバイル表示時のプルダウンメニュー（初期状態では非表示） --}}
-            <div x-data="{ open:false }" class="md:hidden">
-            <!-- アコーディオンのヘッダー -->
-            <div x-data="{ open:false }" class="md:hidden">
-            <button @click="open=!open" class="w-full flex items-center justify-between bg-[#f19db5] text-white px-4 py-3">
-                <span class="text-sm font-medium">ソートメニュー</span>
-                <svg class="h-5 w-5 transition-transform" :class="open ? 'rotate-180' : ''}" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.24a.75.75 0 01-1.06 0L5.21 8.29a.75.75 0 01.02-1.08z" clip-rule="evenodd"/></svg>
-            </button>
-
-            <div
-                x-ref="panel"
-                x-bind:style="open ? 'max-height:' + $refs.panel.scrollHeight + 'px' : 'max-height:0px'"
-                class="overflow-hidden transition-all duration-300 mt-2 shadow-lg bg-[#f19db5]"
-            >
+            <div x-show="open" 
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 transform scale-y-95"
+            x-transition:enter-end="opacity-100 transform scale-y-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 transform scale-y-100"
+            x-transition:leave-end="opacity-0 transform scale-y-95"
+            class="absolute left-0 mt-2 w-full rounded-md shadow-lg bg-blue-100 z-10 md:hidden">
                 <div class="py-1">
-                <a href="{{ route('members.index') }}"
-                    class="block px-4 py-2 text-sm text-white hover:bg-gray-100">デフォルトに戻す</a>
-
-                <a href="{{ route('members.index', ['sort' => 'furigana', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}"
-                    class="block px-4 py-2 text-sm text-white hover:bg-gray-100">50音順</a>
-
-                <a href="{{ route('members.index', ['sort' => 'blood', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}"
-                    class="block px-4 py-2 text-sm text-white hover:bg-gray-100">血液型順</a>
-
-                <a href="{{ route('members.index', ['sort' => 'birthday', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}"
-                    class="block px-4 py-2 text-sm text-white hover:bg-gray-100">誕生日順</a>
-
-                <a href="{{ route('members.index', ['sort' => 'height', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}"
-                    class="block px-4 py-2 text-sm text-white hover:bg-gray-100">身長順</a>
-
-                <a href="{{ route('members.index', ['sort' => 'songs', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
-                    class="block px-4 py-2 text-sm text-white hover:bg-gray-100">参加楽曲順</a>
-
-                <a href="{{ route('members.index', ['sort' => 'titlesongs', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
-                    class="block px-4 py-2 text-sm text-white hover:bg-gray-100">表題曲参加順</a>
-                    
-                <a href="{{ route('members.index', ['sort' => 'center', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
-                    class="block px-4 py-2 text-sm text-white hover:bg-gray-100">センター回数順</a>
+                    <a href="{{ route('members.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        デフォルトに戻す
+                    </a>
+                    <a href="{{ route('members.index', ['sort' => 'furigana', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        50音順
+                    </a>
+                    <a href="{{ route('members.index', ['sort' => 'blood_type', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        血液型順
+                    </a>
+                    <a href="{{ route('members.index', ['sort' => 'birthday', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        誕生日順
+                    </a>
+                    <a href="{{ route('members.index', ['sort' => 'height', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        身長順
+                    </a>
+                    {{-- <a href="{{ route('members.index', ['sort' => 'birthplace', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        出身地順
+                    </a> --}}
                 </div>
             </div>
-            </div>
-
         </div>
         <div class="text-center mt-6">
             <p class="text-sm">ボタンを繰り返し押すと昇順、降順を切り替えることができます</p>
@@ -196,11 +185,11 @@
                             <h3 class="text-lg font-semibold mt-4">{{ $grade }}</h3>
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
                                 @foreach ($members as $member)
-                                    <div class="bg-white shadow-md p-3 text-center hover:scale-105 transition-transform">
+                                    <div class="bg-white shadow-md rounded-lg text-center hover:scale-105 transition-transform">
                                         <a href="{{ route('members.show', $member->id) }}" class="block">
-                                            <img src="{{ asset('storage/images/' . ($member->image ?? 'default.jpg')) }}"
-                                                 alt="{{ $member->name }}（櫻坂46）"
-                                                 class="w-32 h-32 object-cover mx-auto"
+                                            <img src="{{ asset('storage/' . ($member->image ?? 'default.jpg')) }}"
+                                                 alt="{{ $member->name }}（日向坂46）"
+                                                 class="w-32 h-32 object-cover mx-auto rounded-full"
                                                  loading="lazy"
                                                  width="128" height="128"/>
                                             <span class="mt-2 font-semibold">{{ $member->name }}
@@ -217,6 +206,9 @@
                 @endif
             </section>
     
+            {{-- <div class="text-center text-blue-700 mt-8">
+                <a href="https://hinatazaka5th.netlify.app/" target="_blank" rel="noopener noreferrer" class="hover:underline">五期生推しメンチェッカー</a>
+            </div> --}}
             <!-- 卒業メンバー -->
             <section class="mt-8">
                 <h2 class="text-xl font-bold text-gray-800">卒業メンバー</h2>
@@ -228,11 +220,11 @@
                             <h3 class="text-lg font-semibold mt-4">{{ $grade }}</h3>
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
                                 @foreach ($members as $member)
-                                    <div class="bg-white shadow-md p-3 text-center hover:scale-105 transition-transform">
+                                    <div class="bg-white shadow-md rounded-lg text-center hover:scale-105 transition-transform">
                                         <a href="{{ route('members.show', $member->id) }}" class="block">
-                                            <img src="{{ asset('storage/images/' . ($member->image ?? 'default.jpg')) }}"
-                                                 alt="{{ $member->name }}（櫻坂46）"
-                                                 class="w-32 h-32 object-cover mx-auto"
+                                            <img src="{{ asset('storage/' . ($member->image ?? 'default.jpg')) }}"
+                                                 alt="{{ $member->name }}（日向坂46）"
+                                                 class="w-32 h-32 object-cover mx-auto rounded-full"
                                                  loading="lazy"
                                                  width="128" height="128"/>
                                             <span class="mt-2 font-semibold">{{ $member->name }}</span>
@@ -256,11 +248,11 @@
                 @else
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
                         @foreach ($currentMembers as $member)
-                            <div class="bg-white shadow-md p-3 text-center hover:scale-105 transition-transform">
+                            <div class="bg-white shadow-md rounded-lg text-center hover:scale-105 transition-transform">
                                 <a href="{{ route('members.show', $member->id) }}" class="block">
-                                    <img src="{{ asset('storage/images/' . ($member->image ?? 'default.jpg')) }}"
-                                         alt="{{ $member->name }}（櫻坂46）"
-                                         class="w-32 h-32 object-cover mx-auto"
+                                    <img src="{{ asset('storage/' . ($member->image ?? 'default.jpg')) }}"
+                                         alt="{{ $member->name }}（日向坂46）"
+                                         class="w-32 h-32 object-cover mx-auto rounded-full"
                                          loading="lazy"
                                          width="128" height="128"/>
                                     <p class="mt-2 font-semibold">{{ $member->name }}</p>
@@ -286,11 +278,11 @@
                 @else
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
                         @foreach ($graduatedMembers as $member)
-                            <div class="bg-white shadow-md p-3 text-center hover:scale-105 transition-transform">
+                            <div class="bg-white shadow-md rounded-lg text-center hover:scale-105 transition-transform">
                                 <a href="{{ route('members.show', $member->id) }}" class="block">
-                                    <img src="{{ asset('storage/images/' . ($member->image ?? 'default.jpg')) }}"
-                                        alt="{{ $member->name }}（櫻坂46）"
-                                        class="w-32 h-32 object-cover mx-auto"
+                                    <img src="{{ asset('storage/' . ($member->image ?? 'default.jpg')) }}"
+                                        alt="{{ $member->name }}（日向坂46）"
+                                        class="w-32 h-32 object-cover mx-auto rounded-full"
                                         loading="lazy"
                                         width="128" height="128"/>
                                     <p class="mt-2 font-semibold">{{ $member->name }}</p>
@@ -305,22 +297,34 @@
             </section>
         @endif
     </main>
-
     {{-- トップに戻るボタン --}}
-    <button id="back-to-top" title="トップへ戻る">TOP</button>
+    <button
+        id="backToTop"
+        class="opacity-0 pointer-events-none fixed bottom-6 right-6 bg-orange-400 text-white p-4 rounded-full shadow-lg transition-opacity duration-500 hover:bg-orange-700 z-50"
+        aria-label="トップに戻る"
+    >
+        {{-- 上向き矢印（Heroicons） --}}
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+            viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+        </svg>
+    </button>
     <script>
-    const button = document.getElementById("back-to-top");
-    window.addEventListener("scroll", function () {
-        if (window.pageYOffset > 300) {
-            button.classList.add("show");
-        } else {
-            button.classList.remove("show");
-        }
-    });
-    
-    button.addEventListener("click", function () {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+        const backToTop = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.remove('opacity-0', 'pointer-events-none');
+                backToTop.classList.add('opacity-100');
+            } else {
+                backToTop.classList.remove('opacity-100');
+                backToTop.classList.add('opacity-0', 'pointer-events-none');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
     </script>
 @endsection
 

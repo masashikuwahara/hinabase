@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
-@section('title', '櫻坂ちゃんねるランキング | 櫻坂46 | SAKURAAC')
-@section('meta_description', '櫻坂46関連のYouTubeランキング。再生数・高評価数で人気順に一覧表示。最新動画や統計グラフも掲載。')
+@section('title', '日向坂ちゃんねるランキング | 日向坂46 | HINABASE')
+@section('meta_description', '日向坂46関連のYouTubeランキング。再生数・高評価数で人気順に一覧表示。最新動画や統計グラフも掲載。')
 
 @push('head_meta')
 <link rel="canonical" href="{{ url()->current() }}">
@@ -10,7 +10,7 @@
 {
  "@context":"https://schema.org",
  "@type":"ItemList",
- "name":"櫻坂ちゃんねるランキング（再生数）",
+ "name":"日向坂ちゃんねるランキング（再生数）",
  "itemListElement":[
   @foreach($chart as $i => $row)
    { "@type":"ListItem", "position": {{ $i+1 }}, "name": "{{ $row['title'] }}" }@if(!$loop->last),@endif
@@ -25,12 +25,12 @@
   <ol class="flex space-x-2">
     <li><a href="{{ url('/') }}" class="hover:underline">ホーム</a></li>
     <li>›</li>
-    <li aria-current="page">櫻坂ちゃんねるランキング</li>
+    <li aria-current="page">日向坂ちゃんねるランキング</li>
   </ol>
 </nav>
 
 <main class="container mx-auto mt-6 px-4">
-  <h1 class="text-2xl font-bold">櫻坂ちゃんねるランキング</h1>
+  <h1 class="text-2xl font-bold">日向坂ちゃんねるランキング</h1>
   <p class="text-sm text-gray-600 mt-1">再生数の多い順に上位を表示</p>
   {{-- <p class="text-sm text-gray-600 mt-1">再生数の多い順に上位を表示 ※ 毎日4回自動更新</p> --}}
 
@@ -105,6 +105,7 @@
     class="opacity-0 pointer-events-none fixed bottom-6 right-6 bg-orange-400 text-white p-4 rounded-full shadow-lg transition-opacity duration-500 hover:bg-orange-700 z-50"
     aria-label="トップに戻る"
 >
+    {{-- 上向き矢印（Heroicons） --}}
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />

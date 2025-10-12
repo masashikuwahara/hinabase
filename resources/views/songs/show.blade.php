@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', $song->title . ' - 櫻坂46の楽曲情報')
+@section('title', $song->title . ' - 日向坂46の楽曲情報')
 @section('og_description', Str::limit(strip_tags($song->description ?? $song->title.'の情報'), 120))
 @section('og_image', $song->photo ?? 'https://kasumizaka46.com/storage/images/logo.png')
 @push('head_meta')
@@ -30,7 +30,7 @@
   "name":"{{ $song->title }}",
   "url":"{{ url()->current() }}",
   "image":"{{ asset('storage/' . ($song->photo ?? 'images/logo.png')) }}",
-  "byArtist":{"@type":"MusicGroup","name":"櫻坂46"},
+  "byArtist":{"@type":"MusicGroup","name":"日向坂46"},
   @if(!empty($song->album_title))
   "inAlbum":{"@type":"MusicAlbum","name":"{{ $song->album_title }}"},
   @endif
@@ -62,48 +62,9 @@
   "publisher":{"@type":"Organization","name":"Sony Music Labels"}
 }
 </script>
-<style>
-    .video-wrapper {
-        position: relative;
-        width: 100%;
-        padding-bottom: 56.25%; 
-        height: 0;
-        overflow: hidden;
-        margin: 0 auto;
-    }
-
-    .video-wrapper iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        border: 0;
-    }
-
-    @media screen and (min-width: 768px) {
-        .video-wrapper {
-            position: relative;
-            width: 80%;
-            padding-bottom: 45%;
-            height: 0;
-            overflow: hidden;
-            margin: 0 auto;
-        }
-
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-    }
-</style>
 @endpush
 
-@section('og_title', $song->title . ' | SAKURAAC')
+@section('og_title', $song->title . ' | HINABASE')
 @section('og_description', Str::limit(strip_tags($song->description ?? $song->title.'の情報'), 120))
 @section('og_image', $song->jacket_image_url ?? 'https://kasumizaka46.com/storage/images/logo.png')
 
@@ -119,34 +80,33 @@
 </nav>
     <!-- 楽曲詳細 -->
     <main class="container mx-auto mt-8 px-4">
-        <h1 class="text-[2rem] text-[#c84e74] mb-2 border-b-2 border-[#f19db5] pb-[0.3rem] font-bold">
-            {{ $song->title }}
-        </h1>
+        <h1 class="text-3xl font-bold">{{ $song->title }}</h1>
         
-        @if (!empty($song->members))
-            <section class="flex flex-col md:flex-row mt-8 bg-white p-6 shadow-md">
+        @if ($song->members->isEmpty())
+            <p class="mt-4 text-gray-700">この楽曲にはまだ参加メンバーが登録されていません。</p>
+            @else
+            <section class="flex flex-col md:flex-row mt-8 bg-white p-6 shadow-md rounded-lg">
                 <div class="flex-shrink-0">
-                    <img src="{{ asset('storage/photos/' . ($song->photo ?? 'default.jpg')) }}"
-                    alt="{{ $song->title }}（櫻坂46）"
-                    class="md:w-96 md:h-96 w-auto h-auto object-cover shadow-md"
+                    <img src="{{ asset('storage/' . ($song->photo ?? 'default.jpg')) }}"
+                    alt="{{ $song->title }}（日向坂46）"
+                    class="md:w-96 md:h-96 w-auto h-auto object-cover rounded-lg shadow-md"
                     loading="lazy" width="384" height="384">
                 </div>
                 
                 <div class="md:ml-8 mt-4 md:mt-0">
                     <h3 class="text-xl font-semibold">詳細</h3>
-                    <ul class="mt-2 text-lg text-gray-800">
+                    <ul class="mt-2 text-gray-800">
                         <li><strong>リリース日:</strong> {{ \Carbon\Carbon::parse($song->release)->format('Y年m月d日') }}</li>
                         <li><strong>作詞:</strong> {{ $song->lyricist }}</li>
                         <li><strong>作曲:</strong> {{ $song->composer }}</li>
                         <li><strong>編曲:</strong> {{ $song->arranger }}</li>
-                        <li><strong>収録:</strong> {{ $song->is_recorded }}</li>
                     </ul>
                 </div>
             </section>
         
             <!-- 収録楽曲一覧 -->
             @if (!$recordedSongs->isEmpty())
-                <section class="bg-white p-6 shadow-md mt-6">
+                <section class="bg-white p-6 shadow-md rounded-lg mt-6">
                     <h3 class="text-xl font-bold text-gray-800">同じ作品に収録されている楽曲</h3>
                     <ul class="mt-2">
                         @foreach ($recordedSongs as $recordedSong)
@@ -159,8 +119,8 @@
             @endif
             
             <!-- 参加メンバー -->
-            @if (!empty($song->members))
-            <section class="bg-white p-6 shadow-md mt-6">
+            @if ($song->members)
+            <section class="bg-white p-6 shadow-md rounded-lg mt-6">
                 <h3 class="text-xl font-bold text-gray-800">参加メンバー</h3>
                 <ul class="mt-2">
                     @foreach ($song->members as $member)
@@ -173,13 +133,12 @@
                     @endforeach
                 </ul>
             </section>
-            @else
-            <p class="mt-4 text-gray-700">この楽曲にはまだ参加メンバーが登録されていません。</p>
             @endif
 
             <!-- 歌詞へのリンク -->
-            @if (!empty($song->lyric))
-            <section class="flex flex-col md:flex-row mt-8 bg-white p-6 shadow-md">
+            @if ($song->lyric === "-")
+            @else
+            <section class="flex flex-col md:flex-row mt-8 bg-white p-6 shadow-md rounded-lg">
                 <div class="md:ml-8 mt-4 md:mt-0 ">
                     <h3 class="text-xl font-semibold">歌詞はコチラ</h3>
                     <a href="{{($song->lyric) }}" target="_blank" rel="noopener noreferrer" class= "hover:text-blue-600">別リンクへ飛びます</a>
@@ -188,10 +147,11 @@
             @endif
             
             <!-- ミュージックビデオ -->
-            @if (!empty($song->youtube))
-            <section class="bg-white p-6 shadow-md mt-6">
+            @if ($song->youtube === "-")
+            @else
+            <section class="bg-white p-6 shadow-md rounded-lg mt-6">
                 <h3 class="text-xl font-bold text-gray-800">ミュージックビデオ</h3>
-                <div class="mt-4 video-wrapper">
+                <div class="mt-4 aspect-w-16 aspect-h-9 youtube-ratio">
                     {!! $song->youtube !!}
                 </div>
             </section>
@@ -201,23 +161,6 @@
 
     {{-- 閲覧記録 --}}
     <script>
-        (function () {
-        const KEY = 'recentlyViewed';
-        const list = JSON.parse(localStorage.getItem(KEY) || '[]');
-
-        const item = {
-            type: 'song',
-            url: '{{ route('members.show', $song->id) }}',
-            title: @json($song->title),
-            image: @json(asset('storage/photos/' . ltrim($song->photo, '/'))),
-        };
-
-        const filtered = list.filter(x => x.url !== item.url);
-        filtered.unshift(item);
-        localStorage.setItem(KEY, JSON.stringify(filtered.slice(0, 12)));
-        })();
-    </script>
-    {{-- <script>
     (() => {
     const item = {
         type: 'song',
@@ -241,6 +184,6 @@
 
     localStorage.setItem(KEY, JSON.stringify(list));
     })();
-    </script> --}}
+    </script>
 
 @endsection

@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
-@section('title', '櫻坂46楽曲一覧')
-@section('meta_description', '櫻坂46の楽曲一覧。表題曲・カップリング曲を網羅。発売日・センター・参加メンバー・作詞作曲情報の個別ページへリンク。最新更新も随時反映。')
+@section('title', '日向坂46楽曲一覧')
+@section('meta_description', '日向坂46の楽曲一覧。表題曲・カップリング曲を網羅。発売日・センター・参加メンバー・作詞作曲情報の個別ページへリンク。最新更新も随時反映。')
 
 @push('head_meta')
 @php
@@ -14,7 +14,7 @@
 {
   "@context":"https://schema.org",
   "@type":"CollectionPage",
-  "name":"櫻坂46楽曲一覧 | HINABASE",
+  "name":"日向坂46楽曲一覧 | HINABASE",
   "url":"{{ request()->fullUrl() }}",
   "isPartOf":{"@type":"WebSite","name":"HINABASE","url":"{{ url('/') }}"},
   "mainEntity":{
@@ -70,42 +70,15 @@
       @else
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
           @foreach ($singles as $song)
-            <div class="bg-white shadow-md p-3 text-center hover:scale-105 transition-transform">
+            <div class="bg-white shadow-md rounded-lg p-3 text-center hover:scale-105 transition-transform">
               <a href="{{ route('songs.show', $song->id) }}" class="block">
-                <img src="{{ asset('storage/photos/' . ($song->photo ?? 'default.jpg')) }}"
-                     alt="{{ $song->title }}（櫻坂46）"
-                     class="w-20 h-20 sm:w-32 sm:h-32 object-cover mx-auto"
+                <img src="{{ asset('storage/' . ($song->photo ?? 'default.jpg')) }}"
+                     alt="{{ $song->title }}（日向坂46）"
+                     class="w-20 h-20 sm:w-32 sm:h-32 object-cover rounded-lg mx-auto"
                      loading="lazy" width="128" height="128">
                 <p class="mt-2 font-semibold">{{ $song->title }}</p>
                 <span class="mt-2 font-semibold">
                   @if ($song->is_recently_updated)
-                    <span class="text-red-600 font-bold">NEW!</span>
-                  @endif
-                </span>
-              </a>
-            </div>
-          @endforeach
-        </div>
-      @endif
-    </section>
-
-    {{-- アルバム曲--}}
-    <section class="mt-8">
-      <h2 class="text-xl font-bold text-gray-800">アルバム収録曲</h2>
-      @if ($albums->isEmpty())
-        <p class="mt-2 text-gray-700">アルバム収録曲はまだありません。</p>
-      @else
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
-          @foreach ($albums as $album)
-            <div class="bg-white shadow-md p-3 text-center hover:scale-105 transition-transform">
-              <a href="{{ route('songs.show', $album->id) }}" class="block">
-                <img src="{{ asset('storage/photos/' . ($album->photo ?? 'default.jpg')) }}"
-                     alt="{{ $album->title }}（櫻坂46）"
-                     class="w-20 h-20 sm:w-32 sm:h-32 object-cover mx-auto"
-                     loading="lazy" width="128" height="128">
-                <p class="mt-2 font-semibold">{{ $album->title }}</p>
-                <span class="mt-2 font-semibold">
-                  @if ($album->is_recently_updated)
                     <span class="text-red-600 font-bold">NEW!</span>
                   @endif
                 </span>
@@ -124,11 +97,11 @@
       @else
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
           @foreach ($others as $song)
-            <div class="bg-white shadow-md p-3 text-center hover:scale-105 transition-transform">
+            <div class="bg-white shadow-md rounded-lg p-3 text-center hover:scale-105 transition-transform">
               <a href="{{ route('songs.show', $song->id) }}" class="block">
-                <img src="{{ asset('storage/photos/' . ($song->photo ?? 'default.jpg')) }}"
-                     alt="{{ $song->title }}（櫻坂46）"
-                     class="w-20 h-20 sm:w-32 sm:h-32 object-cover mx-auto"
+                <img src="{{ asset('storage/' . ($song->photo ?? 'default.jpg')) }}"
+                     alt="{{ $song->title }}（日向坂46）"
+                     class="w-20 h-20 sm:w-32 sm:h-32 object-cover rounded-lg mx-auto"
                      loading="lazy" width="128" height="128">
                 <p class="mt-2 font-semibold">{{ $song->title }}</p>
                 <span class="mt-2 font-semibold">
@@ -144,20 +117,32 @@
     </section>
   </main>
   {{-- トップに戻るボタン --}}
-  <button id="back-to-top" title="トップへ戻る">TOP</button>
+  <button
+      id="backToTop"
+      class="opacity-0 pointer-events-none fixed bottom-6 right-6 bg-orange-400 text-white p-4 rounded-full shadow-lg transition-opacity duration-500 hover:bg-orange-700 z-50"
+      aria-label="トップに戻る"
+  >
+      {{-- 上向き矢印（Heroicons） --}}
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+      </svg>
+  </button>
   <script>
-    const button = document.getElementById("back-to-top");
+      const backToTop = document.getElementById('backToTop');
 
-    window.addEventListener("scroll", function () {
-      if (window.pageYOffset > 300) {
-        button.classList.add("show");
-      } else {
-        button.classList.remove("show");
-      }
-    });
+      window.addEventListener('scroll', () => {
+          if (window.scrollY > 300) {
+              backToTop.classList.remove('opacity-0', 'pointer-events-none');
+              backToTop.classList.add('opacity-100');
+          } else {
+              backToTop.classList.remove('opacity-100');
+              backToTop.classList.add('opacity-0', 'pointer-events-none');
+          }
+      });
 
-    button.addEventListener("click", function () {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
+      backToTop.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
   </script>
 @endsection
