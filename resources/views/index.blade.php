@@ -242,6 +242,4 @@
         })();
     </script>
 <<<<<<< HEAD
-=======
->>>>>>> parent of 467e107 (blade編集)
 @endsection
