@@ -1,21 +1,41 @@
 @extends('layouts.main')
 
-@section('title', '日向坂ちゃんねるランキング | 日向坂46 | HINABASE')
-@section('meta_description', '日向坂46関連のYouTubeランキング。再生数・高評価数で人気順に一覧表示。最新動画や統計グラフも掲載。')
+@section('title', '日向坂ちゃんねる人気動画ランキング【最新】再生数・高評価数TOP | HINABASE')
+@section('meta_description', '日向坂46公式YouTube「日向坂ちゃんねる」の人気動画ランキング。再生数・高評価数トップ50を毎日更新。最新動画・ショート動画・メンバー出演情報も掲載。')
 
 @push('head_meta')
+<meta property="og:type" content="website">
+<meta property="og:title" content="日向坂ちゃんねる人気動画ランキング【最新】 | HINABASE">
+<meta property="og:description" content="日向坂46公式YouTubeチャンネル「日向坂ちゃんねる」の人気動画を再生数順に紹介。毎日自動更新中。">
+<meta property="og:image" content="{{ asset('storage/images/youtube-ranking-ogp.png') }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@HINABASE_JP">
 <link rel="canonical" href="{{ url()->current() }}">
-{{-- 構造化：ItemList（再生数TOP10） --}}
+
 <script type="application/ld+json">
 {
  "@context":"https://schema.org",
- "@type":"ItemList",
- "name":"日向坂ちゃんねるランキング（再生数）",
- "itemListElement":[
-  @foreach($chart as $i => $row)
-   { "@type":"ListItem", "position": {{ $i+1 }}, "name": "{{ $row['title'] }}" }@if(!$loop->last),@endif
-  @endforeach
- ]
+ "@type":"WebPage",
+ "name":"日向坂ちゃんねる人気動画ランキング | 日向坂46 | HINABASE",
+ "url":"{{ url()->current() }}",
+ "description":"日向坂46公式YouTube「日向坂ちゃんねる」の人気動画ランキング。再生数・高評価数トップ50を毎日自動更新。",
+ "isPartOf": { "@type": "WebSite", "name": "HINABASE", "url": "{{ url('/') }}" },
+ "breadcrumb": {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+     { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "{{ url('/') }}" },
+     { "@type": "ListItem", "position": 2, "name": "日向坂ちゃんねるランキング", "item": "{{ url()->current() }}" }
+   ]
+ },
+ "mainEntity": {
+   "@type": "ItemList",
+   "name": "日向坂ちゃんねる人気動画ランキングTOP10",
+   "itemListElement": [
+     @foreach($chart as $i => $row)
+     { "@type": "ListItem", "position": {{ $i+1 }}, "name": "{{ $row['title'] }}" }@if(!$loop->last),@endif
+     @endforeach
+   ]
+ }
 }
 </script>
 @endpush
@@ -30,8 +50,8 @@
 </nav>
 
 <main class="container mx-auto mt-6 px-4">
-  <h1 class="text-2xl font-bold">日向坂ちゃんねるランキング</h1>
-  <p class="text-sm text-gray-600 mt-1">再生数の多い順に上位を表示</p>
+  <h1 class="text-2xl font-bold">日向坂ちゃんねる人気動画ランキング【最新】</h1>
+  <p class="text-sm text-gray-600 mt-1">日向坂46公式YouTubeチャンネル「日向坂ちゃんねる」の人気動画を再生数順に紹介。毎日更新中。</p>
   {{-- <p class="text-sm text-gray-600 mt-1">再生数の多い順に上位を表示 ※ 毎日4回自動更新</p> --}}
 
   {{-- グラフ（上位10件） --}}
@@ -97,6 +117,13 @@
         </a>
       @endforeach
     </div>
+  </section>
+  
+  <section class="mt-10 text-center">
+    <p class="text-gray-700 text-sm">
+      ▶ <a href="{{ route('members.index') }}" class="text-blue-600 hover:underline">日向坂46メンバー一覧</a> |
+      <a href="{{ route('songs.index') }}" class="text-blue-600 hover:underline">楽曲データベース</a>
+    </p>
   </section>
 </main>
 {{-- トップに戻るボタン --}}
