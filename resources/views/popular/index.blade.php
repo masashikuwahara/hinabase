@@ -48,10 +48,10 @@
   </script>
 @endpush
 
-
 @section('content')
 <div class="max-w-6xl mx-auto p-6">
-  <h1 class="text-2xl font-bold mb-2">人気ページ TOP20（直近7日）</h1>
+  <h1 class="text-2xl font-bold mb-2">人気ページ TOP20</h1>
+  <div class="text-xl font-bold mb-2">ランキングは10分ごとに更新されます</div>
   <div class="text-sm text-gray-500 mb-4">
     集計期間：{{ $rangeText }}
   </div>
@@ -60,7 +60,7 @@
     <p>集計データがまだありません。アクセスがたまるまでお待ちください。</p>
   @else
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      @foreach ($cards as $card)
+      @foreach ($cards as $index => $card)
         <div class="bg-white shadow-md rounded-lg text-center hover:scale-105 transition-transform">
           <a href="{{ $card['url'] }}" class="block p-4" aria-label="{{ $card['title'] }}">
             <div class="relative">
@@ -71,7 +71,12 @@
                 loading="lazy"
                 width="128" height="128"
               />
-              <span class="absolute -top-2 -left-2 bg-gray-100 text-gray-700 text-xs px-2 py-0.5 rounded">
+
+              <span class="absolute -top-2 -left-2 bg-yellow-400 text-white font-bold text-xs sm:text-sm px-2 py-0.5 rounded-t-lg rounded-br-lg shadow">
+                {{ $index + 1 }}位
+              </span>
+
+              <span class="absolute top-6 -left-2 bg-gray-100 text-gray-700 text-xs px-1 py-0.5 rounded shadow">
                 {{ $card['tag'] }}
               </span>
             </div>
@@ -82,11 +87,10 @@
                 <span class="text-red-600 font-bold">NEW!</span>
               @endif
             </div>
-
             {{-- <div class="text-xs text-gray-500 mt-1">
               最終更新：{{ \Illuminate\Support\Carbon::parse($card['updated_at'])->diffForHumans() }}
-            </div> --}}
-            {{-- <div class="text-xs text-gray-500 mt-1">
+            </div>
+            <div class="text-xs text-gray-500 mt-1">
               過去7日：<span class="font-mono tabular-nums">{{ number_format($card['week_views']) }}</span> views
             </div> --}}
           </a>

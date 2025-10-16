@@ -80,22 +80,33 @@
               再生 {{ number_format($v->view_count) }}・高評価 {{ number_format($v->like_count) }}
               ・公開 {{ optional($v->published_at)->format('Y/m/d') }}
             </div>
-            {{-- VideoObject 構造化（軽量版） --}}
+            
             <script type="application/ld+json">
-            {
-              "@context":"https://schema.org",
-              "@type":"VideoObject",
-              "name":"{{ $v->title }}",
-              "thumbnailUrl":"{{ $v->thumbnail_url }}",
-              "uploadDate":"{{ optional($v->published_at)->toIso8601String() }}",
-              "embedUrl":"{{ $v->embed_url }}",
-              "url":"{{ $v->watch_url }}",
-              "interactionStatistic": {
-                "@type":"InteractionCounter",
-                "interactionType":"https://schema.org/WatchAction",
-                "userInteractionCount": {{ (int)$v->view_count }}
+              {
+                "@context": "https://schema.org",
+                "@type": "VideoObject",
+                "name": "{{ $v->title }}",
+                "description": "{{ Str::limit(strip_tags($v->title), 120) }}",
+                "thumbnailUrl": "{{ $v->thumbnail_url }}",
+                "uploadDate": "{{ optional($v->published_at)->toIso8601String() }}",
+                "embedUrl": "https://www.youtube.com/embed/{{ $v->video_id }}",
+                "contentUrl": "https://www.youtube.com/watch?v={{ $v->video_id }}",
+                "url": "https://www.youtube.com/watch?v={{ $v->video_id }}",
+                "duration": "{{ $v->duration ?? 'PT0M0S' }}",
+                "publisher": {
+                  "@type": "Organization",
+                  "name": "日向坂ちゃんねる",
+                  "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://kasumizaka46.com/storage/images/logo.png"
+                  }
+                },
+                "interactionStatistic": {
+                  "@type": "InteractionCounter",
+                  "interactionType": "https://schema.org/WatchAction",
+                  "userInteractionCount": {{ (int) $v->view_count }}
+                }
               }
-            }
             </script>
           </div>
         </article>
