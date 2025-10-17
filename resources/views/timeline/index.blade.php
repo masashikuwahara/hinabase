@@ -4,6 +4,20 @@
 @section('meta_description', '日向坂46（ひらがなけやき時代含む）の活動年表。2017年から現在までの出来事を年ごとに振り返ります。デビュー、シングル発売、ライブ、番組出演などを時系列で紹介。')
 
 @push('head_meta')
+<meta property="og:type" content="article">
+<meta property="og:title" content="日向坂46 ヒストリー（年表） | HINABASE">
+<meta property="og:description" content="日向坂46（ひらがなけやき時代を含む）の活動ヒストリー。2015年の発足から現在までの歩みを、年ごとの出来事でわかりやすく振り返ります。">
+<meta property="og:url" content="{{ url()->current() }}">
+<meta property="og:site_name" content="HINABASE">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:image" content="{{ asset('https://kasumizaka46.com/storage/images/logo.png') }}">
+<meta property="og:image:alt" content="日向坂46 ヒストリー（年表） | HINABASE">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="日向坂46 ヒストリー（年表） | HINABASE">
+<meta name="twitter:description" content="日向坂46（ひらがなけやき時代を含む）の活動ヒストリー。2015年の発足から現在までの歩みを、年ごとの出来事でわかりやすく振り返ります。">
+<meta name="twitter:image" content="{{ asset('https://kasumizaka46.com/storage/images/logo.png') }}">
+{{-- <meta name="twitter:site" content="@HINABASE46">
+<meta name="twitter:creator" content="@HINABASE46"> --}}
 <link rel="canonical" href="{{ url()->current() }}">
 <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
 <script type="application/ld+json">
