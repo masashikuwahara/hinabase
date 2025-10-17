@@ -43,6 +43,8 @@ Route::get('/popular', [PopularController::class, 'index'])->name('popular.index
 
 Route::get('/youtube/ranking', [\App\Http\Controllers\YoutubeRankingController::class, 'index'])->name('youtube.ranking');
 
+Route::get('/timeline', [App\Http\Controllers\TimelineController::class, 'index'])->name('timeline.index');
+
 //認証関係
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
@@ -117,10 +119,45 @@ Route::get('/_make-sitemap', function () {
         }
     });
 
-    // public/sitemap.xml に書き出し
     $sitemap->writeToFile(public_path('sitemap.xml'));
 
     return 'sitemap.xml generated';
 })->middleware('auth');
 
 require __DIR__.'/auth.php';
+
+// timeline_convert.php (一時スクリプト)
+
+// $text = file_get_contents(base_path('timeline_raw.txt'));
+// $lines = preg_split("/\r\n|\n|\r/", trim($text));
+
+// $timeline = [];
+// $currentYear = null;
+
+// foreach ($lines as $line) {
+//     $line = trim($line);
+//     if ($line === '') continue;
+
+//     // 年の行なら新しい配列を作成
+//     if (preg_match('/^(\d{4})年/u', $line, $m)) {
+//         $currentYear = (int)$m[1];
+//         $timeline[$currentYear] = [];
+//         continue;
+//     }
+
+//     // 年が設定されていて、日付が含まれる行なら分割
+//     if ($currentYear && preg_match('/^(\d{1,2}月\d{1,2}日)(.+)/u', $line, $m)) {
+//         $timeline[$currentYear][] = [
+//             'date' => $m[1],
+//             // 'title' => mb_substr(trim($m[2]), 0, 40),
+//             'description' => trim($m[2]),
+//         ];
+//     }
+// }
+
+// // 保存先: storage/app/data/timeline.json
+// $dir = storage_path('app/data');
+// if (!file_exists($dir)) mkdir($dir, 0777, true);
+// file_put_contents($dir.'/timeline.json', json_encode($timeline, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+
+// echo "timeline.json を生成しました！\n";
