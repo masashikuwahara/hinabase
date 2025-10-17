@@ -22,4 +22,5 @@ yarn-error.log
 /.vscode
 /.zed
 storage/app/public/images/
-database/seeders/
+/database/seeders
+resources/views/auth
