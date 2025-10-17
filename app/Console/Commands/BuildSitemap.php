@@ -22,6 +22,7 @@ class BuildSitemap extends Command
         $urls[] = ['loc' => url('/others'), 'lastmod' => now()->toAtomString()];
         $urls[] = ['loc' => url('/popular'), 'lastmod' => now()->toAtomString()];
         $urls[] = ['loc' => url('/youtube/ranking'), 'lastmod' => now()->toAtomString()];
+        $urls[] = ['loc' => url('/timeline'), 'lastmod' => now()->toAtomString()];
 
         foreach (\App\Models\Member::cursor() as $m) {
             $urls[] = [
