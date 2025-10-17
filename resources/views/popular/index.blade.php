@@ -76,9 +76,9 @@
                 {{ $index + 1 }}位
               </span>
 
-              <span class="absolute top-6 -left-2 bg-gray-100 text-gray-700 text-xs px-1 py-0.5 rounded shadow">
+              {{-- <span class="absolute top-6 -left-2 bg-gray-100 text-gray-700 text-xs px-1 py-0.5 rounded shadow">
                 {{ $card['tag'] }}
-              </span>
+              </span> --}}
             </div>
 
             <div class="mt-2 font-semibold">

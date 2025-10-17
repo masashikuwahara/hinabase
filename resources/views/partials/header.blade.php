@@ -57,8 +57,13 @@
     日向坂ちゃんねる集計試験運用開始しました
   </a>
 </div>
-<div class="bg-[#4ade80] text-white py-0 w-full text-center">
+<div class="bg-[#de994a] text-white py-0 w-full text-center">
+  <a href="{{ route('timeline.index') }}" class="hover:text-blue-800 font-semibold">
+    日向坂46ヒストリーを公開しました
+  </a>
+</div>
+{{-- <div class="bg-[#4ade80] text-white py-0 w-full text-center">
   <a href="{{ route('popular.index') }}" class="hover:text-blue-800 font-semibold">
     人気ページTOP20試験運用開始しました
   </a>
-</div>
+</div> --}}
