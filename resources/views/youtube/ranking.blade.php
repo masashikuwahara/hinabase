@@ -51,8 +51,11 @@
 
 <main class="container mx-auto mt-6 px-4">
   <h1 class="text-2xl font-bold">日向坂ちゃんねる人気動画ランキング【最新】</h1>
-  <p class="text-sm text-gray-600 mt-1">日向坂46公式YouTubeチャンネル「日向坂ちゃんねる」の人気動画を再生数順に紹介。毎日更新中。</p>
-  {{-- <p class="text-sm text-gray-600 mt-1">再生数の多い順に上位を表示 ※ 毎日4回自動更新</p> --}}
+  <p class="text-sm text-gray-600 mt-1">日向坂46公式YouTubeチャンネル「日向坂ちゃんねる」の人気動画を再生数順に紹介。</p>
+  <div class="flex gap-4 mb-8">
+    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition scroll-btn" data-target="joui">上位一覧へ</button>
+    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition scroll-btn" data-target="saishin">新着動画へ</button>
+  </div>
 
   {{-- グラフ（上位10件） --}}
   <section class="mt-6 bg-white p-4 shadow rounded">
@@ -62,7 +65,7 @@
 
   {{-- ランキング表（上位50） --}}
   <section class="mt-8">
-    <h2 class="text-lg font-semibold">上位一覧</h2>
+    <h2 class="text-lg font-semibold" id="joui">上位一覧</h2>
     <div class="grid md:grid-cols-2 gap-4 mt-3">
       @foreach ($videosTopViews as $v)
         <article class="bg-white shadow rounded p-3 flex">
@@ -116,7 +119,7 @@
 
   {{-- 最新動画（時系列） --}}
   <section class="mt-10">
-    <h2 class="text-lg font-semibold">最新動画</h2>
+    <h2 class="text-lg font-semibold" id="saishin">最新動画</h2>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-3">
       @foreach ($latest as $v)
         <a href="{{ $v->watch_url }}" target="_blank" rel="noopener"
@@ -186,5 +189,15 @@
     backToTop.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+</script>
+
+<script>
+  document.querySelectorAll('.scroll-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      const targetId = button.dataset.target;
+      const target = document.getElementById(targetId);
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
 </script>
 @endsection
