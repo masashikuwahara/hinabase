@@ -35,7 +35,10 @@ Route::get('/members/{member}', [MemberController::class, 'show'])
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 Route::view('/others', 'others.index', [
     'links' => [
-        ['title' => '櫻坂46のデータベースサイトです。', 'url' => 'https://x.gd/edKLP'],
+        ['title' => '日向坂46推しメンチェッカーです。', 'url' => 'https://x.gd/8sT9P'],
+        ['title' => '日向坂46のペンライトカラーが検索できます。', 'url' => 'https://x.gd/0RLv3'],
+        ['title' => '工事中', 'url' => ''],
+        ['title' => '櫻坂46のデータベースサイトです。', 'url' => 'https://x.gd/edKLP']
     ]
 ])->name('others.index');
 
