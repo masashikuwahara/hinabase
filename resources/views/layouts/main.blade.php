@@ -1,9 +1,18 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta name="description" content="@yield('meta_description', '日向坂46のメンバー情報・楽曲データベースならHINABASE。プロフィール、あだ名、フォーメーション、センター回数、作曲者情報まで網羅。最新シングルや卒業情報も随時更新中。')">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="format-detection" content="email=no,telephone=no,address=no">
     <meta name="google-site-verification" content="dgN96_4bDes1EkWctdSfcV04ySWa5zsXnT_F4Aki23Y" />
+    <title>
+        @hasSection('title')
+            @yield('title') | 日向坂46データベース | HINABASE
+        @else
+            日向坂46データベース | HINABASE
+        @endif
+    </title>
+    <meta name="description" content="@yield('meta_description', '日向坂46のメンバー情報・楽曲データベースならHINABASE。プロフィール、あだ名、フォーメーション、センター回数、作曲者情報まで網羅。最新シングルや卒業情報も随時更新中。')">
     <link rel="canonical" href="{{ url()->current() }}">
     <meta property="og:title" content="{{ trim($__env->yieldContent('og_title', $__env->yieldContent('title', 'HINABASE'))) }}">
     <meta property="og:description" content="@yield('og_description', '日向坂46のメンバー情報・楽曲データベースならHINABASE。プロフィール、あだ名、フォーメーション、センター回数、作曲者情報まで網羅。最新シングルや卒業情報も随時更新中。')">
@@ -18,15 +27,6 @@
     <meta name="twitter:title" content="{{ trim($__env->yieldContent('og_title', $__env->yieldContent('title', 'HINABASE'))) }}">
     <meta name="twitter:description" content="@yield('twitter_description', '日向坂46データベースサイト')">
     <meta name="twitter:image" content="@yield('twitter_image', 'https://kasumizaka46.com/storage/images/logo.png')">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        @hasSection('title')
-            @yield('title') | 日向坂46データベース | HINABASE
-        @else
-            日向坂46データベース | HINABASE
-        @endif
-    </title>
     @vite('resources/css/app.css')
     <script type="application/ld+json">
         {
