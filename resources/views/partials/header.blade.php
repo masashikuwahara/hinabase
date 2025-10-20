@@ -54,8 +54,8 @@
 </header>
 <div class="bg-[#a78bfa] text-white py-0 w-full text-center">
   <a href="{{ route('youtube.ranking') }}" class="hover:text-blue-800 font-semibold">
-    日向坂ちゃんねる集計試験運用開始しました
-  </a>
+    日向坂ちゃんねる 人気動画ランキング
+  </a>（再生数・高評価数を毎日更新中）
 </div>
 <div class="bg-[#de994a] text-white py-0 w-full text-center">
   <a href="{{ route('timeline.index') }}" class="hover:text-blue-800 font-semibold">

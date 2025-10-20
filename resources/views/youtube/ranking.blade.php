@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', '日向坂ちゃんねる人気動画ランキング【最新】再生数・高評価数TOP | HINABASE')
+@section('title', '日向坂ちゃんねる【公式】人気動画ランキング・最新再生数TOP | HINABASE')
 @section('meta_description', '日向坂46公式YouTube「日向坂ちゃんねる」の人気動画ランキング。再生数・高評価数トップ50を毎日更新。最新動画・ショート動画・メンバー出演情報も掲載。')
 
 @push('head_meta')
@@ -59,13 +59,13 @@
 
   {{-- グラフ（上位10件） --}}
   <section class="mt-6 bg-white p-4 shadow rounded">
-    <h2 class="text-lg font-semibold">再生数トップ10</h2>
+    <h2 class="text-lg font-semibold">日向坂ちゃんねる 再生数トップ10</h2>
     <canvas id="viewsChart" class="mt-4" height="240" aria-label="再生数トップ10グラフ" role="img"></canvas>
   </section>
 
   {{-- ランキング表（上位50） --}}
   <section class="mt-8">
-    <h2 class="text-lg font-semibold" id="joui">上位一覧</h2>
+    <h2 class="text-lg font-semibold" id="joui">日向坂ちゃんねる 人気動画 上位一覧</h2>
     <div class="grid md:grid-cols-2 gap-4 mt-3">
       @foreach ($videosTopViews as $v)
         <article class="bg-white shadow rounded p-3 flex">
@@ -119,7 +119,7 @@
 
   {{-- 最新動画（時系列） --}}
   <section class="mt-10">
-    <h2 class="text-lg font-semibold" id="saishin">最新動画</h2>
+    <h2 class="text-lg font-semibold" id="saishin">日向坂ちゃんねる 最新動画</h2>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-3">
       @foreach ($latest as $v)
         <a href="{{ $v->watch_url }}" target="_blank" rel="noopener"

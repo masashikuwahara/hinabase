@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', $member->name . ' のプロフィール')
+@section('title', $member->name . ' （日向坂46）プロフィール・出演情報 | HINABASE')
 @section('meta_description', Str::limit(strip_tags($member->bio ?? $member->name.'のプロフィール'), 120))
 
 @push('head_meta')
