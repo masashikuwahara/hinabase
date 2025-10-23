@@ -132,13 +132,7 @@
       @endforeach
     </div>
   </section>
-  
-  <section class="mt-10 text-center">
-    <p class="text-gray-700 text-sm">
-      ▶ <a href="{{ route('members.index') }}" class="text-blue-600 hover:underline">日向坂46メンバー一覧</a> |
-      <a href="{{ route('songs.index') }}" class="text-blue-600 hover:underline">楽曲データベース</a>
-    </p>
-  </section>
+
 </main>
 {{-- トップに戻るボタン --}}
 <button
