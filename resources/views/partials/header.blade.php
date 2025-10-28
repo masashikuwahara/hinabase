@@ -37,6 +37,7 @@
       <li><a href="{{ route('members.index') }}" class="hover:text-blue-600">メンバー一覧</a></li>
       <li><a href="{{ route('songs.index') }}" class="hover:text-blue-600">楽曲一覧</a></li>
       <li><a href="{{ route('popular.index') }}" class="hover:text-blue-600">人気ページTOP20</a></li>
+      <li><a href="{{ route('timeline.index') }}" class="hover:text-blue-600">日向坂46ヒストリー</a></li>
       <li><a href="{{ route('others.index') }}" class="hover:text-blue-600">その他</a></li>
     </ul>
   </nav>
@@ -48,6 +49,7 @@
       <li><a href="{{ route('members.index') }}" class="hover:underline">メンバー一覧</a></li>
       <li><a href="{{ route('songs.index') }}" class="hover:underline">楽曲一覧</a></li>
       <li><a href="{{ route('popular.index') }}" class="hover:underline">人気ページTOP20</a></li>
+      <li><a href="{{ route('timeline.index') }}" class="hover:text-blue-600">日向坂46ヒストリー</a></li>
       <li><a href="{{ route('others.index') }}" class="hover:underline">その他</a></li>
     </ul>
   </nav>
@@ -57,13 +59,13 @@
     日向坂ちゃんねる 人気動画ランキング（再生数・高評価数を毎日更新中）
   </a>
 </div>
-<div class="bg-[#de994a] text-white py-0 w-full text-center">
+{{-- <div class="bg-[#de994a] text-white py-0 w-full text-center">
   <a href="{{ route('timeline.index') }}" class="hover:text-blue-800 font-semibold">
     日向坂46ヒストリーを公開しました
   </a>
-</div>
-{{-- <div class="bg-[#4ade80] text-white py-0 w-full text-center">
-  <a href="{{ route('popular.index') }}" class="hover:text-blue-800 font-semibold">
-    人気ページTOP20試験運用開始しました
-  </a>
 </div> --}}
+<div class="bg-[#4ade80] text-white py-0 w-full text-center">
+  <a href="https://hinaselect.netlify.app/" target="_blank" class="hover:text-blue-800 font-semibold">
+    推しメン診断アプリリニューアルしました
+  </a>
+</div>
