@@ -35,10 +35,10 @@ Route::get('/members/{member}', [MemberController::class, 'show'])
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 Route::view('/others', 'others.index', [
     'links' => [
-        ['title' => '日向坂46推しメンチェッカーです', 'url' => 'https://x.gd/8sT9P'],
-        ['title' => '日向坂46のペンライトカラーが検索できます', 'url' => 'https://x.gd/0RLv3'],
-        ['title' => '日向坂46推しメンチェッカーver2 工事中...', 'url' => 'https://x.gd/D59T1'],
-        ['title' => '櫻坂46のデータベースサイトです', 'url' => 'https://x.gd/edKLP']
+        ['title' => '日向坂46推しメンチェッカーver2', 'url' => 'https://hinaselect.netlify.app/'],
+        ['title' => '日向坂46推しメンチェッカー', 'url' => 'https://x.gd/8sT9P'],
+        ['title' => '日向坂46メンバーのペンライトカラーが検索できます', 'url' => 'https://x.gd/0RLv3'],
+        ['title' => '日向坂46クイズ 工事中...', 'url' => 'https://hinata-quiz.netlify.app/']
     ]
 ])->name('others.index');
 
