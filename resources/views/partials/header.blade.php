@@ -54,18 +54,22 @@
     </ul>
   </nav>
 </header>
-<div class="bg-[#a78bfa] text-white py-0 w-full text-center">
-  <a href="{{ route('youtube.ranking') }}" class="hover:text-blue-800 font-semibold">
+<div class="bg-[#a78bfa] text-white py-2 w-full text-center text-sm md:text-base">
+  <a href="{{ route('youtube.ranking') }}" class="hover:text-yellow-200 font-semibold transition-colors duration-200">
     日向坂ちゃんねる 人気動画ランキング（再生数・高評価数を毎日更新中）
   </a>
 </div>
-{{-- <div class="bg-[#de994a] text-white py-0 w-full text-center">
-  <a href="{{ route('timeline.index') }}" class="hover:text-blue-800 font-semibold">
-    日向坂46ヒストリーを公開しました
+
+{{-- 
+<div class="bg-[#de994a] text-white py-2 w-full text-center text-sm md:text-base">
+  <a href="{{ route('timeline.index') }}" class="hover:text-yellow-200 font-semibold transition-colors duration-200">
+    🕰 日向坂46ヒストリーを公開しました
   </a>
-</div> --}}
-<div class="bg-[#4ade80] text-white py-0 w-full text-center">
-  <a href="https://hinaselect.netlify.app/" target="_blank" class="hover:text-blue-800 font-semibold">
-    推しメン診断アプリリニューアルしました
+</div>
+--}}
+
+<div class="bg-[#4ade80] text-white py-2 w-full text-center text-sm md:text-base">
+  <a href="https://hinaselect.netlify.app/" target="_blank" class="hover:text-yellow-200 font-semibold transition-colors duration-200">
+    推しメン診断アプリ リニューアルしました！
   </a>
 </div>
