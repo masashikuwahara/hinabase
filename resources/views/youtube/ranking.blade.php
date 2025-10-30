@@ -53,8 +53,8 @@
   <h1 class="text-2xl font-bold">日向坂ちゃんねる人気動画ランキング【最新】</h1>
   <p class="text-sm text-gray-600 mt-1">日向坂46公式YouTubeチャンネル「日向坂ちゃんねる」の人気動画を再生数順に紹介。</p>
   <div class="flex gap-4 mb-8">
-    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition scroll-btn" data-target="joui">上位一覧へ</button>
-    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition scroll-btn" data-target="saishin">新着動画へ</button>
+    <button class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition scroll-btn" data-target="joui">上位一覧へ</button>
+    <button class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition scroll-btn" data-target="saishin">新着動画へ</button>
   </div>
 
   {{-- グラフ（上位10件） --}}
@@ -63,59 +63,118 @@
     <canvas id="viewsChart" class="mt-4" height="240" aria-label="再生数トップ10グラフ" role="img"></canvas>
   </section>
 
-  {{-- ランキング表（上位50） --}}
-  <section class="mt-8">
-    <h2 class="text-lg font-semibold" id="joui">日向坂ちゃんねる 人気動画 上位一覧</h2>
-    <div class="grid md:grid-cols-2 gap-4 mt-3">
-      @foreach ($videosTopViews as $v)
-        <article class="bg-white shadow rounded p-3 flex">
-          <a href="{{ $v->watch_url }}" target="_blank" rel="noopener" class="block flex-shrink-0">
-            <img src="{{ $v->thumbnail_url }}"
-                 alt="{{ $v->title }}"
-                 loading="lazy" width="192" height="108"
-                 class="w-40 h-24 object-cover rounded">
-          </a>
-          <div class="ml-3 flex-1">
-            <a href="{{ $v->watch_url }}" target="_blank" rel="noopener" class="font-semibold hover:underline">
-              {{ $v->title }}
-            </a>
-            <div class="text-xs text-gray-600 mt-1">
-              再生 {{ number_format($v->view_count) }}・高評価 {{ number_format($v->like_count) }}
-              ・公開 {{ optional($v->published_at)->format('Y/m/d') }}
-            </div>
-            
-            <script type="application/ld+json">
-              {
-                "@context": "https://schema.org",
-                "@type": "VideoObject",
-                "name": "{{ $v->title }}",
-                "description": "{{ Str::limit(strip_tags($v->title), 120) }}",
-                "thumbnailUrl": "{{ $v->thumbnail_url }}",
-                "uploadDate": "{{ optional($v->published_at)->toIso8601String() }}",
-                "embedUrl": "https://www.youtube.com/embed/{{ $v->video_id }}",
-                "contentUrl": "https://www.youtube.com/watch?v={{ $v->video_id }}",
-                "url": "https://www.youtube.com/watch?v={{ $v->video_id }}",
-                "duration": "{{ $v->duration ?? 'PT0M0S' }}",
-                "publisher": {
-                  "@type": "Organization",
-                  "name": "日向坂ちゃんねる",
-                  "logo": {
-                    "@type": "ImageObject",
-                    "url": "https://kasumizaka46.com/storage/images/logo.png"
-                  }
-                },
-                "interactionStatistic": {
-                  "@type": "InteractionCounter",
-                  "interactionType": "https://schema.org/WatchAction",
-                  "userInteractionCount": {{ (int) $v->view_count }}
-                }
-              }
-            </script>
+  {{-- ランキング上位50 --}}
+  <section class="mt-8" x-data="videoRanking()">
+  <h2 class="text-lg font-semibold mb-4" id="joui">日向坂ちゃんねる 人気動画 ランキング</h2>
+
+  <div class="flex flex-wrap gap-3 mb-6">
+    <button 
+      @click="sortBy = 'views'" 
+      :class="sortBy === 'views' ? activeClass : baseClass">
+      再生回数順
+    </button>
+
+    <button 
+      @click="sortBy = 'likes'" 
+      :class="sortBy === 'likes' ? activeClass : baseClass">
+      高評価順
+    </button>
+
+    <button 
+      @click="sortBy = 'comments'" 
+      :class="sortBy === 'comments' ? activeClass : baseClass">
+      コメント数順
+    </button>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-4">
+    <template x-for="(v, i) in sortedVideos()" :key="v.video_id">
+      <article class="bg-white shadow rounded p-3 flex items-start hover:shadow-md transition-shadow duration-200">
+        <a :href="v.watch_url" target="_blank" rel="noopener" class="block flex-shrink-0">
+          <img :src="v.thumbnail_url"
+               :alt="v.title"
+               loading="lazy"
+               width="192" height="108"
+               class="w-40 h-24 object-cover rounded">
+        </a>
+
+        <div class="ml-3 flex-1">
+          <a :href="v.watch_url" target="_blank" rel="noopener" 
+             class="font-semibold hover:underline block leading-tight mb-1"
+             x-text="v.title"></a>
+          
+          <div class="text-xs text-gray-600">
+            再生 <span x-text="Number(v.view_count).toLocaleString()"></span>・
+            高評価 <span x-text="Number(v.like_count).toLocaleString()"></span>・
+            コメント <span x-text="Number(v.comment_count || 0).toLocaleString()"></span>・
+            公開 <span x-text="formatDate(v.published_at)"></span>
           </div>
-        </article>
-      @endforeach
-    </div>
-  </section>
+        </div>
+      </article>
+    </template>
+  </div>
+
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('videoRanking', () => ({
+        sortBy: 'views',
+        videos: @json($videosTopViews),
+        baseClass: 'bg-gray-200 text-gray-700 px-4 py-1.5 rounded-full text-sm hover:bg-gray-300 transition-colors',
+        activeClass: 'bg-blue-600 text-white px-4 py-1.5 rounded-full text-sm shadow-md',
+        
+        formatDate(dateStr) {
+          if (!dateStr) return '不明'
+          const d = new Date(dateStr)
+          if (isNaN(d)) return '不明'
+          const y = d.getFullYear()
+          const m = String(d.getMonth() + 1).padStart(2, '0')
+          const day = String(d.getDate()).padStart(2, '0')
+          return `${y}/${m}/${day}`
+        },
+
+        sortedVideos() {
+          if (!this.videos) return []
+          return [...this.videos].sort((a, b) => {
+            if (this.sortBy === 'likes') return b.like_count - a.like_count
+            if (this.sortBy === 'comments') return (b.comment_count || 0) - (a.comment_count || 0)
+            return b.view_count - a.view_count
+          })
+        }
+      }))
+    })
+  </script>
+</section>
+
+@foreach ($videosTopViews as $v)
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoObject",
+      "name": "{{ addslashes($v->title) }}",
+      "description": "{{ addslashes(Str::limit(strip_tags($v->title), 120)) }}",
+      "thumbnailUrl": "{{ $v->thumbnail_url }}",
+      "uploadDate": "{{ optional($v->published_at)->toIso8601String() }}",
+      "embedUrl": "https://www.youtube.com/embed/{{ $v->video_id }}",
+      "contentUrl": "https://www.youtube.com/watch?v={{ $v->video_id }}",
+      "url": "https://www.youtube.com/watch?v={{ $v->video_id }}",
+      "duration": "{{ $v->duration ?? 'PT0M0S' }}",
+      "publisher": {
+        "@type": "Organization",
+        "name": "日向坂ちゃんねる",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://kasumizaka46.com/storage/images/logo.png"
+        }
+      },
+      "interactionStatistic": {
+        "@type": "InteractionCounter",
+        "interactionType": "https://schema.org/WatchAction",
+        "userInteractionCount": {{ (int) $v->view_count }}
+      }
+    }
+  </script>
+@endforeach
+
 
   {{-- 最新動画（時系列） --}}
   <section class="mt-10">
@@ -140,7 +199,6 @@
     class="opacity-0 pointer-events-none fixed bottom-6 right-6 bg-orange-400 text-white p-4 rounded-full shadow-lg transition-opacity duration-500 hover:bg-orange-700 z-50"
     aria-label="トップに戻る"
 >
-    {{-- 上向き矢印（Heroicons） --}}
     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
