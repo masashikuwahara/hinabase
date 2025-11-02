@@ -48,6 +48,11 @@ Route::get('/youtube/ranking', [\App\Http\Controllers\YoutubeRankingController::
 
 Route::get('/timeline', [App\Http\Controllers\TimelineController::class, 'index'])->name('timeline.index');
 
+// bot対策
+Route::middleware('throttle:songs-limit')
+    ->get('/songs/{id}', [SongController::class, 'show'])
+    ->name('songs.show');
+
 //認証関係
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
