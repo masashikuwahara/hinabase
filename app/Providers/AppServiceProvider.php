@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
 
             if ($songId == 150) {
                 return [
-                    Limit::perMinute(1)->by($ip),
+                    Limit::perMinute(1,10)->by($ip),
                 ];
             }
 

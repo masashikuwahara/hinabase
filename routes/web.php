@@ -23,12 +23,13 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 //メンバー、楽曲一覧
 Route::get('/songs', [SongController::class, 'index'])->name('songs.index');
-// Route::get('/songs/{id}', [SongController::class, 'show'])->name('songs.show');
-Route::get('/songs/{song}', [SongController::class, 'show'])
-    ->name('songs.show')
-    ->middleware('count.popularity');
+// Route::get('/songs/{song}', [SongController::class, 'show'])
+//     ->name('songs.show')
+//     ->middleware('count.popularity');
+Route::get('/songs/{id}', [SongController::class, 'show'])
+    ->middleware(['count.popularity', 'throttle:songs-limit'])
+    ->name('songs.show');
 Route::get('/members', [MemberController::class, 'index'])->name('members.index');
-// Route::get('/members/{id}', [MemberController::class, 'show'])->name('members.show');
 Route::get('/members/{member}', [MemberController::class, 'show'])
     ->name('members.show')
     ->middleware('count.popularity');
@@ -36,7 +37,7 @@ Route::get('/search', [SearchController::class, 'search'])->name('search');
 Route::view('/others', 'others.index', [
     'links' => [
         ['title' => '日向坂46推しメンチェッカーver2', 'url' => 'https://hinaselect.netlify.app/'],
-        ['title' => '日向坂46推しメンチェッカー', 'url' => 'https://x.gd/8sT9P'],
+        // ['title' => '日向坂46推しメンチェッカー', 'url' => 'https://x.gd/8sT9P'],
         ['title' => '日向坂46メンバーのペンライトカラーが検索できます', 'url' => 'https://x.gd/0RLv3'],
         ['title' => '日向坂46クイズ 工事中...', 'url' => 'https://hinata-quiz.netlify.app/']
     ]
@@ -47,11 +48,6 @@ Route::get('/popular', [PopularController::class, 'index'])->name('popular.index
 Route::get('/youtube/ranking', [\App\Http\Controllers\YoutubeRankingController::class, 'index'])->name('youtube.ranking');
 
 Route::get('/timeline', [App\Http\Controllers\TimelineController::class, 'index'])->name('timeline.index');
-
-// bot対策
-Route::middleware('throttle:songs-limit')
-    ->get('/songs/{id}', [SongController::class, 'show'])
-    ->name('songs.show');
 
 //認証関係
 Route::get('/dashboard', function () {

@@ -14,8 +14,8 @@ class CountPopularity
 {
     private function isBot(?string $ua): bool {
         if (!$ua) return false;
-        // $bots = ['bot','crawl','spider','slurp','facebookexternalhit','bingpreview'];
-        $bots = [];
+        $bots = ['bot','crawl','spider','slurp','facebookexternalhit','bingpreview'];
+        // $bots = [];
         $ua = mb_strtolower($ua);
         foreach ($bots as $b) if (str_contains($ua, $b)) return true;
         return false;
