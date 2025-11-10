@@ -27,7 +27,7 @@ Route::get('/songs', [SongController::class, 'index'])->name('songs.index');
 //     ->name('songs.show')
 //     ->middleware('count.popularity');
 Route::get('/songs/{id}', [SongController::class, 'show'])
-    ->middleware(['count.popularity', 'throttle:songs-limit'])
+    ->middleware(['throttle:songs-limit', 'count.popularity'])
     ->name('songs.show');
 Route::get('/members', [MemberController::class, 'index'])->name('members.index');
 Route::get('/members/{member}', [MemberController::class, 'show'])
@@ -37,7 +37,6 @@ Route::get('/search', [SearchController::class, 'search'])->name('search');
 Route::view('/others', 'others.index', [
     'links' => [
         ['title' => '日向坂46推しメンチェッカーver2', 'url' => 'https://hinaselect.netlify.app/'],
-        // ['title' => '日向坂46推しメンチェッカー', 'url' => 'https://x.gd/8sT9P'],
         ['title' => '日向坂46メンバーのペンライトカラーが検索できます', 'url' => 'https://x.gd/0RLv3'],
         ['title' => '日向坂46クイズ 工事中...', 'url' => 'https://hinata-quiz.netlify.app/']
     ]
