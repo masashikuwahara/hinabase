@@ -50,7 +50,7 @@ class AppServiceProvider extends ServiceProvider
     if ($songId == 150) {
         $key = 'song150_access_' . now()->toDateString();
         $count = Cache::get($key, 0);
-        $limit = 3;
+        $limit = 1;
 
         if ($count >= $limit) {
             return Limit::perMinute(1)->by('global')->response(function () {
