@@ -90,18 +90,21 @@
   <div class="grid md:grid-cols-2 gap-4">
     <template x-for="(v, i) in sortedVideos()" :key="v.video_id">
       <article class="bg-white shadow rounded p-3 flex items-start hover:shadow-md transition-shadow duration-200">
-        <a :href="`https://www.youtube.com/watch?v=${v.video_id}`" target="_blank" rel="noopener">
+        <a :href="`https://www.youtube.com/watch?v=${v.video_id}`"
+          target="_blank"
+          rel="noopener">
           <img :src="v.thumbnail_url"
-               :alt="v.title"
-               loading="lazy"
-               width="192" height="108"
-               class="w-40 h-24 object-cover rounded">
-
+              :alt="v.title"
+              loading="lazy"
+              width="192" height="108"
+              class="w-40 h-24 object-cover rounded">
+        </a>
         <div class="ml-3 flex-1">
-          <a :href="`https://www.youtube.com/watch?v=${v.video_id}`" target="_blank" rel="noopener" 
-             class="font-semibold hover:underline block leading-tight mb-1"
-             x-text="v.title"></a>
-          
+          <a :href="`https://www.youtube.com/watch?v=${v.video_id}`"
+            target="_blank"
+            rel="noopener"
+            class="font-semibold hover:underline block leading-tight mb-1"
+            x-html="v.linked_title || v.title"></a>
           <div class="text-xs text-gray-600">
             再生 <span x-text="Number(v.view_count).toLocaleString()"></span>・
             高評価 <span x-text="Number(v.like_count).toLocaleString()"></span>・
