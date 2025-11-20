@@ -41,31 +41,22 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         RateLimiter::for('songs-limit', function ($request) {
-            $songId = $request->route('id');
-                Log::info('RateLimiter executed', [
-        'songId' => $songId,
-        'ip' => $request->ip(),
-    ]);
-
-    if ($songId == 150) {
-        $key = 'song150_access_' . now()->toDateString();
-        $count = Cache::get($key, 0);
-        $limit = 1;
-
-        if ($count >= $limit) {
-            return Limit::perMinute(1)->by('global')->response(function () {
-                abort(429);
-            });
-        }
-
-        $expiresAt = now()->addDay()->startOfDay();
-        Cache::put($key, $count + 1, $expiresAt);
-        return [Limit::perMinute(30)];
+            $songId = (int)$request->route('id');
+            
+            if ($songId === 150) {
+                $key = 'song150_' . now()->toDateString();
+                return [
+                    Limit::perMinutes(1440, 3)
+                    ->by($key)
+                    ->response(function () {
+                        abort(429);
+                    }),
+                ];
+            }
+            
+            return [
+                Limit::perMinute(60)->by($request->ip()),
+            ];
+        });
     }
-
-    return [
-        Limit::perMinute(60)->by($request->ip()),
-    ];
-    });
-  }
 }
