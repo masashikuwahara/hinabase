@@ -4,8 +4,6 @@ namespace App\Providers;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,23 +18,6 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    // public function boot()
-    // {
-    //     RateLimiter::for('songs-limit', function ($request) {
-    //         $ip = $request->ip();
-    //         $songId = $request->route('id');
-
-    //         if ($songId == 150) {
-    //             return [
-    //                 Limit::perMinute(1,1440)->by($ip),
-    //             ];
-    //         }
-
-    //         return [
-    //             Limit::perMinute(30)->by($ip),
-    //         ];
-    //     });
-    // }
 
     public function boot()
     {
