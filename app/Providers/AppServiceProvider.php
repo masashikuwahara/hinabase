@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
             if ($songId === 150) {
                 $key = 'song150_' . now()->toDateString();
                 return [
-                    Limit::perMinutes(1440, 3)
+                    Limit::perMinutes(1440, 2)
                     ->by($key)
                     ->response(function () {
                         abort(429);
