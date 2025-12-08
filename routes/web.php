@@ -23,16 +23,13 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 //メンバー、楽曲一覧
 Route::get('/songs', [SongController::class, 'index'])->name('songs.index');
-// Route::get('/songs/{song}', [SongController::class, 'show'])
-//     ->name('songs.show')
-//     ->middleware('count.popularity');
 Route::get('/songs/{id}', [SongController::class, 'show'])
     ->middleware(['throttle:songs-limit', 'count.popularity'])
     ->name('songs.show');
 Route::get('/members', [MemberController::class, 'index'])->name('members.index');
 Route::get('/members/{member}', [MemberController::class, 'show'])
-    ->name('members.show')
-    ->middleware('count.popularity');
+    ->middleware('count.popularity', 'throttle:members-limit')
+    ->name('members.show');
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 Route::view('/others', 'others.index', [
     'links' => [
