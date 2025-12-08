@@ -39,26 +39,25 @@ class AppServiceProvider extends ServiceProvider
             }
             return Limit::perMinute(30)->by($request->ip());
         });
+
+        RateLimiter::for('members-limit', function ($request) {
+            $memberId = (int) $request->route('id');
+            $limitedMembers = [];
+            $limit = 5;
+
+            if (in_array($memberId, $limitedMembers, true)) {
+                $key = "member_access_{$memberId}_" . now()->toDateString();
+                $count = Cache::get($key, 0);
+
+                if ($count >= $limit) {
+                    abort(429);
+                }
+
+                Cache::put($key, $count + 1, now()->addDay()->startOfDay());
+                return Limit::perMinute(30)->by('global');
+            }
+
+            return Limit::perMinute(30)->by($request->ip());
+        });
     }
-    // public function boot()
-    // {
-    //     RateLimiter::for('songs-limit', function ($request) {
-    //         $songId = (int)$request->route('id');
-            
-    //         if ($songId === 150) {
-    //             $key = 'song150_' . now()->toDateString();
-    //             return [
-    //                 Limit::perMinutes(1440, 2)
-    //                 ->by($key)
-    //                 ->response(function () {
-    //                     abort(429);
-    //                 }),
-    //             ];
-    //         }
-            
-    //         return [
-    //             Limit::perMinute(60)->by($request->ip()),
-    //         ];
-    //     });
-    // }
 }
