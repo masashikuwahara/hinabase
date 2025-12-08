@@ -49,7 +49,7 @@
       <li><a href="{{ route('members.index') }}" class="hover:underline">メンバー一覧</a></li>
       <li><a href="{{ route('songs.index') }}" class="hover:underline">楽曲一覧</a></li>
       <li><a href="{{ route('popular.index') }}" class="hover:underline">人気ページTOP20</a></li>
-      <li><a href="{{ route('timeline.index') }}" class="hover:text-blue-600">日向坂46ヒストリー</a></li>
+      <li><a href="{{ route('timeline.index') }}" class="hover:underline">日向坂46ヒストリー</a></li>
       <li><a href="{{ route('others.index') }}" class="hover:underline">その他</a></li>
     </ul>
   </nav>
