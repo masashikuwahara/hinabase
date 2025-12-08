@@ -14,43 +14,59 @@ class CountPopularity
 {
     private function isBot(?string $ua): bool {
         if (!$ua) return false;
-        $bots = ['bot','crawl','spider','slurp','facebookexternalhit','bingpreview'];
-        // $bots = [];
         $ua = mb_strtolower($ua);
-        foreach ($bots as $b) if (str_contains($ua, $b)) return true;
+        foreach (['bot','crawl','spider','slurp','facebookexternalhit','bingpreview'] as $b) {
+            if (str_contains($ua, $b)) return true;
+        }
         return false;
     }
 
-    public function handle(Request $request, Closure $next)
+    private function resolveTypeAndId(Request $request): array|null
     {
-        $response = $next($request);
-
         $name = optional($request->route())->getName();
-        if (!in_array($name, ['members.show','songs.show'])) return $response;
-        if ($this->isBot($request->userAgent())) return $response;
+        if (!in_array($name, ['members.show','songs.show'])) return null;
 
         if ($name === 'members.show') {
             $param = $request->route('member') ?? $request->route('id');
             $id = $param instanceof Member ? $param->getKey() : (int) $param;
-            $type = 'member';
+            if ($id <= 0 || !Member::whereKey($id)->exists()) return null;
+            return ['member', $id];
         } else {
             $param = $request->route('song') ?? $request->route('id');
             $id = $param instanceof Song ? $param->getKey() : (int) $param;
-            $type = 'song';
+            if ($id <= 0 || !Song::whereKey($id)->exists()) return null;
+            return ['song', $id];
+        }
+    }
+
+    public function handle(Request $request, Closure $next)
+    {
+        if ($this->isBot($request->userAgent())) {
+            return $next($request);
         }
 
-        $record = Popularity::firstOrCreate(
-            ['type' => $type, 'entity_id' => $id],
-            ['views' => 0]
-        );
-        $record->increment('views');
+        $resolved = $this->resolveTypeAndId($request);
+        if ($resolved === null) {
+            return $next($request);
+        }
+        [$type, $id] = $resolved;
 
-        $today = Carbon::today();
-        $daily = PopularityDaily::firstOrCreate(
-            ['type' => $type, 'entity_id' => $id, 'date' => $today],
-            ['views' => 0]
-        );
-        $daily->increment('views');
+        $response = $next($request);
+
+        if ($response->isSuccessful()) {
+            $record = Popularity::firstOrCreate(
+                ['type' => $type, 'entity_id' => $id],
+                ['views' => 0]
+            );
+            $record->increment('views');
+
+            $today = Carbon::today(config('app.timezone'));
+            $daily = PopularityDaily::firstOrCreate(
+                ['type' => $type, 'entity_id' => $id, 'date' => $today],
+                ['views' => 0]
+            );
+            $daily->increment('views');
+        }
 
         return $response;
     }
