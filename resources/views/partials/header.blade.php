@@ -19,7 +19,7 @@
     x-transition:leave="transition ease-in duration-200"
     x-transition:leave-start="opacity-100 scale-100"
     x-transition:leave-end="opacity-0 scale-90"
-    class="fixed inset-0 bg-white text-black flex flex-col items-center justify-center space-y-6 z-40"
+    class="fixed inset-0 bg-white text-black flex flex-col items-center justify-center space-y-6 z-50"
   >
     <!-- ✕ボタン -->
     <button
