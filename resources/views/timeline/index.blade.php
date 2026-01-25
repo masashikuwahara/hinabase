@@ -65,7 +65,7 @@
     </h2>
     <ul class="relative border-l border-gray-300 pl-6 space-y-6">
       @foreach($events as $event)
-        <li data-aos="fade-up" class="{{ $year == 2025 ? 'bg-[#ffcf77] p-3 rounded-lg shadow-sm' : '' }}">
+        <li data-aos="fade-up" class="{{ $year == 2026 ? 'bg-[#ffcf77] p-3 rounded-lg shadow-sm' : '' }}">
           {{-- <div class="absolute -left-2.5 top-1.5 w-3 h-3 bg-blue-600 rounded-full"></div> --}}
           <time class="block text-sm text-gray-500">{{ $event['date'] }}</time>
           {{-- <div class="font-medium text-lg">{{ $event['title'] }}</div> --}}
