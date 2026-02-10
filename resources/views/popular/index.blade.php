@@ -87,12 +87,12 @@
                 <span class="text-red-600 font-bold">NEW!</span>
               @endif
             </div>
-            {{-- <div class="text-xs text-gray-500 mt-1">
+            <div class="text-xs text-gray-500 mt-1">
               最終更新：{{ \Illuminate\Support\Carbon::parse($card['updated_at'])->diffForHumans() }}
             </div>
             <div class="text-xs text-gray-500 mt-1">
               過去7日：<span class="font-mono tabular-nums">{{ number_format($card['week_views']) }}</span> views
-            </div> --}}
+            </div>
           </a>
         </div>
       @endforeach
