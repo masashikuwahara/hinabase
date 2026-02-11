@@ -82,7 +82,7 @@
 @endpush
     <!-- メンバー詳細 -->
     <main class="container mx-auto mt-8 px-4">
-        <h1 class="text-3xl font-bold text-center">{{ $member->name }}</h1>
+        <h1 class="text-3xl font-bold font-mont text-center">{{ $member->name }}</h1>
         <p class="text-xl text-center mt-2">{{ $member->furigana }}</p>
         
         <section class="flex flex-col md:flex-row items-center mt-8 bg-white p-6 shadow-md rounded-lg">
@@ -97,7 +97,7 @@
 
             <!-- メンバー情報 -->
             <div class="md:ml-8 mt-4 md:mt-0">
-                <h2 class="text-xl font-semibold">プロフィール</h2>
+                <h2 class="text-xl font-semibold font-mont">プロフィール</h2>
                 <ul class="mt-2 text-gray-800">
                     <li><strong>ニックネーム:</strong> {{ $member->nickname }}</li>
                     <li><strong>生年月日:</strong> {{ \Carbon\Carbon::parse($member->birthday)->format('Y年m月d日') }}</li>
@@ -143,14 +143,14 @@
         {{-- 公式ブログ --}}
         @if (!empty($member->blog_url))
             <section class="flex flex-col md:flex-row items-start mt-8 bg-white p-6 shadow-md rounded-lg">
-                <h2 class="text-xl font-bold mb-4 md:mb-0 md:mr-4 md:flex-none">公式ブログ</h2>
+                <h2 class="text-xl font-semibold font-mont mb-4 md:mb-0 md:mr-4 md:flex-none">公式ブログ</h2>
                 <div class="mt-2 text-blue-700 font-semibold hover:text-indigo-600 md:mt-0 md:flex-1">
                     {!! $blogHtml !!}
                 </div>
             </section>
         @else
             <section class="flex flex-col md:flex-row items-start mt-8 bg-white p-6 shadow-md rounded-lg">
-                <h2 class="text-xl font-bold mb-4 md:mb-0 md:mr-4 md:flex-none">公式ブログ</h2>
+                <h2 class="text-xl font-semibold font-mont mb-4 md:mb-0 md:mr-4 md:flex-none">公式ブログ</h2>
                 <div class="mt-2 text-blue-700 font-semibold hover:text-indigo-600 md:mt-0 md:flex-1">
                     {!! $blogHtml !!}
                 </div>
@@ -160,7 +160,7 @@
         {{-- 同期メンバー --}}
         @if(isset($sameGenMembers) && $sameGenMembers->isNotEmpty())
             <section class="mt-8 bg-white p-6 shadow-md rounded-lg">
-                <h2 class="text-xl font-semibold mb-4">
+                <h2 class="text-xl font-semibold font-mont mb-4">
                     同じ{{ $member->grade }}メンバー
                 </h2>
                 <ul class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
@@ -229,7 +229,7 @@
         
         <!-- 参加楽曲リスト -->
         <section class="mt-8">
-            <h2 class="text-2xl font-semibold">参加楽曲</h2>
+            <h2 class="text-2xl font-semibold font-mont">参加楽曲</h2>
             @if ($member->songs->isEmpty())
                 <p class="mt-2 text-gray-700">まだ参加楽曲はありません。</p>
             @else

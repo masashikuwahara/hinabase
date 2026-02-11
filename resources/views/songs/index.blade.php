@@ -60,11 +60,11 @@
   </nav>
 
   <main class="container mx-auto mt-8 px-4">
-    <h1 class="text-2xl font-semibold">楽曲一覧</h1>
+    <h1 class="text-2xl font-bold font-mont">楽曲一覧</h1>
 
     {{-- 表題曲 --}}
     <section class="mt-6">
-      <h2 class="text-xl font-bold text-gray-800">表題曲</h2>
+      <h2 class="text-xl font-semibold font-mont text-gray-800">表題曲</h2>
       @if ($singles->isEmpty())
         <p class="mt-2 text-gray-700">表題曲はまだありません。</p>
       @else
@@ -91,7 +91,7 @@
 
     {{-- c/w・その他 --}}
     <section class="mt-8">
-      <h2 class="text-xl font-bold text-gray-800">c/w・その他</h2>
+      <h2 class="text-xl font-semibold font-mont text-gray-800">c/w・その他</h2>
       @if ($others->isEmpty())
         <p class="mt-2 text-gray-700">c/wやその他の楽曲はまだありません。</p>
       @else

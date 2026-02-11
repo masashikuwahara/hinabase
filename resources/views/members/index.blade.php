@@ -85,7 +85,7 @@
     </nav>
     <main class="container mx-auto mt-8 px-4">
         {{-- 現在の状態を表示 --}}
-        <h1 class="text-2xl font-semibold">日向坂46メンバー一覧</h1>
+        <h1 class="text-2xl font-semibold font-mont">日向坂46メンバー一覧</h1>
         @php
         $labels = [
             'default'    => 'デフォルト',
@@ -176,7 +176,7 @@
             {{-- デフォルト: gradeごとに表示 --}}
             <!-- 在籍メンバー -->
             <section class="mt-6">
-                <h2 class="text-xl font-bold text-gray-800">在籍メンバー</h2>
+                <h2 class="text-xl font-semibold font-mont text-gray-800">在籍メンバー</h2>
                 @if (is_array($currentMembers) || is_object($currentMembers))
                     @if (empty((array)$currentMembers))
                         <p class="mt-2 text-gray-700">在籍メンバーはいません。</p>
@@ -211,7 +211,7 @@
             </div> --}}
             <!-- 卒業メンバー -->
             <section class="mt-8">
-                <h2 class="text-xl font-bold text-gray-800">卒業メンバー</h2>
+                <h2 class="text-xl font-semibold font-mont text-gray-800">卒業メンバー</h2>
                 @if (is_array($graduatedMembers) || is_object($graduatedMembers))
                     @if (empty((array)$graduatedMembers))
                         <p class="mt-2 text-gray-700">卒業メンバーはいません。</p>
@@ -242,7 +242,7 @@
         @else
             {{-- gradeを無視してソート --}}
             <section class="mt-6">
-                <h2 class="text-xl font-bold text-gray-800">在籍メンバー</h2>
+                <h2 class="text-xl font-semibold font-mont text-gray-800">在籍メンバー</h2>
                 @if ($currentMembers->isEmpty())
                     <p class="mt-2 text-gray-700">在籍メンバーはいません。</p>
                 @else
@@ -272,7 +272,7 @@
             </section>
             
             <section class="mt-8">
-                <h2 class="text-xl font-bold text-gray-800">卒業メンバー</h2>
+                <h2 class="text-xl font-semibold font-mont text-gray-800">卒業メンバー</h2>
                 @if ($graduatedMembers->isEmpty())
                     <p class="mt-2 text-gray-700">卒業メンバーはいません。</p>
                 @else

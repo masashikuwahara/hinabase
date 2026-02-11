@@ -50,7 +50,7 @@
 </nav>
 
 <main class="container mx-auto mt-6 px-4">
-  <h1 class="text-2xl font-bold">日向坂ちゃんねる人気動画ランキング【最新】</h1>
+  <h1 class="text-2xl font-bold font-mont">日向坂ちゃんねる人気動画ランキング【最新】</h1>
   <p class="text-sm text-gray-600 mt-1">日向坂46公式YouTubeチャンネル「日向坂ちゃんねる」の人気動画を再生数順に紹介。</p>
   <div class="flex gap-4 mb-8">
     <button class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition scroll-btn" data-target="joui">上位一覧へ</button>
@@ -59,13 +59,13 @@
 
   {{-- グラフ（上位10件） --}}
   <section class="mt-6 bg-white p-4 shadow rounded">
-    <h2 class="text-lg font-semibold">日向坂ちゃんねる 再生数トップ10</h2>
+    <h2 class="text-lg font-semibold font-mont">日向坂ちゃんねる 再生数トップ10</h2>
     <canvas id="viewsChart" class="mt-4" height="240" aria-label="再生数トップ10グラフ" role="img"></canvas>
   </section>
 
   {{-- ランキング上位50 --}}
   <section class="mt-8" x-data="videoRanking()">
-  <h2 class="text-lg font-semibold mb-4" id="joui">日向坂ちゃんねる 人気動画 ランキング</h2>
+  <h2 class="text-lg font-semibold font-mont mb-4" id="joui">日向坂ちゃんねる 人気動画 ランキング</h2>
 
   <div class="flex flex-wrap gap-3 mb-6">
     <button 
@@ -180,7 +180,7 @@
 
   {{-- 最新動画（時系列） --}}
   <section class="mt-10">
-    <h2 class="text-lg font-semibold" id="saishin">日向坂ちゃんねる 最新動画</h2>
+    <h2 class="text-lg font-semibold font-mont" id="saishin">日向坂ちゃんねる 最新動画</h2>
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-3">
       @foreach ($latest as $v)
         <a href="{{ $v->watch_url }}" target="_blank" rel="noopener"

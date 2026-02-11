@@ -43,7 +43,7 @@
 
 @section('content')
 <div class="max-w-3xl mx-auto p-6">
-  <h1 class="text-3xl font-bold mb-8 text-center">日向坂46 ヒストリー</h1>
+  <h1 class="text-3xl font-bold font-mont mb-8 text-center">日向坂46 ヒストリー</h1>
 
   <!-- 年ナビ（タブ風） -->
   <div class="flex flex-wrap justify-center gap-2 mb-8">
@@ -60,7 +60,7 @@
   <!-- タイムライン本体 -->
   @foreach($timeline as $year => $events)
   <section id="year-{{ $year }}" class="mb-12 scroll-mt-20">
-    <h2 class="text-2xl font-semibold text-[#7cc7e8] border-l-4 border-[#7cc7e8] pl-3 mb-6">
+    <h2 class="text-2xl font-semibold font-mont text-[#7cc7e8] border-l-4 border-[#7cc7e8] pl-3 mb-6">
       {{ $year }}年
     </h2>
     <ul class="relative border-l border-gray-300 pl-6 space-y-6">

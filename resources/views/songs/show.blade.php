@@ -80,7 +80,7 @@
 </nav>
     <!-- 楽曲詳細 -->
     <main class="container mx-auto mt-8 px-4">
-        <h1 class="text-3xl font-bold">{{ $song->title }}</h1>
+        <h1 class="text-3xl font-bold font-mont">{{ $song->title }}</h1>
         <section class="flex flex-col md:flex-row mt-8 bg-white p-6 shadow-md rounded-lg">
             <div class="flex-shrink-0">
                 <img src="{{ asset('storage/' . ($song->photo ?? 'default.jpg')) }}"

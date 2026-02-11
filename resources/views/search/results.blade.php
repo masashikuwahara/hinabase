@@ -7,7 +7,7 @@
 @section('content')
     <!-- 検索結果 -->
     <main class="container mx-auto mt-8 px-4">
-        <h2 class="text-2xl font-semibold">「{{ $query }}」の検索結果</h2>
+        <h2 class="text-2xl font-semibold font-mont">「{{ $query }}」の検索結果</h2>
 
         @if ($results->isEmpty())
             <p class="mt-4 text-gray-700">該当する結果が見つかりませんでした。</p>

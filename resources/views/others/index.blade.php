@@ -4,7 +4,7 @@
 
 @section('content')
 <main class="container mx-auto mt-8 px-4">
-  <h1 class="text-2xl font-bold mb-6">リンク集</h1>
+  <h1 class="text-2xl font-bold font-mont mb-6">リンク集</h1>
 
   <ul id="linkList" class="mt-4 space-y-2">
     @foreach ($links as $link)
