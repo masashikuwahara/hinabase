@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.font-num {
+  font-family: 'Montserrat', 'Noto Sans JP', sans-serif;
+  font-variant-numeric: tabular-nums; /* 桁が揃って見やすい */
+}
