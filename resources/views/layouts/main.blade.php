@@ -37,6 +37,9 @@
     <meta name="twitter:title" content="{{ trim($__env->yieldContent('og_title', $__env->yieldContent('title', 'HINABASE'))) }}">
     <meta name="twitter:description" content="@yield('twitter_description', '日向坂46データベースサイト')">
     <meta name="twitter:image" content="@yield('twitter_image', 'https://kasumizaka46.com/storage/images/logo.png')">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
     @vite('resources/css/app.css')
     <script type="application/ld+json">
         {
@@ -67,7 +70,7 @@
     </style>
     @stack('head_meta')
 </head>
-<body class="bg-[#f0f8ff] text-gray-800">
+<body class="bg-[#f0f8ff] text-gray-800 font-sans">
 
     @include('partials.header')
 

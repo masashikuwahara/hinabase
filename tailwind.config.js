@@ -12,7 +12,8 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Noto Sans JP', 'Hiragino Sans', 'Yu Gothic', 'Meiryo', 'sans-serif'],
+                mont: ['Montserrat', 'Noto Sans JP', 'sans-serif'],
             },
             screens: {
                 xs: '450px', // 430px以下で適用
