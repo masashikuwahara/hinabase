@@ -28,8 +28,10 @@ class YoutubeRankingController extends Controller
         $chart = $videosTopViews->take(10)->map(fn($v)=>[
             'title' => mb_strimwidth($v->title,0,20,'…'),
             'views' => (int)$v->view_count,
+            'video_id' => $v->video_id,
         ]);
 
+        $lastUpdatedAt = now();
         return view('youtube.ranking', compact('videosTopViews','latest','chart'));
     }
 

@@ -4,6 +4,7 @@
 @section('meta_description', '日向坂46公式YouTube「日向坂ちゃんねる」の人気動画ランキング。再生数・高評価数トップ50を毎日更新。最新動画・ショート動画・メンバー出演情報も掲載。')
 
 @push('head_meta')
+<meta name="robots" content="max-snippet:-1,max-image-preview:large,max-video-preview:-1">
 <meta property="og:type" content="website">
 <meta property="og:title" content="日向坂ちゃんねる人気動画ランキング【最新】 | HINABASE">
 <meta property="og:description" content="日向坂46公式YouTubeチャンネル「日向坂ちゃんねる」の人気動画を再生数順に紹介。毎日自動更新中。">
@@ -12,7 +13,55 @@
 <meta name="twitter:site" content="@HINABASE_JP">
 <link rel="canonical" href="{{ url()->current() }}">
 
+@php
+  $canonical = url()->current();
+  $desc = '日向坂46公式YouTube「日向坂ちゃんねる」の人気動画ランキング。再生数・高評価数トップ50を毎日自動更新。';
+  $lastUpdatedAt = $lastUpdatedAt ?? now();
+@endphp
+
 <script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"CollectionPage",
+  "name":"日向坂ちゃんねる人気動画ランキング【最新】 | HINABASE",
+  "url":"{{ $canonical }}",
+  "description":"{{ $desc }}",
+  "dateModified":"{{ \Carbon\Carbon::parse($lastUpdatedAt)->toIso8601String() }}",
+  "isPartOf": { "@type": "WebSite", "name": "HINABASE", "url": "{{ url('/') }}" },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "ホーム", "item": "{{ url('/') }}" },
+      { "@type": "ListItem", "position": 2, "name": "日向坂ちゃんねるランキング", "item": "{{ $canonical }}" }
+    ]
+  },
+  "mainEntity": {
+    "@type": "ItemList",
+    "name": "日向坂ちゃんねる 再生数ランキングTOP10",
+    "itemListOrder": "https://schema.org/ItemListOrderDescending",
+    "numberOfItems": {{ $chart->count() }},
+    "itemListElement": [
+      @foreach($chart as $i => $row)
+      {
+        "@type": "ListItem",
+        "position": {{ $i+1 }},
+        "name": @json($row['title']),
+        "url": "https://www.youtube.com/watch?v={{ $row['video_id'] }}",
+        "additionalProperty": [
+          {
+            "@type":"PropertyValue",
+            "name":"views",
+            "value":"{{ number_format((int)$row['views']) }}"
+          }
+        ]
+      }@if(!$loop->last),@endif
+      @endforeach
+    ]
+  }
+}
+</script>
+
+{{-- <script type="application/ld+json">
 {
  "@context":"https://schema.org",
  "@type":"WebPage",
@@ -37,7 +86,7 @@
    ]
  }
 }
-</script>
+</script> --}}
 @endpush
 
 @section('content')
@@ -51,7 +100,34 @@
 
 <main class="container mx-auto mt-6 px-4">
   <h1 class="text-2xl font-bold font-mont">日向坂ちゃんねる人気動画ランキング【最新】</h1>
-  <p class="text-sm text-gray-600 mt-1">日向坂46公式YouTubeチャンネル「日向坂ちゃんねる」の人気動画を再生数順に紹介。</p>
+  @php
+    // できれば controller から $lastUpdatedAt を渡すのがベスト。
+    // 暫定：ページ生成時刻（＝更新処理が走って表示された時刻）として now() を使う
+    $lastUpdatedAt = $lastUpdatedAt ?? now();
+  @endphp
+
+  <section class="mt-3 bg-white border rounded p-4 text-sm text-gray-700 leading-relaxed">
+    <p class="font-semibold text-gray-900">このランキングについて（集計方法・更新）</p>
+    <ul class="list-disc pl-5 mt-2 space-y-1">
+      <li>対象：日向坂46公式YouTube「日向坂ちゃんねる」の公開動画（ショート含む）</li>
+      <li>集計：再生数 / 高評価数 / コメント数（YouTube上の公開データ）</li>
+      <li>
+        更新：毎日自動更新（最終更新：
+        <time datetime="{{ \Carbon\Carbon::parse($lastUpdatedAt)->toIso8601String() }}">
+          {{ \Carbon\Carbon::parse($lastUpdatedAt)->format('Y/m/d H:i') }}
+        </time>）
+      </li>
+      <li>注記：YouTube側の反映遅延等により数値が前後する場合があります</li>
+    </ul>
+  </section>
+
+  {{-- <p class="text-sm text-gray-600 mt-1">日向坂46公式YouTubeチャンネル「日向坂ちゃんねる」の人気動画を再生数順に紹介。</p> --}}
+
+  <p class="text-sm text-gray-600 mt-1">
+    日向坂46公式YouTube「日向坂ちゃんねる」の人気動画を再生数順にランキング化。
+    高評価数・コメント数でも並べ替え可能。ショート動画も含め、毎日自動更新しています。
+  </p>
+
   <div class="flex gap-4 mb-8">
     <button class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition scroll-btn" data-target="joui">上位一覧へ</button>
     <button class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition scroll-btn" data-target="saishin">新着動画へ</button>
@@ -147,7 +223,7 @@
   </script>
 </section>
 
-@foreach ($videosTopViews as $v)
+@foreach ($videosTopViews->take(10) as $v)
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
