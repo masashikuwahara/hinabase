@@ -224,6 +224,45 @@
 </section>
 
 @foreach ($videosTopViews->take(10) as $v)
+  @php
+    $title = html_entity_decode($v->title ?? '', ENT_QUOTES, 'UTF-8');
+
+    $videoLd = [
+      '@context' => 'https://schema.org',
+      '@type' => 'VideoObject',
+      'name' => $title,
+      'description' => \Illuminate\Support\Str::limit(strip_tags(html_entity_decode($v->description ?? $title, ENT_QUOTES, 'UTF-8')), 160),
+      'thumbnailUrl' => [$v->thumbnail_url],
+      'uploadDate' => optional($v->published_at)->toIso8601String(),
+      'embedUrl' => "https://www.youtube.com/embed/{$v->video_id}",
+      'contentUrl' => "https://www.youtube.com/watch?v={$v->video_id}",
+      'url' => "https://www.youtube.com/watch?v={$v->video_id}",
+      'publisher' => [
+        '@type' => 'Organization',
+        'name' => '日向坂ちゃんねる',
+        'logo' => [
+          '@type' => 'ImageObject',
+          'url' => 'https://kasumizaka46.com/storage/images/logo.png',
+        ],
+      ],
+      'interactionStatistic' => [
+        '@type' => 'InteractionCounter',
+        'interactionType' => 'https://schema.org/WatchAction',
+        'userInteractionCount' => (int) $v->view_count,
+      ],
+    ];
+
+    if (!empty($v->duration)) {
+      $videoLd['duration'] = $v->duration; // "PT5M12S" 形式ならOK。怪しいなら入れない
+    }
+  @endphp
+
+  <script type="application/ld+json">
+    {!! json_encode($videoLd, JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES) !!}
+  </script>
+@endforeach
+
+{{-- @foreach ($videosTopViews->take(10) as $v)
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -251,7 +290,7 @@
       }
     }
   </script>
-@endforeach
+@endforeach --}}
 
 
   {{-- 最新動画（時系列） --}}
