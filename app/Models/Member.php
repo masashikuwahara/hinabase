@@ -13,6 +13,10 @@ class Member extends Model
     protected $fillable = ['name', 'furigana', 'birthday', 'constellation','height','blood_type','birthplace', 'nickname',
     'grade','color1','colorname1','color2','colorname2','promotion_video','image','graduation','introduction','sns','blog_url'];
 
+    protected $casts = [
+        'birthday' => 'date',
+        ];
+
     public function songs()
     {
         return $this->belongsToMany(Song::class, 'song_members')
