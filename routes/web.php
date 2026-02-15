@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PopularController;
+use App\Http\Controllers\MemberStatsController;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 use App\Models\Member;
@@ -27,6 +28,7 @@ Route::get('/songs/{id}', [SongController::class, 'show'])
     ->middleware(['throttle:songs-limit', 'count.popularity'])
     ->name('songs.show');
 Route::get('/members', [MemberController::class, 'index'])->name('members.index');
+Route::get('/members/stats', [MemberStatsController::class, 'index'])->name('members.stats');
 Route::get('/members/{member}', [MemberController::class, 'show'])
     ->middleware('count.popularity', 'throttle:members-limit')
     ->name('members.show');
