@@ -126,6 +126,10 @@
                     class="px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-md hover:bg-yellow-600">
                     身長順
                 </a>
+                <a href="{{ route('members.stats') }}" 
+                    class="px-4 py-2 bg-pink-500 text-white rounded-lg shadow-md hover:bg-pink-600">
+                    メンバー 統計・ランキングはこちら
+                </a>
                 {{-- <a href="{{ route('members.index', ['sort' => 'birthplace', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
                     class="px-4 py-2 bg-pink-500 text-white rounded-lg shadow-md hover:bg-pink-600">
                     出身地順

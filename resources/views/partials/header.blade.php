@@ -36,6 +36,7 @@
     <ul class="flex flex-col space-y-6 text-xl">
       <li><a href="{{ route('members.index') }}" class="hover:text-blue-600">メンバー一覧</a></li>
       <li><a href="{{ route('songs.index') }}" class="hover:text-blue-600">楽曲一覧</a></li>
+      <li><a href="{{ route('members.stats') }}" class="hover:underline">メンバー 統計・ランキング</a></li>
       <li><a href="{{ route('popular.index') }}" class="hover:text-blue-600">人気ページTOP20</a></li>
       <li><a href="{{ route('timeline.index') }}" class="hover:text-blue-600">日向坂46ヒストリー</a></li>
       <li><a href="{{ route('others.index') }}" class="hover:text-blue-600">その他</a></li>
@@ -48,6 +49,7 @@
     <ul class="flex space-x-6 text-lg">
       <li><a href="{{ route('members.index') }}" class="hover:underline">メンバー一覧</a></li>
       <li><a href="{{ route('songs.index') }}" class="hover:underline">楽曲一覧</a></li>
+      <li><a href="{{ route('members.stats') }}" class="hover:underline">メンバー 統計・ランキング</a></li>
       <li><a href="{{ route('popular.index') }}" class="hover:underline">人気ページTOP20</a></li>
       <li><a href="{{ route('timeline.index') }}" class="hover:underline">日向坂46ヒストリー</a></li>
       <li><a href="{{ route('others.index') }}" class="hover:underline">その他</a></li>
@@ -60,7 +62,7 @@
   </a>
 </div>
 
-<div class="bg-[#4ade80] text-white py-2 w-full text-center text-sm md:text-base">
+<div class="bg-[#f19db5] text-white py-2 w-full text-center text-sm md:text-base">
   <a href="https://sakurazaka46.live/" target="_blank" class="hover:text-yellow-200 font-semibold transition-colors duration-200">
     姉妹サイトSAKURA DATA 46 オープンしました
   </a>
