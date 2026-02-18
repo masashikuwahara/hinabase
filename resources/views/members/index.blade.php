@@ -1,16 +1,9 @@
 @extends('layouts.main')
 
-@section('title', '日向坂46メンバー一覧')
-@section('meta_description', '日向坂46のメンバー一覧。プロフィール、あだ名、生年月日、身長、血液型、参加楽曲などのリンクを整理。期別の在籍メンバーと卒業メンバーを確認できます。')
+@section('title', '日向坂46メンバー一覧（在籍・卒業）｜期別・50音・誕生日・身長 | HINABASE')
+@section('meta_description', '日向坂46メンバーを在籍・卒業別／期別に一覧化。プロフィール（誕生日・身長・血液型・出身）や参加楽曲数、センター回数もまとめて確認できます。')
 
 @push('head_meta')
-  @if(request('sort') || request('order'))
-    <meta name="robots" content="noindex,follow">
-    <link rel="canonical" href="{{ route('members.index') }}">
-  @else
-    <link rel="canonical" href="{{ url()->current() }}">
-  @endif
-
   @php
     $hasSort = request()->has('sort') || request()->has('order');
     $hasPage = (int)request('page') > 1;
@@ -86,6 +79,9 @@
     <main class="container mx-auto mt-8 px-4">
         {{-- 現在の状態を表示 --}}
         <h1 class="text-2xl font-semibold font-mont">日向坂46メンバー一覧</h1>
+        <p class="text-sm text-gray-600 mt-1">
+            日向坂46の在籍・卒業メンバーを期別に一覧化。プロフィール（誕生日・身長・血液型・出身）や参加楽曲数もまとめて確認できます。
+        </p>
         @php
         $labels = [
             'default'    => 'デフォルト',
