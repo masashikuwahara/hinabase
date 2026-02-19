@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
             $songId = (int) $request->route('id');
             
             $limitedIds = [150, 147];
-            $limit = 2;
+            $limit = 3;
             if (in_array($songId, $limitedIds, true)) {
                 $key = "song_access_{$songId}_" . now()->toDateString();
                 $count = Cache::get($key, 0);
