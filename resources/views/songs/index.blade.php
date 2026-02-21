@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', '日向坂46楽曲一覧')
+@section('title', '日向坂46楽曲一覧｜表題曲・カップリング・参加メンバー・センター | HINABASE')
 @section('meta_description', '日向坂46の楽曲一覧。表題曲・カップリング曲を網羅。発売日・センター・参加メンバー・作詞作曲情報の個別ページへリンク。最新更新も随時反映。')
 
 @push('head_meta')
@@ -61,6 +61,9 @@
 
   <main class="container mx-auto mt-8 px-4">
     <h1 class="text-2xl font-bold font-mont">楽曲一覧</h1>
+    <p class="text-sm text-gray-600 mt-1">
+      日向坂46の表題曲・カップリング曲を一覧で掲載。各楽曲ページで発売日、センター、参加メンバー、作詞・作曲情報を確認できます。
+    </p>
 
     {{-- 表題曲 --}}
     <section class="mt-6">
