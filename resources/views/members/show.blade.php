@@ -102,7 +102,7 @@
                     <li><strong>ニックネーム:</strong> {{ $member->nickname }}</li>
                     <li><strong>生年月日:</strong> {{ \Carbon\Carbon::parse($member->birthday)->format('Y年m月d日') }}</li>
                     <li><strong>星座:</strong> {{ $member->constellation }}</li>
-                    <li><strong>身長:</strong> {{ $member->height }}cm</li>
+                    <li><strong>身長:</strong>{{ fmod((float)$member->height, 1.0) === 0.0 ? number_format($member->height, 0) : number_format($member->height, 1) }}cm</li>
                     <li><strong>血液型:</strong> {{ $member->blood_type }}</li>
                     <li><strong>出身地:</strong> {{ $member->birthplace }}</li>
                     <li><strong>加入:</strong> {{ $member->grade }}</li>
