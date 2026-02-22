@@ -33,17 +33,17 @@ class MemberStatsController extends Controller
         $heightRank = (clone $base)
             ->orderByRaw('height IS NULL asc')
             ->orderBy('height', 'desc')
-            ->get(['id', 'name', 'height']);
+            ->get(['id', 'name', 'height', 'grade']);
         
         // 1b) 可視化用（Alpineへ渡す配列）
         $heightRankForJs = $heightRank
-            ->filter(fn ($m) => $m->height !== null)
-            ->map(fn ($m) => [
-                'id' => (int) $m->id,
-                'name' => (string) $m->name,
-                'height' => (float) $m->height,
-            ])
-            ->values();
+        ->filter(fn ($m) => $m->height !== null)
+        ->map(fn ($m) => [
+            'id' => (int)$m->id,
+            'name' => (string)$m->name,
+            'height' => (float)$m->height,
+            'grade' => $this->gradeToNum($m->grade),
+        ])->values();
 
         // 2) 誕生日順
         $birthdayRank = (clone $base)
@@ -145,5 +145,19 @@ class MemberStatsController extends Controller
             'bloodtypeRank' => $bloodtypeRank,
             'birthplaceRank' => $birthplaceRank,
         ];
+    }
+
+    private function gradeToNum($grade): int
+    {
+        $g = (string)($grade ?? '');
+
+        return match (true) {
+            str_contains($g, '一') => 1,
+            str_contains($g, '二') => 2,
+            str_contains($g, '三') => 3,
+            str_contains($g, '四') => 4,
+            str_contains($g, '五') => 5,
+            default => 0,
+        };
     }
 }
