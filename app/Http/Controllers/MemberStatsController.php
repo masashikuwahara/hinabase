@@ -34,6 +34,16 @@ class MemberStatsController extends Controller
             ->orderByRaw('height IS NULL asc')
             ->orderBy('height', 'desc')
             ->get(['id', 'name', 'height']);
+        
+        // 1b) 可視化用（Alpineへ渡す配列）
+        $heightRankForJs = $heightRank
+            ->filter(fn ($m) => $m->height !== null)
+            ->map(fn ($m) => [
+                'id' => (int) $m->id,
+                'name' => (string) $m->name,
+                'height' => (float) $m->height,
+            ])
+            ->values();
 
         // 2) 誕生日順
         $birthdayRank = (clone $base)
@@ -79,13 +89,61 @@ class MemberStatsController extends Controller
             )
             ->orderByDesc('titlesong_count')
             ->get();
+        
+        // 6) 血液型順（A, B, O, AB, 不明）
+        $bloodtypeRank = (clone $base)
+            ->orderByRaw("
+                CASE
+                    WHEN blood_type IS NULL OR blood_type = '' THEN 6
+                    ELSE 0
+                END asc
+            ")
+            ->orderByRaw("FIELD(blood_type, 'A型', 'B型', 'O型', 'AB型', '不明')")
+            ->orderBy('furigana', 'asc')
+            ->get(['id', 'name', 'furigana', 'blood_type']);
+        
+        // 7) 出身地（都道府県）順：北→南（京都問題修正版）
+        $prefExpr = "
+            CASE
+                WHEN birthplace = '北海道' THEN '北海道'
+                WHEN RIGHT(birthplace, 1) IN ('都','府','県') THEN LEFT(birthplace, CHAR_LENGTH(birthplace) - 1)
+                ELSE birthplace
+            END
+        ";
+
+        $birthplaceRank = (clone $base)
+            ->orderByRaw("FIELD($prefExpr,
+                '北海道','青森','岩手','宮城','秋田','山形','福島',
+                '茨城','栃木','群馬','埼玉','千葉','東京','神奈川',
+                '新潟','富山','石川','福井','山梨','長野',
+                '岐阜','静岡','愛知','三重',
+                '滋賀','京都','大阪','兵庫','奈良','和歌山',
+                '鳥取','島根','岡山','広島','山口',
+                '徳島','香川','愛媛','高知',
+                '福岡','佐賀','長崎','熊本','大分','宮崎','鹿児島','沖縄'
+            ) = 0 asc")
+            ->orderByRaw("FIELD($prefExpr,
+                '北海道','青森','岩手','宮城','秋田','山形','福島',
+                '茨城','栃木','群馬','埼玉','千葉','東京','神奈川',
+                '新潟','富山','石川','福井','山梨','長野',
+                '岐阜','静岡','愛知','三重',
+                '滋賀','京都','大阪','兵庫','奈良','和歌山',
+                '鳥取','島根','岡山','広島','山口',
+                '徳島','香川','愛媛','高知',
+                '福岡','佐賀','長崎','熊本','大分','宮崎','鹿児島','沖縄'
+            ) asc")
+            ->orderBy('furigana', 'asc')
+            ->get(['id','name','furigana','birthplace']);
 
         return [
             'heightRank' => $heightRank,
+            'heightRankForJs' => $heightRankForJs,
             'birthdayRank' => $birthdayRank,
             'songCountRank' => $songCountRank,
             'centerCountRank' => $centerCountRank,
             'titleSongCountRank' => $titleSongCountRank,
+            'bloodtypeRank' => $bloodtypeRank,
+            'birthplaceRank' => $birthplaceRank,
         ];
     }
 }
