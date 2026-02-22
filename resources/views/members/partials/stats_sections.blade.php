@@ -43,9 +43,15 @@
 
     <div x-ref="rail" class="flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory scroll-smooth">
       <template x-for="m in sorted" :key="m.id">
-        <div class="snap-start shrink-0 w-28">
+        <div class="snap-start shrink-0 w-28 relative">
+          <span class="absolute top-0 right-0 translate-x-1 -translate-y-1
+                      text-[10px] px-2 py-0.5 rounded-full border bg-white/90"
+                :class="genBadgeClass(m.grade)"
+                x-text="m.grade ? (m.grade + '期') : ''">
+          </span>
+
           <div class="h-[300px] flex flex-col justify-end">
-            <div class="mx-auto w-2 rounded bg-gray-300" :style="`height:${m.renderPx}px;`" aria-hidden="true"></div>
+            <div class="mx-auto w-2 rounded bg-gray-200" :style="`height:${m.renderPx}px;`" aria-hidden="true"></div>
 
             <svg class="mx-auto -mt-2 fill-gray-800" :style="`height:${m.renderPx}px; width:auto;`" viewBox="0 0 80 160" aria-hidden="true">
               <circle cx="40" cy="22" r="14" />
@@ -57,7 +63,12 @@
 
           <div class="mt-2 text-center leading-tight">
             <div class="text-xs font-semibold" x-text="m.name"></div>
-            <div class="text-xs text-gray-600" x-text="m.height + 'cm'"></div>
+
+            <div class="mt-1 mx-auto h-[3px] w-14 rounded"
+                :class="genColorClass(m.grade)">
+            </div>
+
+            <div class="text-xs text-gray-600 mt-1" x-text="m.height + 'cm'"></div>
           </div>
         </div>
       </template>
@@ -208,7 +219,14 @@
     <script>
       window.heightLineup ??= function heightLineup({ members, maxPx }) {
         const list = (members ?? []).filter(m => typeof m.height === 'number');
-        if (!list.length) return { sorted: [], scrollBy(){ } };
+        if (!list.length) {
+          return {
+            sorted: [],
+            scrollBy(){},
+            genColorClass(){ return 'bg-gray-300'; },
+            genBadgeClass(){ return 'border-gray-200 text-gray-600'; },
+          };
+        }
 
         const heights = list.map(m => m.height);
         const maxCm = Math.max(...heights);
@@ -225,8 +243,31 @@
 
         return {
           sorted: withRender.sort((a, b) => b.height - a.height),
+
           scrollBy(px) {
             this.$refs.rail?.scrollBy({ left: px, behavior: 'smooth' });
+          },
+
+          genColorClass(gen) {
+            switch (gen) {
+              case 1: return 'bg-rose-400';
+              case 2: return 'bg-sky-400';
+              case 3: return 'bg-emerald-400';
+              case 4: return 'bg-amber-400';
+              case 5: return 'bg-violet-400';
+              default: return 'bg-gray-300';
+            }
+          },
+
+          genBadgeClass(gen) {
+            switch (gen) {
+              case 1: return 'border-rose-300 text-rose-700';
+              case 2: return 'border-sky-300 text-sky-700';
+              case 3: return 'border-emerald-300 text-emerald-700';
+              case 4: return 'border-amber-300 text-amber-700';
+              case 5: return 'border-violet-300 text-violet-700';
+              default: return 'border-gray-200 text-gray-600';
+            }
           }
         };
       };
