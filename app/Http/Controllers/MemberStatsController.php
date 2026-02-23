@@ -16,7 +16,13 @@ class MemberStatsController extends Controller
         $graduated = $this->buildRanks(1, $asOf);
         $all       = $this->buildRanks(null, $asOf);
 
-        return view('members.stats', compact('current', 'graduated', 'all'));
+        $breadcrumbs = [
+            ['label' => 'ホーム', 'url' => url('/')],
+            ['label' => 'メンバー', 'url' => route('members.index')],
+            ['label' => '統計・ランキング', 'url' => null],
+        ];
+
+        return view('members.stats', compact('current', 'graduated', 'all','breadcrumbs'));
     }
 
     /**
