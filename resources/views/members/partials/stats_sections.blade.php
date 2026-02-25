@@ -37,28 +37,58 @@
       <button type="button" class="px-3 py-1 rounded border text-sm" @click="scrollBy(320)">▶</button>
     </div>
   </div>
+  
+  <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-600">
+    <span class="font-semibold text-gray-700">凡例：</span>
 
-  <div class="relative border-b">
-    <div class="absolute left-0 right-0 -bottom-[1px] h-px bg-gray-300"></div>
+    <span class="inline-flex items-center gap-1">
+      <span class="inline-block h-2.5 w-2.5 rounded-sm" :class="genColorClass(1)"></span>
+      <span>1期</span>
+    </span>
+
+    <span class="inline-flex items-center gap-1">
+      <span class="inline-block h-2.5 w-2.5 rounded-sm" :class="genColorClass(2)"></span>
+      <span>2期</span>
+    </span>
+
+    <span class="inline-flex items-center gap-1">
+      <span class="inline-block h-2.5 w-2.5 rounded-sm" :class="genColorClass(3)"></span>
+      <span>3期</span>
+    </span>
+
+    <span class="inline-flex items-center gap-1">
+      <span class="inline-block h-2.5 w-2.5 rounded-sm" :class="genColorClass(4)"></span>
+      <span>4期</span>
+    </span>
+
+    <span class="inline-flex items-center gap-1">
+      <span class="inline-block h-2.5 w-2.5 rounded-sm" :class="genColorClass(5)"></span>
+      <span>5期</span>
+    </span>
+  </div>
+
+  <div class="relative">
+    <div class="absolute left-0 right-0 bottom-[72px] h-px bg-gray-300"></div>
 
     <div x-ref="rail" class="flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory scroll-smooth">
       <template x-for="m in sorted" :key="m.id">
         <div class="snap-start shrink-0 w-28 relative">
-          <span class="absolute top-0 right-0 translate-x-1 -translate-y-1
+          <span class="absolute top-1 right-0 translate-x-1 -translate-y-1
                       text-[10px] px-2 py-0.5 rounded-full border bg-white/90"
                 :class="genBadgeClass(m.grade)"
                 x-text="m.grade ? (m.grade + '期') : ''">
           </span>
 
           <div class="h-[300px] flex flex-col justify-end">
-            <div class="mx-auto w-2 rounded bg-gray-200" :style="`height:${m.renderPx}px;`" aria-hidden="true"></div>
-
-            <svg class="mx-auto -mt-2 fill-gray-800" :style="`height:${m.renderPx}px; width:auto;`" viewBox="0 0 80 160" aria-hidden="true">
-              <circle cx="40" cy="22" r="14" />
-              <rect x="28" y="36" width="24" height="54" rx="10" />
-              <rect x="30" y="90" width="8" height="60" rx="4" />
-              <rect x="42" y="90" width="8" height="60" rx="4" />
-            </svg>
+            <img
+              :src="`storage/images/avatars/members/${m.id}.png`"
+              :style="`height:${m.renderPx}px; width:auto;`"
+              class="mx-auto -mt-2 block object-contain select-none"
+              alt=""
+              loading="lazy"
+              decoding="async"
+              onerror="this.onerror=null; this.src='{{ asset('storage/images/avatars/base.png') }}';"
+            />
           </div>
 
           <div class="mt-2 text-center leading-tight">
