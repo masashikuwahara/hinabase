@@ -73,7 +73,7 @@
     <div x-ref="rail" class="flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory scroll-smooth">
       <template x-for="m in sorted" :key="m.id">
         <div class="snap-start shrink-0 w-28 relative">
-          <span class="absolute top-1 right-0 translate-x-1 -translate-y-1
+          <span class="absolute top-1 right-1
                       text-[10px] px-2 py-0.5 rounded-full border bg-white/90"
                 :class="genBadgeClass(m.grade)"
                 x-text="m.grade ? (m.grade + '期') : ''">
@@ -81,13 +81,13 @@
 
           <div class="h-[300px] flex flex-col justify-end">
             <img
-              :src="`storage/images/avatars/members/${m.id}.png`"
+              :src="`/storage/images/avatars/members/${m.id}.png`"
               :style="`height:${m.renderPx}px; width:auto;`"
               class="mx-auto -mt-2 block object-contain select-none"
               alt=""
               loading="lazy"
               decoding="async"
-              onerror="this.onerror=null; this.src='{{ asset('storage/images/avatars/base.png') }}';"
+              onerror="this.onerror=null; this.src='{{ asset('/storage/images/avatars/base.png') }}';"
             />
           </div>
 
