@@ -24,7 +24,7 @@
       現役
     </button>
 
-    {{-- <button type="button"
+    <button type="button"
       @click="group='graduated'; open=''"
       class="px-4 py-1.5 rounded-full text-sm transition"
       :class="group==='graduated' ? 'bg-blue-600 text-white shadow' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'">
@@ -36,7 +36,7 @@
       class="px-4 py-1.5 rounded-full text-sm transition"
       :class="group==='all' ? 'bg-blue-600 text-white shadow' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'">
       全員
-    </button> --}}
+    </button>
   </div>
 
   {{-- 内容 --}}

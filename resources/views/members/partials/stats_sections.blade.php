@@ -21,17 +21,17 @@
     </ol>
   </div>
 </section>
-
+@auth
 {{-- 身長順可視化用 --}}
 <div
   x-data="heightLineup({
     maxPx: 260,
-    members: @js($data['heightRankForJs']),
+    members: @js($data['heightRankForJs']),active: null
   })"
   class="space-y-3"
 >
   <div class="flex items-center justify-between">
-    <h2 class="text-lg font-bold">身長順</h2>
+    <h2 class="text-lg font-bold">図で比較</h2>
     <div class="flex gap-2">
       <button type="button" class="px-3 py-1 rounded border text-sm" @click="scrollBy(-320)">◀</button>
       <button type="button" class="px-3 py-1 rounded border text-sm" @click="scrollBy(320)">▶</button>
@@ -67,28 +67,58 @@
     </span>
   </div>
 
-  <div class="relative">
+  <div class="relative" @click="active = null">
     <div class="absolute left-0 right-0 bottom-[72px] h-px bg-gray-300"></div>
 
-    <div x-ref="rail" class="flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory scroll-smooth">
+    <div x-ref="rail" class="flex gap-3 overflow-x-auto pb-3 snap-x snap-mandatory scroll-smooth" @click.stop>
       <template x-for="m in sorted" :key="m.id">
-        <div class="snap-start shrink-0 w-28 relative">
+        {{-- <div class="snap-start shrink-0 w-28 sm:w-32 relative"> --}}
+        <div class="snap-start shrink-0 w-28 relative cursor-pointer"
+            @click.stop="active = (active?.id === m.id ? null : m)"
+            {{-- @click.outside="active = null" --}}
+            role="button"
+            tabindex="0"
+            @keydown.enter="active = (active?.id === m.id ? null : m)"
+            @keydown.space.prevent="active = (active?.id === m.id ? null : m)"
+        >
           <span class="absolute top-1 right-1
                       text-[10px] px-2 py-0.5 rounded-full border bg-white/90"
                 :class="genBadgeClass(m.grade)"
                 x-text="m.grade ? (m.grade + '期') : ''">
           </span>
+          <div
+            x-show="active?.id === m.id"
+            x-transition
+            class="absolute left-1/2 -translate-x-1/2 top-8 z-20
+                  w-44 rounded-lg border bg-white shadow-lg p-2 text-xs"
+          >
+            <div class="font-semibold text-gray-900" x-text="m.name"></div>
+            <div class="mt-1 text-gray-700">
+              <span class="text-gray-500">身長</span>：
+              <span class="font-num" x-text="m.height + 'cm'"></span>
+            </div>
+            <div class="mt-0.5 text-gray-700">
+              <span class="text-gray-500">期</span>：
+              <span x-text="m.grade ? (m.grade + '期') : '不明'"></span>
+            </div>
 
+            <div class="mt-2 flex justify-end">
+              <a :href="`/members/${m.id}`"
+                class="text-blue-600 hover:underline"
+                @click.stop
+              >詳細へ</a>
+            </div>
+          </div>
           <div class="h-[300px] flex flex-col justify-end">
-            <img
-              :src="`/storage/images/avatars/members/${m.id}.png`"
-              :style="`height:${m.renderPx}px; width:auto;`"
-              class="mx-auto -mt-2 block object-contain select-none"
-              alt=""
-              loading="lazy"
-              decoding="async"
-              onerror="this.onerror=null; this.src='{{ asset('/storage/images/avatars/base.png') }}';"
-            />
+          <img
+            :src="`/storage/images/avatars/members/${m.id}.png`"
+            :style="`height:${m.renderPx}px; width:100%; object-fit:contain; object-position:bottom center;`"
+            class="mx-auto block select-none"
+            alt=""
+            loading="lazy"
+            decoding="async"
+            onerror="this.onerror=null; this.src='{{ asset('storage/images/avatars/base.png') }}';"
+          />
           </div>
 
           <div class="mt-2 text-center leading-tight">
@@ -105,7 +135,7 @@
     </div>
   </div>
 </div>
-
+@endauth
 {{-- 誕生日順 --}}
 <section class="bg-white rounded-xl shadow">
   <button type="button" class="w-full flex items-center justify-between p-4"
@@ -272,6 +302,7 @@
         });
 
         return {
+          active: null,
           sorted: withRender.sort((a, b) => b.height - a.height),
 
           scrollBy(px) {
