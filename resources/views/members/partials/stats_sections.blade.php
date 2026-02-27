@@ -21,7 +21,7 @@
     </ol>
   </div>
 </section>
-@auth
+
 {{-- 身長順可視化用 --}}
 <div
   x-data="heightLineup({
@@ -90,7 +90,7 @@
             x-show="active?.id === m.id"
             x-transition
             class="absolute left-1/2 -translate-x-1/2 top-8 z-20
-                  w-44 rounded-lg border bg-white shadow-lg p-2 text-xs"
+                  w-38 rounded-lg border bg-white shadow-lg p-2 text-xs"
           >
             <div class="font-semibold text-gray-900" x-text="m.name"></div>
             <div class="mt-1 text-gray-700">
@@ -135,7 +135,7 @@
     </div>
   </div>
 </div>
-@endauth
+
 {{-- 誕生日順 --}}
 <section class="bg-white rounded-xl shadow">
   <button type="button" class="w-full flex items-center justify-between p-4"
