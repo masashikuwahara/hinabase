@@ -161,10 +161,14 @@
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                         身長順
                     </a>
-                    {{-- <a href="{{ route('members.index', ['sort' => 'birthplace', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
+                    <a href="{{ route('members.stats') }}" 
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        メンバー 統計・ランキングはこちら
+                    </a>
+                    <!--<a href="{{ route('members.index', ['sort' => 'birthplace', 'order' => $order === 'asc' ? 'desc' : 'asc']) }}" 
                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                         出身地順
-                    </a> --}}
+                    </a> -->
                 </div>
             </div>
         </div>
@@ -206,9 +210,9 @@
                 @endif
             </section>
     
-            {{-- <div class="text-center text-blue-700 mt-8">
+            <!--<div class="text-center text-blue-700 mt-8">
                 <a href="https://hinatazaka5th.netlify.app/" target="_blank" rel="noopener noreferrer" class="hover:underline">五期生推しメンチェッカー</a>
-            </div> --}}
+            </div> -->
             <!-- 卒業メンバー -->
             <section class="mt-8">
                 <h2 class="text-xl font-semibold font-mont text-gray-800">卒業メンバー</h2>
