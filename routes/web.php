@@ -13,6 +13,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PopularController;
 use App\Http\Controllers\MemberStatsController;
+use App\Http\Controllers\GraphController;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 use App\Models\Member;
@@ -42,11 +43,18 @@ Route::view('/others', 'others.index', [
     ]
 ])->name('others.index');
 
+//人気ページカウント
 Route::get('/popular', [PopularController::class, 'index'])->name('popular.index');
 
+//youtube
 Route::get('/youtube/ranking', [\App\Http\Controllers\YoutubeRankingController::class, 'index'])->name('youtube.ranking');
 
+//ヒストリー
 Route::get('/timeline', [App\Http\Controllers\TimelineController::class, 'index'])->name('timeline.index');
+
+//相関図
+Route::get('/graphs/{slug}', [GraphController::class, 'show'])->name('graphs.show');
+Route::get('/graphs/{slug}/data', [GraphController::class, 'data'])->name('graphs.data');
 
 //認証関係
 Route::get('/dashboard', function () {
