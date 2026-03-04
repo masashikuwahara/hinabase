@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', $graph->title)
+@section('title', $graph->title. ' （日向坂46）相関図 | HINABASE')
 @section('meta_description', $graph->description ?? ($graph->title . 'の相関図'))
 
 @push('head_meta')
@@ -18,7 +18,6 @@
             <p class="mt-2 text-sm text-gray-600 leading-6">{{ $graph->description }}</p>
         @endif
     </header>
-
     {{-- 操作バー --}}
     <div class="mb-3 flex flex-wrap items-center gap-2">
         <button id="btn-fit" class="px-3 py-2 rounded bg-gray-900 text-white text-sm">全体表示</button>
@@ -27,8 +26,8 @@
         <div class="ml-auto flex items-center gap-2">
             <label class="text-sm text-gray-700">エッジラベル</label>
             <select id="edge-label-mode" class="border rounded px-2 py-2 text-sm">
-              <option value="always">常に表示</option>
-              <option value="hover" selected>ホバー時のみ</option>
+              <option value="always" selected>常に表示</option>
+              <option value="hover">ホバー時のみ</option>
               <option value="never">非表示</option>
             </select>
         </div>
@@ -36,13 +35,13 @@
 
     {{-- 図エリア --}}
     <div class="rounded-lg border bg-white overflow-hidden">
-<div id="cy" class="w-full" style="height: 70vh; min-height: 320px;"></div>
+        <div id="cy" class="w-full" style="height: 70vh; min-height: 320px;"></div>
     </div>
 
     {{-- モバイル向け：タップしたノード情報 --}}
     <div class="mt-4 rounded-lg border bg-white p-4">
         <div class="text-sm text-gray-500">選択中</div>
-        <div id="info" class="mt-1 text-base font-semibold">ノードをタップしてください</div>
+        <div id="info" class="mt-1 text-base font-semibold">メンバーをタップしてください</div>
         <div id="info-sub" class="mt-1 text-sm text-gray-700"></div>
 
         <a id="info-link"
@@ -94,34 +93,55 @@
                     if (!copy.position) delete copy.position;
                     return copy;
                 });
-
+                
+                const hasPositions = normalized.some(e => e.position && e.position.x != null && e.position.y != null);
                 const cy = cytoscape({
                     container: document.getElementById('cy'),
                     elements: normalized,
-                    layout: {
-                        name: 'cose',
-                        animate: true,
-                        animationDuration: 400,
-                        fit: true,
-                        padding: 30,
-                    },
+                    // layout: {
+                    //     name: 'cose',
+                    //     animate: true,
+                    //     animationDuration: 400,
+                    //     fit: true,
+                    //     padding: 30,
+                    // },
+                    layout: hasPositions
+                    ? { name: 'preset', fit: true, padding: 30 }
+                    : { name: 'cose', animate: true, animationDuration: 400, fit: true, padding: 30 },
                     style: [
                         {
-                            selector: 'node',
-                            style: {
-                                'label': 'data(label)',
-                                'text-wrap': 'wrap',
-                                'text-max-width': 90,
-                                'font-size': 10,
-                                'text-valign': 'center',
-                                'text-halign': 'center',
-                                'background-color': '#111827',
-                                'color': '#ffffff',
-                                'width': 'mapData(size, 10, 80, 28, 54)',
-                                'height': 'mapData(size, 10, 80, 28, 54)',
-                                'border-width': 2,
-                                'border-color': '#ffffff',
-                            }
+                        selector: 'node',
+                        style: {
+                            'label': 'data(label)',
+                            'text-wrap': 'wrap',
+                            'text-max-width': 90,
+                            'font-size': 10,
+                            'text-valign': 'center',
+                            'text-halign': 'center',
+                            'color': '#ffffff',
+                            'width': 'mapData(size, 10, 120, 28, 60)',
+                            'height': 'mapData(size, 10, 120, 28, 60)',
+                            'border-width': 2,
+                            'border-color': '#ffffff',
+                        }
+                        },
+                        {
+                        selector: 'node[!image_url]',
+                        style: {
+                            'background-color': '#111827',
+                        }
+                        },
+                        {
+                        selector: 'node[image_url]',
+                        style: {
+                            'background-image': 'data(image_url)',
+                            'background-fit': 'cover',
+                            'background-clip': 'node',
+                            'background-opacity': 1,
+
+                            // 画像の上に名前を出したくないなら
+                            'label': '',
+                        }
                         },
                         {
                             selector: 'node:selected',
