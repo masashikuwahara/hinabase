@@ -3,17 +3,18 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SongController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PopularController;
+use App\Http\Controllers\MemberStatsController;
+use App\Http\Controllers\GraphController;
 use App\Http\Controllers\Admin\MemberController as AdminMemberController;
 use App\Http\Controllers\Admin\ImageController as AdminImageController;
 use App\Http\Controllers\Admin\SongController as AdminSongController;
 use App\Http\Controllers\Admin\ChangelogController as AdminChangelogController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\Admin\AccountController;
-use App\Http\Controllers\SearchController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PopularController;
-use App\Http\Controllers\MemberStatsController;
-use App\Http\Controllers\GraphController;
+use App\Http\Controllers\Admin\GraphAdminController;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 use App\Models\Member;
@@ -81,6 +82,27 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
         Route::put('/password', [AccountController::class, 'updatePassword'])->name('password.update');
         Route::put('/email', [AccountController::class, 'updateEmail'])->name('email.update');
     });
+});
+
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/graphs', [GraphAdminController::class, 'index'])->name('graphs.index');
+    Route::get('/graphs/{graph}/edit', [GraphAdminController::class, 'edit'])->name('graphs.edit');
+
+    // nodes
+    Route::post('/graphs/{graph}/nodes', [GraphAdminController::class, 'storeNode'])->name('graphs.nodes.store');
+    Route::patch('/graphs/{graph}/nodes/{node}', [GraphAdminController::class, 'updateNode'])->name('graphs.nodes.update');
+    Route::delete('/graphs/{graph}/nodes/{node}', [GraphAdminController::class, 'destroyNode'])->name('graphs.nodes.destroy');
+
+    // edges
+    Route::post('/graphs/{graph}/edges', [GraphAdminController::class, 'storeEdge'])->name('graphs.edges.store');
+    Route::patch('/graphs/{graph}/edges/{edge}', [GraphAdminController::class, 'updateEdge'])->name('graphs.edges.update');
+    Route::delete('/graphs/{graph}/edges/{edge}', [GraphAdminController::class, 'destroyEdge'])->name('graphs.edges.destroy');
+
+    // preview data (admin用)
+    Route::get('/graphs/{graph}/data', [GraphAdminController::class, 'data'])->name('graphs.data');
+
+    //座標固定
+    Route::post('/graphs/{graph}/positions', [GraphAdminController::class, 'savePositions'])->name('graphs.positions.save');
 });
 
 // サイトマップ生成
