@@ -12,6 +12,45 @@
         </p>
     </section>
 
+    {{-- 今日が誕生日のメンバー（個別カード型） --}}
+    {{-- @php $cols = $birthdayMembers->count() === 1 ? 'grid-cols-1' : 'grid-cols-2'; @endphp
+    @if(isset($birthdayMembers) && $birthdayMembers->count())
+        <section class="mt-10 px-6">
+            <h2 class="text-xl font-bold mb-4 flex items-center justify-center gap-2">
+                <span>🎂 本日お誕生日</span>
+                <span class="text-sm text-gray-500 font-normal">
+                    （{{ now()->format('n月j日') }}）
+                </span>
+            </h2>
+
+            <div class="flex justify-center">
+                <div class="grid {{ $cols }} md:grid-cols-4 gap-6 mt-2 w-fit">
+                @foreach($birthdayMembers as $m)
+                    <div class="bg-white shadow-md rounded-lg p-3 text-center hover:scale-105 transition-transform">
+                    <a href="{{ route('members.show', $m->id) }}">
+                        <img src="{{ asset('storage/' . $m->image) }}"
+                            alt="{{ $m->name }}"
+                            class="w-20 h-20 sm:w-32 sm:h-32 object-cover rounded-full mx-auto"
+                            loading="lazy" width="128" height="128">
+                        <span class="mt-2 font-semibold block">
+                        {{ $m->name }}
+                        <span class="text-[#7cc7e8] font-bold">BIRTHDAY!</span>
+                        </span> --}}
+
+                        {{-- 年齢（birthdayがDATE想定、NULL対策込み） --}}
+                        {{-- @if($m->birthday)
+                        <p class="text-xs text-gray-500 mt-1">
+                            {{ \Carbon\Carbon::parse($m->birthday)->age }}歳
+                        </p>
+                        @endif
+                    </a>
+                    </div>
+                @endforeach
+                </div>
+            </div>
+        </section>
+    @endif --}}
+
     <!-- 検索フォーム -->
     <div class="mt-6 text-center">
         @if (session('error'))
@@ -156,5 +195,5 @@
     });
     })();
     </script>
-<!-- v.1.43.2 -->
+<!-- v.1.44.0 -->
 @endsection
