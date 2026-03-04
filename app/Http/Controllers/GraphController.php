@@ -35,21 +35,22 @@ class GraphController extends Controller
         $elements = [];
 
         foreach ($graph->nodes as $n) {
-            $elements[] = [
+            $item = [
                 'data' => [
                     'id' => 'n' . $n->id,
                     'label' => $n->label,
                     'member_id' => $n->member_id,
-                    'image_url' => $n->image_url,
-                    'size' => $n->size,
-                    'meta' => $n->meta,
+                    'image_url' => $n->image_url ?: null,
+                    'size' => $n->size ?? 30,
                     'locked' => (bool)$n->is_position_locked,
                 ],
-                // 座標固定を将来やる場合。NULLならレイアウト任せ。
-                'position' => ($n->pos_x !== null && $n->pos_y !== null)
-                    ? ['x' => (float)$n->pos_x, 'y' => (float)$n->pos_y]
-                    : null,
             ];
+
+            if ($n->pos_x !== null && $n->pos_y !== null) {
+                $item['position'] = ['x' => (float)$n->pos_x, 'y' => (float)$n->pos_y];
+            }
+
+            $elements[] = $item;
         }
 
         foreach ($graph->edges as $e) {

@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Member;
 use App\Models\Song;
 use App\Models\Changelog;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
     public function index()
     {
+        $today = Carbon::now('Asia/Tokyo')->startOfDay();
+
         // メンバーを7人ランダム取得
         $members = Member::inRandomOrder()->take(7)->get();
 
@@ -18,9 +20,16 @@ class HomeController extends Controller
         $songs = Song::inRandomOrder()->take(7)->get();
 
         // 更新履歴を50件取得
-        $logs = Changelog::ordered()->limit(20)->get();
+        $logs = Changelog::ordered()->limit(50)->get();
+
+        // $birthdayMembers = Member::query()
+        //     ->whereMonth('birth', $today->month)
+        //     ->whereDay('birth', $today->day)
+        //     ->orderBy('furigana')
+        //     ->get();
 
         // ビューにデータを渡す
+        // return view('index', compact('members','songs' ,'logs' ,'birthdayMembers'));
         return view('index', compact('members','songs' ,'logs'));
     }
 }
