@@ -1,13 +1,93 @@
 @extends('layouts.main')
 
-@section('title', $graph->title. ' （日向坂46）相関図 | HINABASE')
-@section('meta_description', $graph->description ?? ($graph->title . 'の相関図'))
+@php
+  // URL
+  $pageUrl = url()->current();
+
+  // タイトル/説明（descriptionが空のときも自然な文に）
+  $seoTitle = $graph->title . '（日向坂46）相関図 | HINABASE';
+  $seoDesc = $graph->description
+      ? $graph->description
+      : ($graph->title . 'の相関図。メンバー同士の関係性・ユニット・関連グループを可視化。');
+
+  // index制御
+  $robots = $graph->is_published ? 'index,follow' : 'noindex,nofollow';
+
+  // OGP画像（graph側に用意が無ければサイトのデフォルトへ）
+  // 例：/public/ogp/default-graph.png を置く想定
+  $ogImage = $graph->og_image_url ?? asset('ogp/default-graph.png');
+
+  // パンくず（routesは適宜あなたの実装に合わせて）
+  // indexは後でやるとのことなので、ひとまず /graphs を一覧想定
+  $graphsIndexUrl = url('/graphs');
+@endphp
+
+@section('title', $seoTitle)
+@section('meta_description', $seoDesc)
 
 @push('head_meta')
-    <meta name="robots" content="{{ $graph->is_published ? 'index,follow' : 'noindex,nofollow' }}">
-    <style>
-      #cy { touch-action: none; }
-    </style>
+  {{-- robots --}}
+  <meta name="robots" content="{{ $robots }}">
+
+  {{-- canonical --}}
+  <link rel="canonical" href="{{ $pageUrl }}">
+
+  {{-- OGP --}}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="HINABASE">
+  <meta property="og:title" content="{{ $seoTitle }}">
+  <meta property="og:description" content="{{ $seoDesc }}">
+  <meta property="og:url" content="{{ $pageUrl }}">
+  <meta property="og:image" content="{{ $ogImage }}">
+
+  {{-- Twitter --}}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ $seoTitle }}">
+  <meta name="twitter:description" content="{{ $seoDesc }}">
+  <meta name="twitter:image" content="{{ $ogImage }}">
+
+  {{-- 構造化データ（公開時のみ推奨：noindexページに出しても害は少ないが、運用的に分けると綺麗） --}}
+  @if($graph->is_published)
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@graph":[
+        {
+          "@type":"WebSite",
+          "@id":"{{ url('/') }}#website",
+          "name":"HINABASE",
+          "url":"{{ url('/') }}"
+        },
+        {
+          "@type":"WebPage",
+          "@id":"{{ $pageUrl }}#webpage",
+          "url":"{{ $pageUrl }}",
+          "name":"{{ $seoTitle }}",
+          "description":"{{ $seoDesc }}",
+          "isPartOf":{"@id":"{{ url('/') }}#website"},
+          "inLanguage":"ja",
+          "about":[
+            {"@type":"MusicGroup","name":"日向坂46"}
+          ]
+        },
+        {
+          "@type":"BreadcrumbList",
+          "@id":"{{ $pageUrl }}#breadcrumb",
+          "itemListElement":[
+            {"@type":"ListItem","position":1,"name":"ホーム","item":"{{ url('/') }}"},
+            {"@type":"ListItem","position":2,"name":"相関図","item":"{{ $graphsIndexUrl }}"},
+            {"@type":"ListItem","position":3,"name":"{{ $graph->title }}","item":"{{ $pageUrl }}"}
+          ]
+        }
+      ]
+    }
+    </script>
+  @endif
+
+  {{-- Cytoscape領域の操作 --}}
+  <style>
+    #cy { touch-action: none; }
+  </style>
 @endpush
 
 @section('content')
@@ -18,6 +98,14 @@
             <p class="mt-2 text-sm text-gray-600 leading-6">{{ $graph->description }}</p>
         @endif
     </header>
+    @if($graph->is_published)
+    <div class="mt-3 text-xs text-gray-500 leading-5">
+        <p>このページは日向坂46の相関図です。ノード（メンバー/ユニット）をタップすると詳細を表示します。</p>
+        <noscript>
+        <p class="mt-2 text-red-600">※ 相関図の表示にはJavaScriptが必要です。</p>
+        </noscript>
+    </div>
+    @endif
     {{-- 操作バー --}}
     <div class="mb-3 flex flex-wrap items-center gap-2">
         <button id="btn-fit" class="px-3 py-2 rounded bg-gray-900 text-white text-sm">全体表示</button>
@@ -55,7 +143,7 @@
 
 @push('scripts')
     {{-- Cytoscape CDN（プロトタイプ用。後でViteに移行OK） --}}
-    <script src="https://unpkg.com/cytoscape@3.27.0/dist/cytoscape.min.js"></script>
+    <script defer src="https://unpkg.com/cytoscape@3.27.0/dist/cytoscape.min.js"></script>
 
     {{-- もしレイアウトでcose-bilkent等を使いたい場合は追加読み込みも可能 --}}
     {{-- <script src="https://unpkg.com/cytoscape-cose-bilkent/cytoscape-cose-bilkent.js"></script> --}}
