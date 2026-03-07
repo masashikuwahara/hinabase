@@ -54,6 +54,11 @@ Route::get('/youtube/ranking', [\App\Http\Controllers\YoutubeRankingController::
 Route::get('/timeline', [App\Http\Controllers\TimelineController::class, 'index'])->name('timeline.index');
 
 //相関図
+Route::view('/graphs', 'graphs.index', [
+    'links' => [
+        ['title' => '五期生相関図です', 'desc' => '2026年3月現在', 'url' => 'https://kasumizaka46.com/graphs/hinata-relationship-5th'],
+    ]
+])->name('graphs.index');
 Route::get('/graphs/{slug}', [GraphController::class, 'show'])->name('graphs.show');
 Route::get('/graphs/{slug}/data', [GraphController::class, 'data'])->name('graphs.data');
 
