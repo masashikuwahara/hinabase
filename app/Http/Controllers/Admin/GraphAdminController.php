@@ -42,6 +42,11 @@ class GraphAdminController extends Controller
             ->groupBy('to_node_id')
             ->pluck('cnt', 'node_id')
             ->toArray();
+        
+        $boxes = \App\Models\GraphBox::where('graph_id', $graph->id)
+            ->orderBy('z')
+            ->orderBy('id')
+            ->get();
 
         // from + to を合算
         foreach ($edgeCountsToNode as $nodeId => $cnt) {
@@ -50,7 +55,7 @@ class GraphAdminController extends Controller
 
         $relationTypes = RelationType::query()->orderBy('sort_order')->orderBy('id')->get();
 
-        return view('admin.graphs.edit', compact('graph', 'relationTypes', 'members', 'edgeCountsByNode'));
+        return view('admin.graphs.edit', compact('graph', 'relationTypes', 'members', 'edgeCountsByNode', 'boxes'));
     }
 
     public function storeNode(Request $request, Graph $graph)
@@ -279,13 +284,14 @@ class GraphAdminController extends Controller
         ]);
 
         $valid = \App\Models\GraphBox::where('graph_id', $graph->id)->pluck('id')->all();
+        $updated = 0;
 
-        DB::transaction(function() use ($data, $graph, $valid) {
+        DB::transaction(function() use ($data, $graph, $valid, &$updated) {
             foreach ($data['boxes'] as $b) {
                 $id = (int)$b['id'];
                 if (!in_array($id, $valid, true)) continue;
 
-                \App\Models\GraphBox::where('graph_id', $graph->id)
+                $count = \App\Models\GraphBox::where('graph_id', $graph->id)
                     ->where('id', $id)
                     ->update([
                         'label' => $b['label'] ?? null,
@@ -296,10 +302,15 @@ class GraphAdminController extends Controller
                         'h' => $b['h'],
                         'z' => (int)($b['z'] ?? 0),
                     ]);
+
+                $updated += $count;
             }
         });
 
-        return response()->json(['ok' => true]);
+        return response()->json([
+            'ok' => true,
+            'updated' => $updated,
+        ]);
     }
 
     public function storeBox(Request $request, Graph $graph)
@@ -321,5 +332,33 @@ class GraphAdminController extends Controller
         ]);
 
         return back()->with('status', '囲みを追加しました');
+    }
+
+    public function updateBox(Request $request, Graph $graph, \App\Models\GraphBox $box)
+    {
+        abort_unless($box->graph_id === $graph->id, 404);
+
+        $data = $request->validate([
+            'label' => ['nullable', 'string', 'max:255'],
+            'color' => ['nullable', 'string', 'max:32'],
+            'z' => ['nullable', 'integer'],
+        ]);
+
+        $box->update([
+            'label' => $data['label'] ?? null,
+            'color' => $data['color'] ?? '#ef4444',
+            'z' => (int)($data['z'] ?? 0),
+        ]);
+
+        return back()->with('status', '囲みを更新しました');
+    }
+
+    public function destroyBox(Graph $graph, \App\Models\GraphBox $box)
+    {
+        abort_unless($box->graph_id === $graph->id, 404);
+
+        $box->delete();
+
+        return back()->with('status', '囲みを削除しました');
     }
 }

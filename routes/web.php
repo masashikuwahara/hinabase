@@ -109,9 +109,11 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     //座標固定
     Route::post('/graphs/{graph}/positions', [GraphAdminController::class, 'savePositions'])->name('graphs.positions.save');
 
-    //箱の保存
+    //囲み
     Route::post('/graphs/{graph}/boxes', [GraphAdminController::class, 'storeBox'])->name('graphs.boxes.store');
     Route::post('/graphs/{graph}/boxes/save', [GraphAdminController::class, 'saveBoxes'])->name('graphs.boxes.save');
+    Route::patch('/graphs/{graph}/boxes/{box}', [GraphAdminController::class, 'updateBox'])->name('graphs.boxes.update');
+    Route::delete('/graphs/{graph}/boxes/{box}', [GraphAdminController::class, 'destroyBox'])->name('graphs.boxes.destroy');
 });
 
 // サイトマップ生成
