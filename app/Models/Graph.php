@@ -20,4 +20,9 @@ class Graph extends Model
     {
         return $this->hasMany(GraphEdge::class);
     }
+
+    public function boxes(): HasMany
+    {
+        return $this->hasMany(GraphBox::class);
+    }
 }

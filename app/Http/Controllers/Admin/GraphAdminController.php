@@ -10,7 +10,6 @@ use App\Models\Graph;
 use App\Models\GraphNode;
 use App\Models\GraphEdge;
 use App\Models\RelationType;
-use App\Models\Member;
 
 class GraphAdminController extends Controller
 {
@@ -206,6 +205,23 @@ class GraphAdminController extends Controller
             ];
         }
 
+        $boxes = \App\Models\GraphBox::where('graph_id', $graph->id)
+            ->orderBy('z')->orderBy('id')
+            ->get(['id','label','color','x','y','w','h','z'])
+            ->map(function ($b) {
+                return [
+                    'id' => $b->id,
+                    'label' => $b->label,
+                    'color' => $b->color,
+                    'x' => (float) $b->x,
+                    'y' => (float) $b->y,
+                    'w' => (float) $b->w,
+                    'h' => (float) $b->h,
+                    'z' => (int) $b->z,
+                ];
+        })
+        ->values();
+
         return response()->json([
             'graph' => [
                 'id' => $graph->id,
@@ -213,6 +229,7 @@ class GraphAdminController extends Controller
                 'title' => $graph->title,
             ],
             'elements' => $elements,
+            'boxes' => $boxes,
         ]);
     }
 
@@ -245,5 +262,64 @@ class GraphAdminController extends Controller
         });
 
         return response()->json(['ok' => true]);
+    }
+
+    public function saveBoxes(Request $request, Graph $graph)
+    {
+        $data = $request->validate([
+            'boxes' => ['required','array'],
+            'boxes.*.id' => ['required','integer'],
+            'boxes.*.label' => ['nullable','string','max:255'],
+            'boxes.*.color' => ['nullable','string','max:32'],
+            'boxes.*.x' => ['required','numeric'],
+            'boxes.*.y' => ['required','numeric'],
+            'boxes.*.w' => ['required','numeric','min:1'],
+            'boxes.*.h' => ['required','numeric','min:1'],
+            'boxes.*.z' => ['nullable','integer'],
+        ]);
+
+        $valid = \App\Models\GraphBox::where('graph_id', $graph->id)->pluck('id')->all();
+
+        DB::transaction(function() use ($data, $graph, $valid) {
+            foreach ($data['boxes'] as $b) {
+                $id = (int)$b['id'];
+                if (!in_array($id, $valid, true)) continue;
+
+                \App\Models\GraphBox::where('graph_id', $graph->id)
+                    ->where('id', $id)
+                    ->update([
+                        'label' => $b['label'] ?? null,
+                        'color' => $b['color'] ?? null,
+                        'x' => $b['x'],
+                        'y' => $b['y'],
+                        'w' => $b['w'],
+                        'h' => $b['h'],
+                        'z' => (int)($b['z'] ?? 0),
+                    ]);
+            }
+        });
+
+        return response()->json(['ok' => true]);
+    }
+
+    public function storeBox(Request $request, Graph $graph)
+    {
+        $data = $request->validate([
+            'label' => ['nullable', 'string', 'max:255'],
+            'color' => ['nullable', 'string', 'max:32'],
+        ]);
+
+        \App\Models\GraphBox::create([
+            'graph_id' => $graph->id,
+            'label' => $data['label'] ?? null,
+            'color' => $data['color'] ?? '#ef4444',
+            'x' => 150,
+            'y' => 150,
+            'w' => 260,
+            'h' => 160,
+            'z' => 0,
+        ]);
+
+        return back()->with('status', '囲みを追加しました');
     }
 }

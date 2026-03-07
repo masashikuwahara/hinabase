@@ -123,7 +123,9 @@
 
     {{-- 図エリア --}}
     <div class="rounded-lg border bg-white overflow-hidden">
-        <div id="cy" class="w-full" style="height: 70vh; min-height: 320px;"></div>
+        <div id="cy-wrap" class="relative" style="height: 70vh; min-height: 320px;">
+            <div id="cy" class="absolute inset-0"></div>
+        </div>
     </div>
 
     {{-- モバイル向け：タップしたノード情報 --}}
@@ -149,55 +151,145 @@
     {{-- <script src="https://unpkg.com/cytoscape-cose-bilkent/cytoscape-cose-bilkent.js"></script> --}}
 
     <script>
-      const memberBaseUrl = @json(url('/members')); // HINABASEの members 詳細が /members/{id} 想定
-      const infoLinkEl = document.getElementById('info-link');
-        (function () {
-            const dataUrl = @json(route('graphs.data', ['slug' => $graph->slug]));
+    const memberBaseUrl = @json(url('/members'));
+    const infoLinkEl = document.getElementById('info-link');
 
-            const infoEl = document.getElementById('info');
-            const infoSubEl = document.getElementById('info-sub');
+    (function () {
+        const dataUrl = @json(route('graphs.data', ['slug' => $graph->slug]));
 
-            function setInfo(title, sub = '', memberId = null) {
-              infoEl.textContent = title || '';
-              infoSubEl.textContent = sub || '';
+        const infoEl = document.getElementById('info');
+        const infoSubEl = document.getElementById('info-sub');
+        const cyWrap = document.getElementById('cy-wrap');
+        const cyContainer = document.getElementById('cy');
 
-              if (memberId) {
+        let boxes = [];
+        let boxEls = new Map();
+
+        function setInfo(title, sub = '', memberId = null) {
+            infoEl.textContent = title || '';
+            infoSubEl.textContent = sub || '';
+
+            if (memberId) {
                 infoLinkEl.href = `${memberBaseUrl}/${memberId}`;
                 infoLinkEl.classList.remove('hidden');
-              } else {
+            } else {
                 infoLinkEl.href = '#';
                 infoLinkEl.classList.add('hidden');
-              }
+            }
+        }
+
+        function safeLabel(ele) {
+            return ele?.data?.('label') ?? ele?.data?.('id') ?? '';
+        }
+
+        function ensureOverlay() {
+            let overlay = cyWrap.querySelector('.box-overlay');
+
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.className = 'box-overlay';
+                overlay.style.position = 'absolute';
+                overlay.style.inset = '0';
+                overlay.style.pointerEvents = 'none';
+                overlay.style.zIndex = '20';
+                cyWrap.appendChild(overlay);
             }
 
-            function safeLabel(ele) {
-                return ele?.data?.('label') ?? ele?.data?.('id') ?? '';
-            }
+            return overlay;
+        }
 
-            function buildCy(elements) {
-                // position: null を含む要素があるので除去（Cytoscapeはposition無しでOK）
-                const normalized = elements.map(e => {
-                    const copy = JSON.parse(JSON.stringify(e));
-                    if (!copy.position) delete copy.position;
-                    return copy;
-                });
-                
-                const hasPositions = normalized.some(e => e.position && e.position.x != null && e.position.y != null);
-                const cy = cytoscape({
-                    container: document.getElementById('cy'),
-                    elements: normalized,
-                    // layout: {
-                    //     name: 'cose',
-                    //     animate: true,
-                    //     animationDuration: 400,
-                    //     fit: true,
-                    //     padding: 30,
-                    // },
-                    layout: hasPositions
+        function modelToRendered(cy, x, y) {
+            const pan = cy.pan();
+            const zoom = cy.zoom();
+            return {
+                x: x * zoom + pan.x,
+                y: y * zoom + pan.y,
+            };
+        }
+
+        function updateBoxElement(cy, b) {
+            console.log('updateBoxElement', b.id, b.x, b.y, b.w, b.h);
+            const el = boxEls.get(b.id);
+            if (!el) return;
+
+            const leftTop = modelToRendered(cy, b.x - b.w / 2, b.y - b.h / 2);
+            const rightBottom = modelToRendered(cy, b.x + b.w / 2, b.y + b.h / 2);
+
+            const left = Math.min(leftTop.x, rightBottom.x);
+            const top = Math.min(leftTop.y, rightBottom.y);
+            const width = Math.abs(rightBottom.x - leftTop.x);
+            const height = Math.abs(rightBottom.y - leftTop.y);
+            console.log('rendered box rect', b.id, left, top, width, height);
+
+            el.style.left = left + 'px';
+            el.style.top = top + 'px';
+            el.style.width = width + 'px';
+            el.style.height = height + 'px';
+
+            const label = el.querySelector('.box-label');
+            if (label) label.textContent = b.label || '';
+        }
+
+        function renderBoxes(cy) {
+            const overlay = ensureOverlay();
+
+            boxes.forEach(b => {
+                let el = boxEls.get(b.id);
+
+                if (!el) {
+                    el = document.createElement('div');
+                    el.dataset.id = b.id;
+                    el.style.position = 'absolute';
+                    el.style.border = `3px solid ${b.color || '#ef4444'}`;
+                    el.style.borderRadius = '12px';
+                    el.style.background = 'rgba(239,68,68,0.06)';
+                    el.style.boxSizing = 'border-box';
+                    el.style.pointerEvents = 'none';
+                    el.style.zIndex = String(10 + (b.z || 0));
+
+                    const label = document.createElement('div');
+                    label.className = 'box-label';
+                    label.style.position = 'absolute';
+                    label.style.top = '-12px';
+                    label.style.left = '10px';
+                    label.style.padding = '2px 8px';
+                    label.style.fontSize = '12px';
+                    label.style.background = 'white';
+                    label.style.border = `1px solid ${b.color || '#ef4444'}`;
+                    label.style.borderRadius = '999px';
+                    label.textContent = b.label || '';
+                    el.appendChild(label);
+
+                    overlay.appendChild(el);
+                    boxEls.set(b.id, el);
+                }
+
+                updateBoxElement(cy, b);
+            });
+        }
+
+        function bindBoxRedraw(cy) {
+            cy.on('pan zoom render', () => renderBoxes(cy));
+            window.addEventListener('resize', () => renderBoxes(cy));
+        }
+
+        function buildCy(elements) {
+            const normalized = elements.map(e => {
+                const copy = JSON.parse(JSON.stringify(e));
+                if (!copy.position) delete copy.position;
+                return copy;
+            });
+
+            const hasPositions = normalized.some(e => e.position && e.position.x != null && e.position.y != null);
+
+            const cy = cytoscape({
+                container: cyContainer,
+                elements: normalized,
+                layout: hasPositions
                     ? { name: 'preset', fit: true, padding: 30 }
                     : { name: 'cose', animate: true, animationDuration: 400, fit: true, padding: 30 },
-                    style: [
-                        {
+                style: [
+                    {
                         selector: 'node',
                         style: {
                             'label': 'data(label)',
@@ -212,169 +304,169 @@
                             'border-width': 2,
                             'border-color': '#ffffff',
                         }
-                        },
-                        {
+                    },
+                    {
                         selector: 'node[!image_url]',
                         style: {
                             'background-color': '#111827',
                         }
-                        },
-                        {
+                    },
+                    {
                         selector: 'node[image_url]',
                         style: {
                             'background-image': 'data(image_url)',
                             'background-fit': 'cover',
                             'background-clip': 'node',
                             'background-opacity': 1,
-
-                            // 画像の上に名前を出したくないなら
                             'label': '',
                         }
-                        },
-                        {
-                            selector: 'node:selected',
-                            style: {
-                                'border-width': 4,
-                                'border-color': '#111827',
-                                'background-color': '#374151',
-                            }
-                        },
-                        {
-                            selector: 'edge',
-                            style: {
-                                'curve-style': 'bezier',
-                                'width': 'mapData(weight, 1, 10, 1, 6)',
-                                'line-color': 'data(type_color)',
-                                'target-arrow-color': 'data(type_color)',
-                                'target-arrow-shape': 'triangle',
-                                'arrow-scale': 0.9,
-                                'label': 'data(label)',
-                                'font-size': 9,
-                                'text-rotation': 'autorotate',
-                                'text-margin-y': -6,
-                                'color': '#111827',
-                                'text-background-color': '#ffffff',
-                                'text-background-opacity': 0.8,
-                                'text-background-padding': 2,
-                            }
-                        },
-                        // directed=false のとき矢印を消す
-                        {
-                            selector: 'edge[directed = "false"]',
-                            style: {
-                                'target-arrow-shape': 'none'
-                            }
-                        },
-                        // type_color が無い場合のフォールバック
-                        {
-                            selector: 'edge[type_color = ""]',
-                            style: {
-                                'line-color': '#9ca3af',
-                                'target-arrow-color': '#9ca3af'
-                            }
+                    },
+                    {
+                        selector: 'node:selected',
+                        style: {
+                            'border-width': 4,
+                            'border-color': '#111827',
+                            'background-color': '#374151',
                         }
-                    ],
-                });
+                    },
+                    {
+                        selector: 'edge',
+                        style: {
+                            'curve-style': 'bezier',
+                            'width': 'mapData(weight, 1, 10, 1, 6)',
+                            'line-color': 'data(type_color)',
+                            'target-arrow-color': 'data(type_color)',
+                            'target-arrow-shape': 'triangle',
+                            'arrow-scale': 0.9,
+                            'label': 'data(label)',
+                            'font-size': 9,
+                            'text-rotation': 'autorotate',
+                            'text-margin-y': -6,
+                            'color': '#111827',
+                            'text-background-color': '#ffffff',
+                            'text-background-opacity': 0.8,
+                            'text-background-padding': 2,
+                        }
+                    },
+                    {
+                        selector: 'edge[directed = "false"]',
+                        style: {
+                            'target-arrow-shape': 'none'
+                        }
+                    },
+                    {
+                        selector: 'edge[type_color = ""]',
+                        style: {
+                            'line-color': '#9ca3af',
+                            'target-arrow-color': '#9ca3af'
+                        }
+                    }
+                ],
+            });
 
-                // ノードをタップしたら情報表示
-                cy.on('tap', 'node', function (evt) {
-                  const n = evt.target;
-                if (evt.target === cy) setInfo('ノードをタップしてください', '', null);
-                  const memberId = n.data('member_id');
-                  setInfo(
+            cy.on('tap', 'node', function (evt) {
+                const n = evt.target;
+                const memberId = n.data('member_id');
+                setInfo(
                     safeLabel(n),
                     memberId ? `member_id: ${memberId}` : '自由ノード',
                     memberId
-                  );
-                });
+                );
+            });
 
-                // エッジタップで関係表示
-                cy.on('tap', 'edge', function (evt) {
-                    const e = evt.target;
-                    const source = cy.getElementById(e.data('source'));
-                    const target = cy.getElementById(e.data('target'));
-                    const label = e.data('label') || '';
-                    setInfo(`${safeLabel(source)} → ${safeLabel(target)}`, label ? `関係: ${label}` : '');
-                });
+            cy.on('tap', 'edge', function (evt) {
+                const e = evt.target;
+                const source = cy.getElementById(e.data('source'));
+                const target = cy.getElementById(e.data('target'));
+                const label = e.data('label') || '';
+                setInfo(`${safeLabel(source)} → ${safeLabel(target)}`, label ? `関係: ${label}` : '');
+            });
 
-                // 背景タップで選択解除
-                cy.on('tap', function (evt) {
-                    if (evt.target === cy) setInfo('ノードをタップしてください', '');
-                });
+            cy.nodes().forEach(n => {
+                if (n.data('locked')) n.lock();
+            });
 
-                // 位置ロックされたノードがあるならロック（将来用）
-                cy.nodes().forEach(n => {
-                    if (n.data('locked')) n.lock();
-                });
+            bindBoxRedraw(cy);
+            renderBoxes(cy);
 
-                return cy;
+            return cy;
+        }
+
+        function applyEdgeLabelMode(cy, mode) {
+            const show = (mode === 'always');
+            const hover = (mode === 'hover');
+
+            cy.style()
+                .selector('edge')
+                .style('label', show ? 'data(label)' : '')
+                .update();
+
+            if (hover) {
+                cy.on('mouseover', 'edge', function (evt) {
+                    evt.target.style('label', evt.target.data('label') || '');
+                });
+                cy.on('mouseout', 'edge', function (evt) {
+                    evt.target.style('label', '');
+                });
             }
+        }
 
-            function applyEdgeLabelMode(cy, mode) {
-                const show = (mode === 'always');
-                const hover = (mode === 'hover');
+        async function init() {
+            try {
+                const res = await fetch(dataUrl, { headers: { 'Accept': 'application/json' } });
+                if (!res.ok) throw new Error('failed to fetch graph data');
+                const json = await res.json();
+                console.log('json.boxes', json.boxes);
+                console.log('json.elements', json.elements);
+                console.log('cyWrap', cyWrap);
 
-                cy.style()
-                    .selector('edge')
-                    .style('label', show ? 'data(label)' : '')
-                    .update();
+                const elements = (json.elements || []).map(el => {
+                    if (el?.data && (el.data.type_color === null || el.data.type_color === undefined)) {
+                        el.data.type_color = '';
+                    }
+                    if (el?.data && (el.data.size === null || el.data.size === undefined)) {
+                        el.data.size = 30;
+                    }
+                    return el;
+                });
 
-                if (hover) {
-                    cy.on('mouseover', 'edge', function (evt) {
-                        evt.target.style('label', evt.target.data('label') || '');
-                    });
-                    cy.on('mouseout', 'edge', function (evt) {
-                        evt.target.style('label', '');
-                    });
-                }
+                boxes = (json.boxes || []).map(b => ({
+                    ...b,
+                    x: parseFloat(b.x),
+                    y: parseFloat(b.y),
+                    w: parseFloat(b.w),
+                    h: parseFloat(b.h),
+                    z: parseInt(b.z ?? 0, 10),
+                }));
+                console.log('parsed boxes', boxes);
+
+                const cy = buildCy(elements);
+
+                document.getElementById('btn-fit').addEventListener('click', () => {
+                    cy.fit(undefined, 30);
+                });
+
+                document.getElementById('btn-relayout').addEventListener('click', () => {
+                    cy.layout({
+                        name: 'cose',
+                        animate: true,
+                        animationDuration: 400,
+                        fit: true,
+                        padding: 30,
+                    }).run();
+                });
+
+                const select = document.getElementById('edge-label-mode');
+                applyEdgeLabelMode(cy, select.value);
+                select.addEventListener('change', () => applyEdgeLabelMode(cy, select.value));
+
+            } catch (e) {
+                console.error(e);
+                setInfo('読み込みに失敗しました', 'コンソールを確認してください');
             }
+        }
 
-            async function init() {
-                try {
-                    const res = await fetch(dataUrl, { headers: { 'Accept': 'application/json' }});
-                    if (!res.ok) throw new Error('failed to fetch graph data');
-                    const json = await res.json();
-
-                    // type_color が null の場合に備えて空文字へ
-                    const elements = (json.elements || []).map(el => {
-                        if (el?.data && (el.data.type_color === null || el.data.type_color === undefined)) {
-                            el.data.type_color = '';
-                        }
-                        if (el?.data && (el.data.size === null || el.data.size === undefined)) {
-                            // sizeを入れていないノードでも mapData が効くように
-                            el.data.size = 30;
-                        }
-                        return el;
-                    });
-
-                    const cy = buildCy(elements);
-
-                    // ボタン類
-                    document.getElementById('btn-fit').addEventListener('click', () => {
-                        cy.fit(undefined, 30);
-                    });
-
-                    document.getElementById('btn-relayout').addEventListener('click', () => {
-                        cy.layout({
-                            name: 'cose',
-                            animate: true,
-                            animationDuration: 400,
-                            fit: true,
-                            padding: 30,
-                        }).run();
-                    });
-
-                    const select = document.getElementById('edge-label-mode');
-                    applyEdgeLabelMode(cy, select.value);
-                    select.addEventListener('change', () => applyEdgeLabelMode(cy, select.value));
-
-                } catch (e) {
-                    console.error(e);
-                    setInfo('読み込みに失敗しました', 'コンソールを確認してください');
-                }
-            }
-
-            init();
-        })();
+        init();
+    })();
     </script>
 @endpush
