@@ -8,6 +8,12 @@ use App\Models\Graph;
 
 class GraphController extends Controller
 {
+    public function index()
+    {
+        
+    return view('index', compact('',));
+    }
+    
     public function show(string $slug)
     {
         $graph = Graph::query()
