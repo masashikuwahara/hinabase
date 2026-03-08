@@ -18,12 +18,15 @@ class BuildSitemap extends Command
         // 固定ページ
         $urls[] = ['loc' => url('/'), 'lastmod' => now()->toAtomString()];
         $urls[] = ['loc' => url('/members'), 'lastmod' => now()->toAtomString()];
+        $urls[] = ['loc' => url('/members/stats'), 'lastmod' => now()->toAtomString()];
+        $urls[] = ['loc' => url('/members/current'), 'lastmod' => now()->toAtomString()];
+        $urls[] = ['loc' => url('/members/graduates'), 'lastmod' => now()->toAtomString()];
+        $urls[] = ['loc' => url('/members/generation'), 'lastmod' => now()->toAtomString()];
         $urls[] = ['loc' => url('/songs'), 'lastmod' => now()->toAtomString()];
         $urls[] = ['loc' => url('/others'), 'lastmod' => now()->toAtomString()];
         $urls[] = ['loc' => url('/popular'), 'lastmod' => now()->toAtomString()];
         $urls[] = ['loc' => url('/youtube/ranking'), 'lastmod' => now()->toAtomString()];
         $urls[] = ['loc' => url('/timeline'), 'lastmod' => now()->toAtomString()];
-        $urls[] = ['loc' => url('/members/stats'), 'lastmod' => now()->toAtomString()];
         $urls[] = ['loc' => url('/graphs/hinata-relationship-5th'), 'lastmod' => now()->toAtomString()];
 
         foreach (\App\Models\Member::cursor() as $m) {
