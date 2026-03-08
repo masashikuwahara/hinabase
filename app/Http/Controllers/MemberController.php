@@ -71,6 +71,29 @@ class MemberController extends Controller
     public function show($id)
     {
         $member = Member::with(['songs', 'skill'])->findOrFail($id);
+        $previousMember = Member::where('graduation', $member->graduation)
+            ->where(function ($query) use ($member) {
+                $query->where('furigana', '<', $member->furigana)
+                    ->orWhere(function ($q) use ($member) {
+                        $q->where('furigana', $member->furigana)
+                            ->where('id', '<', $member->id);
+                    });
+            })
+            ->orderBy('furigana', 'desc')
+            ->orderBy('id', 'desc')
+            ->first();
+
+        $nextMember = Member::where('graduation', $member->graduation)
+            ->where(function ($query) use ($member) {
+                $query->where('furigana', '>', $member->furigana)
+                    ->orWhere(function ($q) use ($member) {
+                        $q->where('furigana', $member->furigana)
+                            ->where('id', '>', $member->id);
+                    });
+            })
+            ->orderBy('furigana', 'asc')
+            ->orderBy('id', 'asc')
+            ->first();
         $songCount = $member->songs->count();
         $centerCount = $member->songs->where('pivot.is_center', true)->count();
         $titlesongCount = $member->songs->where('titlesong', 1)->count();
@@ -86,9 +109,9 @@ class MemberController extends Controller
         ];
 
         $sameGenMembers = Member::where('grade', $member->grade)
-            ->where('graduation', $member->graduation)
+            // ->where('graduation', $member->graduation)
             ->where('id', '!=', $member->id)
-            ->orderBy('furigana')
+            ->orderBy('furigana', 'asc')
             ->get();
 
         if ($member->blog_url) {
@@ -108,15 +131,77 @@ class MemberController extends Controller
             $blogHtml = 'ブログは終了しました。';
         }
 
+        $relatedContents = collect([
+            [
+                'title' => '日向坂46ヒストリー',
+                'description' => '加入時期やグループの流れを時系列で確認できます。',
+                'url' => route('timeline.index'),
+            ],
+            [
+                'title' => 'メンバー相関図',
+                'description' => '公開中の相関図ページから関係性を確認できます。',
+                'url' => route('graphs.index'),
+            ],
+        ]);
+
         return view('members.show', compact(
             'member',
             'centerCount',
             'titlesongCount',
             'songCount',
             'blogHtml',
+            'sameGenMembers',
             'radar',
             'radarData',
-            'sameGenMembers'
+            'sameGenMembers',
+            'previousMember',
+            'nextMember'
         ));
+    }
+
+    private function gradeOrder(): array
+    {
+        return ['一期生', '二期生', '三期生', '四期生', '五期生'];
+    }
+
+    public function current()
+    {
+        $membersByGrade = Member::where('graduation', 0)
+            ->orderBy('furigana', 'asc')
+            ->get()
+            ->groupBy('grade');
+
+        $gradeOrder = $this->gradeOrder();
+
+        return view('members.current', compact('membersByGrade', 'gradeOrder'));
+    }
+
+    public function graduates()
+    {
+        $membersByGrade = Member::where('graduation', 1)
+            ->orderBy('furigana', 'asc')
+            ->get()
+            ->groupBy('grade');
+
+        $gradeOrder = $this->gradeOrder();
+
+        return view('members.graduates', compact('membersByGrade', 'gradeOrder'));
+    }
+
+    public function generation()
+    {
+        $currentMembers = Member::where('graduation', 0)
+            ->orderBy('furigana', 'asc')
+            ->get()
+            ->groupBy('grade');
+
+        $graduatedMembers = Member::where('graduation', 1)
+            ->orderBy('furigana', 'asc')
+            ->get()
+            ->groupBy('grade');
+
+        $gradeOrder = $this->gradeOrder();
+
+        return view('members.generation', compact('currentMembers', 'graduatedMembers', 'gradeOrder'));
     }
 }
