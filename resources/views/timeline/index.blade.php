@@ -42,6 +42,14 @@
 @endpush
 
 @section('content')
+<nav class="text-sm text-gray-600 mt-4 px-4 max-w-6xl mx-auto" aria-label="パンくず">
+    <ol class="flex flex-wrap items-center gap-2">
+        <li><a href="{{ url('/') }}" class="hover:underline">ホーム</a></li>
+        <li>›</li>
+        <li>日向坂46 ヒストリー</li>
+    </ol>
+</nav>
+
 <div class="max-w-3xl mx-auto p-6">
   <h1 class="text-3xl font-bold font-mont mb-8 text-center">日向坂46 ヒストリー</h1>
 
