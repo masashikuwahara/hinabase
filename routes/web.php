@@ -30,6 +30,9 @@ Route::get('/songs/{id}', [SongController::class, 'show'])
     ->middleware(['throttle:songs-limit', 'count.popularity'])
     ->name('songs.show');
 Route::get('/members', [MemberController::class, 'index'])->name('members.index');
+Route::get('/members/current', [MemberController::class, 'current'])->name('members.current');
+Route::get('/members/graduates', [MemberController::class, 'graduates'])->name('members.graduates');
+Route::get('/members/generation', [MemberController::class, 'generation'])->name('members.generation');
 Route::get('/members/stats', [MemberStatsController::class, 'index'])->name('members.stats');
 Route::get('/members/{member}', [MemberController::class, 'show'])
     ->middleware('count.popularity', 'throttle:members-limit')
