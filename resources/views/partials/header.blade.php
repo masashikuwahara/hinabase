@@ -69,7 +69,7 @@
 </div> --}}
 
 <div class="bg-[#4ade80] text-white py-2 w-full text-center text-sm md:text-base">
-  <a href="https://kasumizaka46.com/graphs/hinata-relationship-5th" target="_blank" class="hover:text-yellow-200 font-semibold transition-colors duration-200">
+  <a href="https://kasumizaka46.com/graphs/hinata-relationship-5th" class="hover:text-yellow-200 font-semibold transition-colors duration-200">
     五期生相関図公開しました
   </a>
 </div>
