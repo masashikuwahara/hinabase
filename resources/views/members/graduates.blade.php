@@ -152,6 +152,10 @@
                                             >
                                             <div class="mt-3">
                                                 <span class="font-semibold">{{ $member->name }}</span>
+                                                <p class="text-sm text-gray-600">最終在籍日</p>
+                                                @if (isset($member->final_membership_date))
+                                                <p class="text-sm text-gray-600">{{ \Carbon\Carbon::parse($member->final_membership_date)->format('Y年m月d日') }}</p>
+                                                @endif
                                                 @if ($member->is_recently_updated)
                                                     <span class="text-red-600 font-bold ml-1">NEW!</span>
                                                 @endif

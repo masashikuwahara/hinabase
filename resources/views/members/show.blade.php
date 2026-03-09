@@ -164,6 +164,9 @@
                 <li><strong>血液型:</strong> {{ $member->blood_type }}</li>
                 <li><strong>出身地:</strong> {{ $member->birthplace }}</li>
                 <li><strong>加入:</strong> {{ $member->grade }}</li>
+                @if ($member->final_membership_date)
+                    <li><strong>最終在籍日:</strong> {{ \Carbon\Carbon::parse($member->final_membership_date)->format('Y年m月d日') }}</li>
+                @endif
                 <li><strong>参加楽曲数:</strong> {{ $songCount }}</li>
                 <li><strong>選抜回数:</strong> {{ $titlesongCount }}</li>
                 <li><strong>センター曲数:</strong> {{ $centerCount }}</li>
