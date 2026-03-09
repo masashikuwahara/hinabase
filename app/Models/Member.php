@@ -11,10 +11,11 @@ class Member extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'furigana', 'birthday', 'constellation','height','blood_type','birthplace', 'nickname',
-    'grade','color1','colorname1','color2','colorname2','promotion_video','image','graduation','introduction','sns','blog_url'];
+    'grade','final_membership_date','color1','colorname1','color2','colorname2','promotion_video','image','graduation','introduction','sns','blog_url'];
 
     protected $casts = [
         'birthday' => 'date',
+        'final_membership_date' => 'date',
         ];
 
     public function songs()
