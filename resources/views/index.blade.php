@@ -145,9 +145,9 @@
             @forelse ($logs as $log)
             <p class="text-sm leading-6">
                 <span class="tabular-nums">{{ $log->date->format('Y.m.d') }}</span>
-                @if($log->version)
+                {{-- @if($log->version)
                 &nbsp;<span class="font-mono">v.{{ ltrim($log->version, 'v.') }}</span>
-                @endif
+                @endif --}}
                 &nbsp;{!! $log->is_new ? '<span class="text-red-600 font-bold">NEW!</span>&nbsp;' : '' !!}
                 @if($log->link)
                 <a href="{{ $log->link }}" target="_blank" rel="noopener" class="hover:underline">{{ $log->title }}</a>
@@ -195,5 +195,5 @@
     });
     })();
     </script>
-<!-- v.1.47.0 -->
+<!-- v.1.47.1 -->
 @endsection
