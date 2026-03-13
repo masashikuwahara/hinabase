@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
-@section('title', '日向坂46 ヒストリー（年表） | HINABASE')
-@section('meta_description', '日向坂46（ひらがなけやき時代含む）の活動年表。2015年の発足から現在までの出来事を年ごとに振り返ります。デビュー、シングル発売、ライブ、番組出演などを時系列で紹介。')
+@section('title', '日向坂46 ヒストリー（年表）｜加入・卒業・シングル発売の流れ | HINABASE')
+@section('meta_description', '日向坂46（ひらがなけやき時代含む）の活動年表。2015年の発足から現在までの加入・卒業・改名・シングル発売・ライブ開催を時系列で整理し、メンバー一覧や卒業メンバー一覧にも移動できます。')
 
 @push('head_meta')
 <meta property="og:type" content="article">
