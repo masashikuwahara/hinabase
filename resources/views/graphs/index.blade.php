@@ -1,6 +1,6 @@
 @extends('layouts.main')
 
-@section('title', ' （日向坂46）相関図 | HINABASE')
+@section('title', ' 日向坂46相関図 | HINABASE')
 @section('meta_description', '日向坂46メンバーの相関図を公開！度のメンバーとどんな関係か分かります。')
 
 @push('head_meta')

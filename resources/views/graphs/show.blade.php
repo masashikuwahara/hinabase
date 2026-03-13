@@ -17,7 +17,6 @@
   // 例：/public/ogp/default-graph.png を置く想定
   $ogImage = $graph->og_image_url ?? asset('ogp/default-graph.png');
 
-  // パンくず（routesは適宜あなたの実装に合わせて）
   // indexは後でやるとのことなので、ひとまず /graphs を一覧想定
   $graphsIndexUrl = url('/graphs');
 @endphp
