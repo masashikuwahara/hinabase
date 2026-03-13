@@ -33,4 +33,18 @@ class Member extends Model
     {
         return $this->updated_at->gt(Carbon::now()->subDays(5));
     }
+
+    public function scopeOrderByGrade($query)
+    {
+        return $query->orderByRaw("
+            CASE grade
+                WHEN '一期生' THEN 1
+                WHEN '二期生' THEN 2
+                WHEN '三期生' THEN 3
+                WHEN '四期生' THEN 4
+                WHEN '五期生' THEN 5
+                ELSE 99
+            END
+        ");
+    }
 }

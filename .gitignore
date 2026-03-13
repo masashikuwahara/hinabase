@@ -25,3 +25,4 @@ storage/app/public/images/
 /database/seeders
 resources/views/auth
 resources/views/admin
+resources/views/hinatansai

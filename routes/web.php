@@ -8,6 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PopularController;
 use App\Http\Controllers\MemberStatsController;
 use App\Http\Controllers\GraphController;
+use App\Http\Controllers\HinatansaiController;
 use App\Http\Controllers\Admin\MemberController as AdminMemberController;
 use App\Http\Controllers\Admin\ImageController as AdminImageController;
 use App\Http\Controllers\Admin\SongController as AdminSongController;
@@ -64,6 +65,9 @@ Route::view('/graphs', 'graphs.index', [
 ])->name('graphs.index');
 Route::get('/graphs/{slug}', [GraphController::class, 'show'])->name('graphs.show');
 Route::get('/graphs/{slug}/data', [GraphController::class, 'data'])->name('graphs.data');
+
+//ひな誕祭
+Route::get('/hinatansai', [HinatansaiController::class, 'index'])->name('hinatansai.index');
 
 //認証関係
 Route::get('/dashboard', function () {
