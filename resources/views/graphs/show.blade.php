@@ -120,15 +120,8 @@
         </div>
     </div>
 
-    {{-- 図エリア --}}
-    <div class="rounded-lg border bg-white overflow-hidden">
-        <div id="cy-wrap" class="relative" style="height: 70vh; min-height: 320px;">
-            <div id="cy" class="absolute inset-0"></div>
-        </div>
-    </div>
-
     {{-- モバイル向け：タップしたノード情報 --}}
-    <div class="mt-4 rounded-lg border bg-white p-4">
+    <div class="mb-4 rounded-lg border bg-white p-4">
         <div class="text-sm text-gray-500">選択中</div>
         <div id="info" class="mt-1 text-base font-semibold">メンバーをタップしてください</div>
         <div id="info-sub" class="mt-1 text-sm text-gray-700"></div>
@@ -139,6 +132,14 @@
           メンバー詳細へ
         </a>
     </div>
+
+    {{-- 図エリア --}}
+    <div class="rounded-lg border bg-white overflow-hidden">
+        <div id="cy-wrap" class="relative" style="height: 70vh; min-height: 320px;">
+            <div id="cy" class="absolute inset-0"></div>
+        </div>
+    </div>
+
 </div>
 @endsection
 
