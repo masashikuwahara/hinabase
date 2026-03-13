@@ -243,10 +243,10 @@
                    class="px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-md hover:bg-yellow-600">
                     身長順
                 </a>
-                <a href="{{ route('members.stats') }}"
+                {{-- <a href="{{ route('members.stats') }}"
                    class="px-4 py-2 bg-pink-500 text-white rounded-lg shadow-md hover:bg-pink-600">
                     メンバー統計・ランキングはこちら
-                </a>
+                </a> --}}
             </div>
 
             <div x-show="open"
@@ -277,10 +277,10 @@
                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                         身長順
                     </a>
-                    <a href="{{ route('members.stats') }}"
+                    {{-- <a href="{{ route('members.stats') }}"
                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                         メンバー統計・ランキングはこちら
-                    </a>
+                    </a> --}}
                 </div>
             </div>
         </div>

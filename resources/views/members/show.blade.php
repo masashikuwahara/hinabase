@@ -195,7 +195,7 @@
             </ul>
 
             {{-- 一覧導線 --}}
-            <!--<div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <a href="{{ route('members.index') }}"
                    class="block rounded-lg border bg-gray-50 px-4 py-3 text-sm font-semibold hover:bg-gray-100 transition">
                     メンバー一覧トップ
@@ -220,7 +220,7 @@
                     </a>
                 @endif
             </div>
-        </div>-->
+        </div>
 
         <div class="md:ml-8 w-72 h-72 mt-6 md:mt-0">
             <canvas id="radarChart"></canvas>
