@@ -34,11 +34,13 @@
 
     <!-- メニュー項目 -->
     <ul class="flex flex-col space-y-6 text-xl">
+      <li><a href="{{ route('home') }}" class="hover:text-blue-600">TOPに戻る</a></li>
       <li><a href="{{ route('members.index') }}" class="hover:text-blue-600">メンバー一覧</a></li>
       <li><a href="{{ route('songs.index') }}" class="hover:text-blue-600">楽曲一覧</a></li>
       <li><a href="{{ route('members.stats') }}" class="hover:underline">メンバー 統計・ランキング</a></li>
       <li><a href="{{ route('popular.index') }}" class="hover:text-blue-600">人気ページTOP20</a></li>
       <li><a href="{{ route('timeline.index') }}" class="hover:text-blue-600">日向坂46ヒストリー</a></li>
+      <li><a href="{{ route('graphs.index') }}" class="hover:text-blue-600">相関図</a></li>
       <li><a href="{{ route('others.index') }}" class="hover:text-blue-600">その他</a></li>
     </ul>
   </nav>
@@ -52,6 +54,7 @@
       <li><a href="{{ route('members.stats') }}" class="hover:underline">メンバー 統計・ランキング</a></li>
       <li><a href="{{ route('popular.index') }}" class="hover:underline">人気ページTOP20</a></li>
       <li><a href="{{ route('timeline.index') }}" class="hover:underline">日向坂46ヒストリー</a></li>
+      <li><a href="{{ route('graphs.index') }}" class="hover:text-blue-600">相関図</a></li>
       <li><a href="{{ route('others.index') }}" class="hover:underline">その他</a></li>
     </ul>
   </nav>
@@ -62,14 +65,14 @@
   </a>
 </div>
 
-{{-- <div class="bg-[#f19db5] text-white py-2 w-full text-center text-sm md:text-base">
-  <a href="https://sakurazaka46.live/" target="_blank" class="hover:text-yellow-200 font-semibold transition-colors duration-200">
-    姉妹サイトSAKURA DATA 46 オープンしました
+<div class="bg-[linear-gradient(90deg,#f19db5_0%,#f7c6a3_25%,#f9e27d_50%,#9dd9f3_75%,#c8b6ff_100%)] text-gray-900 py-2 w-full text-center text-sm md:text-base">
+  <a href="{{ route('hinatansai.index') }}" class="hover:text-pink-700 font-semibold transition-colors duration-200">
+    7回目のひな誕祭みどころ
   </a>
-</div> --}}
+</div>
 
-<div class="bg-[#4ade80] text-white py-2 w-full text-center text-sm md:text-base">
+{{-- <div class="bg-[#4ade80] text-white py-2 w-full text-center text-sm md:text-base">
   <a href="https://kasumizaka46.com/graphs/hinata-relationship-5th" class="hover:text-yellow-200 font-semibold transition-colors duration-200">
     五期生相関図公開しました
   </a>
-</div>
+</div> --}}

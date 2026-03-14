@@ -21,6 +21,7 @@ class GraphController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
+        abort_unless($graph->is_published, 404);
         // 本番で「公開のみ」にするなら
         // abort_unless($graph->is_published, 404);
 
@@ -29,16 +30,28 @@ class GraphController extends Controller
 
     public function data(string $slug): JsonResponse
     {
+        // $graph = Graph::query()
+        //     ->where('slug', $slug)
+        //     ->with([
+        //         'nodes:id,graph_id,member_id,label,image_url,pos_x,pos_y,is_position_locked,size,meta,sort_order',
+        //         'edges:id,graph_id,from_node_id,to_node_id,relation_type_id,label,is_directed,weight,meta',
+        //         'edges.relationType:id,slug,name_ja,color',
+        //     ])
+        //     ->firstOrFail();
+
+        // $elements = [];
+
         $graph = Graph::query()
             ->where('slug', $slug)
-            ->with([
-                'nodes:id,graph_id,member_id,label,image_url,pos_x,pos_y,is_position_locked,size,meta,sort_order',
-                'edges:id,graph_id,from_node_id,to_node_id,relation_type_id,label,is_directed,weight,meta',
-                'edges.relationType:id,slug,name_ja,color',
-            ])
             ->firstOrFail();
 
-        $elements = [];
+        abort_unless($graph->is_published, 404);
+
+        $graph->load([
+            'nodes:id,graph_id,member_id,label,image_url,pos_x,pos_y,is_position_locked,size,meta,sort_order',
+            'edges:id,graph_id,from_node_id,to_node_id,relation_type_id,label,is_directed,weight,meta',
+            'edges.relationType:id,slug,name_ja,color',
+        ]);
 
         foreach ($graph->nodes as $n) {
             $item = [
