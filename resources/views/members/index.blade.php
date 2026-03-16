@@ -156,7 +156,20 @@
                     </div>
                 @endif
 
-                @if(Route::has('members.birthdays'))
+                @if(Route::has('members.stats'))
+                    <a href="{{ route('members.stats') }}"
+                       class="block rounded-xl border bg-white p-4 shadow-sm hover:shadow-md transition">
+                        <h3 class="font-semibold text-gray-900">メンバー統計・ランキング</h3>
+                        <p class="text-sm text-gray-600 mt-1">参加楽曲数、センター回数、身長順、誕生日順などの統計ページです。</p>
+                    </a>
+                @else
+                    <div class="rounded-xl border bg-gray-50 p-4">
+                        <h3 class="font-semibold text-gray-900">期別メンバー一覧</h3>
+                        <p class="text-sm text-gray-600 mt-1">参加楽曲数、センター回数、身長順、誕生日順などの統計ページを準備中です。</p>
+                    </div>
+                @endif
+
+                {{-- @if(Route::has('members.birthdays'))
                     <a href="{{ route('members.birthdays') }}"
                        class="block rounded-xl border bg-white p-4 shadow-sm hover:shadow-md transition">
                         <h3 class="font-semibold text-gray-900">誕生日順</h3>
@@ -182,7 +195,7 @@
                         <h3 class="font-semibold text-gray-900">身長順</h3>
                         <p class="text-sm text-gray-600 mt-1">現状はこのページ内の並び替えで身長順を確認できます。</p>
                     </a>
-                @endif
+                @endif --}}
             </div>
         </section>
 
@@ -196,12 +209,6 @@
                         <p class="text-sm text-gray-600 mt-1">年齢や生年月日ベースでメンバーを見たい方向けの一覧です。</p>
                     </a>
                 @endif
-
-                <a href="{{ route('members.stats') }}"
-                   class="block rounded-xl border bg-white p-4 shadow-sm hover:shadow-md transition">
-                    <h2 class="text-lg font-semibold text-gray-900">メンバー統計・ランキング</h2>
-                    <p class="text-sm text-gray-600 mt-1">参加楽曲数、センター回数、身長順、誕生日順などの統計ページです。</p>
-                </a>
             </div>
         </section>
 
