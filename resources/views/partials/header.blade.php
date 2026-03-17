@@ -54,7 +54,7 @@
       <li><a href="{{ route('members.stats') }}" class="hover:underline">メンバー 統計・ランキング</a></li>
       <li><a href="{{ route('popular.index') }}" class="hover:underline">人気ページTOP20</a></li>
       <li><a href="{{ route('timeline.index') }}" class="hover:underline">日向坂46ヒストリー</a></li>
-      <li><a href="{{ route('graphs.index') }}" class="hover:text-blue-600">相関図</a></li>
+      <li><a href="{{ route('graphs.index') }}" class="hover:underline">相関図</a></li>
       <li><a href="{{ route('others.index') }}" class="hover:underline">その他</a></li>
     </ul>
   </nav>
