@@ -6,7 +6,9 @@ use App\Models\Member;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Symfony\Component\DomCrawler\Crawler;
-use Illuminate\Support\Facades\View; 
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 
 class MemberController extends Controller
 {
@@ -144,6 +146,35 @@ class MemberController extends Controller
             ],
         ]);
 
+        // アクセス推移
+        $days = 14;
+        $endDate = now()->startOfDay();
+        $startDate = now()->subDays($days - 1)->startOfDay();
+
+        $dailyViewsRaw = DB::table('popularity_dailies')
+            ->where('type', 'member')
+            ->where('entity_id', $member->id)
+            ->whereBetween('date', [$startDate->toDateString(), $endDate->toDateString()])
+            ->orderBy('date')
+            ->pluck('views', 'date');
+
+        $period = CarbonPeriod::create($startDate, $endDate);
+
+        $accessChart = collect();
+
+        foreach ($period as $date) {
+            $ymd = $date->format('Y-m-d');
+
+            $accessChart->push([
+                'date' => $ymd,
+                'label' => $date->format('n/j'),
+                'views' => (int) ($dailyViewsRaw[$ymd] ?? 0),
+            ]);
+        }
+
+        $accessChartLabels = $accessChart->pluck('label');
+        $accessChartData = $accessChart->pluck('views');
+
         return view('members.show', compact(
             'member',
             'centerCount',
@@ -155,7 +186,9 @@ class MemberController extends Controller
             'radarData',
             'sameGenMembers',
             'previousMember',
-            'nextMember'
+            'nextMember',
+            'accessChartLabels',
+            'accessChartData'
         ));
     }
 
