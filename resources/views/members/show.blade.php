@@ -192,6 +192,9 @@
                     </li>
                 @endif
                 <li><strong>キャラクター:</strong> {{ $member->introduction }}</li>
+                @if ($member->post_graduation_activity)
+                    <li><strong>卒業後の活動:</strong> {{ $member->post_graduation_activity }}</li>
+                @endif
             </ul>
 
             {{-- 一覧導線 --}}
@@ -486,6 +489,20 @@
             @endif
         </p>
     </section>
+    @auth
+    {{-- アクセス推移 --}}
+    <section class="bg-white p-6 shadow-md mt-6 rounded-lg">
+        <h2 class="text-xl font-bold text-gray-800 mb-4">アクセス推移（直近14日）</h2>
+
+        <div class="relative h-64">
+            <canvas id="memberAccessChart"></canvas>
+        </div>
+
+        <p class="text-sm text-gray-500 mt-3">
+            日別アクセス数を表示しています。
+        </p>
+    </section>
+    @endauth
 </main>
 
 <button
@@ -500,6 +517,8 @@
 </button>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{{-- スキル表 --}}
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const ctx = document.getElementById('radarChart').getContext('2d');
@@ -533,6 +552,53 @@
             }
         });
     });
+</script>
+
+{{-- アクセス推移 --}}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const ctx = document.getElementById('memberAccessChart');
+    if (!ctx) return;
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: @json($accessChartLabels),
+            datasets: [{
+                label: 'アクセス数',
+                data: @json($accessChartData),
+                tension: 0.3,
+                fill: false,
+                borderWidth: 2,
+                pointRadius: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return ' ' + context.parsed.y + ' 回';
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        }
+    });
+});
 </script>
 
 <script>

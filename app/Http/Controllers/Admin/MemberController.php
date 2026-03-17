@@ -34,6 +34,7 @@ class MemberController extends Controller
             'promotion_video' => 'nullable|string|max:510',
             'introduction' => 'nullable|string',
             'sns' => 'nullable|url',
+            'post_graduation_activity' => 'nullable|string',
         ]);
 
         $member->update($request->all());
