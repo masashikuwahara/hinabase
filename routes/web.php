@@ -44,7 +44,7 @@ Route::view('/others', 'others.index', [
         ['title' => '日向坂46推しメンチェッカーver2', 'url' => 'https://hinaselect.netlify.app/'],
         ['title' => '日向坂46メンバーのペンライトカラーが検索できます', 'url' => 'https://x.gd/0RLv3'],
         ['title' => '日向坂46クイズ', 'url' => 'https://hinata-quiz.netlify.app/'],
-        ['title' => '姉妹サイトSAKURA DATA 46', 'url' => 'https://sakurazaka46.live/']
+        ['title' => '姉妹サイトSAKURA DATA 46', 'url' => 'https://sakurazaka46.site/']
     ]
 ])->name('others.index');
 
