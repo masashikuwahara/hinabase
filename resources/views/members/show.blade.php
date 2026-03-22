@@ -492,7 +492,7 @@
     @auth
     {{-- アクセス推移 --}}
     <section class="bg-white p-6 shadow-md mt-6 rounded-lg">
-        <h2 class="text-xl font-bold text-gray-800 mb-4">アクセス推移（直近14日）</h2>
+        <h2 class="text-xl font-bold text-gray-800 mb-4">アクセス推移（直近31日）</h2>
 
         <div class="relative h-64">
             <canvas id="memberAccessChart"></canvas>

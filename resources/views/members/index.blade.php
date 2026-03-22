@@ -91,11 +91,11 @@
 @endpush
 
 @section('content')
-    <nav class="text-sm text-gray-600 mt-2 px-4 max-w-6xl mx-auto" aria-label="パンくず">
+    <nav class="text-sm text-gray-600 mt-4 px-4 max-w-6xl mx-auto" aria-label="パンくず">
         <ol class="flex flex-wrap items-center gap-2">
             <li><a href="{{ url('/') }}" class="hover:underline">ホーム</a></li>
             <li>›</li>
-            <li aria-current="page">メンバー一覧</li>
+            <li>メンバー一覧</li>
         </ol>
     </nav>
 
