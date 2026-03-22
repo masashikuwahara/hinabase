@@ -60,7 +60,7 @@ Route::get('/timeline', [App\Http\Controllers\TimelineController::class, 'index'
 //相関図
 Route::view('/graphs', 'graphs.index', [
     'links' => [
-        ['title' => '五期生相関図です', 'desc' => '2026年3月現在', 'url' => 'https://kasumizaka46.com/graphs/hinata-relationship-5th'],
+        ['title' => '五期生相関図です', 'desc' => '2026年3月現在', 'url' => '/graphs/hinata-relationship-5th']
     ]
 ])->name('graphs.index');
 Route::get('/graphs/{slug}', [GraphController::class, 'show'])->name('graphs.show');
@@ -68,6 +68,27 @@ Route::get('/graphs/{slug}/data', [GraphController::class, 'data'])->name('graph
 
 //ひな誕祭
 Route::get('/hinatansai', [HinatansaiController::class, 'index'])->name('hinatansai.index');
+
+// データまとめページ
+Route::view('/data', 'data.index', [
+    'links' => [
+        [
+            'title' => '日向坂ちゃんねる 人気動画ランキング',
+            'desc'  => '日向坂46公式YouTube「日向坂ちゃんねる」の人気動画を再生数順にランキング化。高評価数・コメント数でも並べ替え可能。ショート動画も含め、毎日自動更新しています。',
+            'url'   => '/youtube/ranking',
+        ],
+        [
+            'title' => '日向坂46メンバー 統計・ランキング',
+            'desc'  => '身長・誕生日・血液型・出身地・参加曲数・センター回数・選抜回数をまとめてチェック。',
+            'url'   => '/members/stats',
+        ],
+        [
+            'title' => '人気ページ TOP20',
+            'desc'  => 'HINABASE内でよく見られている人気ページをランキング形式でまとめています。',
+            'url'   => '/popular',
+        ],
+    ]
+])->name('data.index');
 
 //認証関係
 Route::get('/dashboard', function () {
