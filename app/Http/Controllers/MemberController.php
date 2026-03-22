@@ -147,7 +147,7 @@ class MemberController extends Controller
         ]);
 
         // アクセス推移
-        $days = 14;
+        $days = 31;
         $endDate = now()->startOfDay();
         $startDate = now()->subDays($days - 1)->startOfDay();
 
