@@ -150,7 +150,7 @@
                 @endif --}}
                 &nbsp;{!! $log->is_new ? '<span class="text-red-600 font-bold">NEW!</span>&nbsp;' : '' !!}
                 @if($log->link)
-                <a href="{{ $log->link }}" target="_blank" rel="noopener" class="hover:underline">{{ $log->title }}</a>
+                <a href="{{ $log->link }}" class="hover:underline">{{ $log->title }}</a>
                 @else
                 {{ $log->title }}
                 @endif
@@ -195,5 +195,5 @@
     });
     })();
     </script>
-<!-- v.1.49.0 -->
+<!-- v.1.49.1 -->
 @endsection

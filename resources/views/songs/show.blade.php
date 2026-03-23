@@ -157,6 +157,16 @@
             </div>
         </section>
         @endif
+
+        @if ($isSukininaru)
+        <section class="bg-white p-6 shadow-md rounded-lg mt-6">
+            <h3 class="text-xl font-bold text-gray-800">コール動画</h3>
+            <div class="mt-4 aspect-w-16 aspect-h-9 youtube-ratio">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/wA_lovpT5C4?si=5hmR4V6RppHi2ZQJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </section>
+        @endif
+    
     </main>
 
     {{-- 閲覧記録 --}}

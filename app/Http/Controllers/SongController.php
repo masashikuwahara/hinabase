@@ -22,6 +22,9 @@ class SongController extends Controller
         $recordedSongs = Song::where('is_recorded', $song->is_recorded)
         ->where('id', '!=', $song->id) // 自分自身は除外
         ->get();
-        return view('songs.show', compact('song', 'recordedSongs'));
+
+        $isSukininaru = (int) $song->id === 154;
+
+        return view('songs.show', compact('song', 'recordedSongs', 'isSukininaru'));
     }
 }
