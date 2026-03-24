@@ -25,9 +25,9 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('songs-limit', function ($request) {
             $songId = (int) $request->route('id');
             
-            $limitedIds = [0];
+            $limitedIds = [];
             // $limitedIds = [150, 147];
-            $limit = 3;
+            $limit = 0;
             if (in_array($songId, $limitedIds, true)) {
                 $key = "song_access_{$songId}_" . now()->toDateString();
                 $count = Cache::get($key, 0);
