@@ -81,7 +81,7 @@
             {
                 "@type":"ListItem",
                 "position": {{ $i + 1 }},
-                "url": "{{ route('members.show', $m->id) }}",
+                "url": "{{ route('members.show', $m->slug) }}",
                 "name": @json($m->name)
             }@if(!$loop->last),@endif
             @endforeach
@@ -312,7 +312,7 @@
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-3">
                                 @foreach ($members as $member)
                                     <article class="bg-white shadow-md rounded-lg text-center hover:scale-105 transition-transform p-4">
-                                        <a href="{{ route('members.show', $member->id) }}" class="block">
+                                        <a href="{{ route('members.show', $member->slug) }}" class="block">
                                             <img src="{{ asset('storage/' . ($member->image ?? 'default.jpg')) }}"
                                                  alt="{{ $member->name }}（日向坂46）"
                                                  class="w-32 h-32 object-cover mx-auto rounded-full"
@@ -349,7 +349,7 @@
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-3">
                                 @foreach ($members as $member)
                                     <article class="bg-white shadow-md rounded-lg text-center hover:scale-105 transition-transform p-4">
-                                        <a href="{{ route('members.show', $member->id) }}" class="block">
+                                        <a href="{{ route('members.show', $member->slug) }}" class="block">
                                             <img src="{{ asset('storage/' . ($member->image ?? 'default.jpg')) }}"
                                                  alt="{{ $member->name }}（日向坂46）"
                                                  class="w-32 h-32 object-cover mx-auto rounded-full"
@@ -379,7 +379,7 @@
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-3">
                         @foreach ($currentMembers as $member)
                             <article class="bg-white shadow-md rounded-lg text-center hover:scale-105 transition-transform p-4">
-                                <a href="{{ route('members.show', $member->id) }}" class="block">
+                                <a href="{{ route('members.show', $member->slug) }}" class="block">
                                     <img src="{{ asset('storage/' . ($member->image ?? 'default.jpg')) }}"
                                          alt="{{ $member->name }}（日向坂46）"
                                          class="w-32 h-32 object-cover mx-auto rounded-full"
@@ -408,7 +408,7 @@
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-3">
                         @foreach ($graduatedMembers as $member)
                             <article class="bg-white shadow-md rounded-lg text-center hover:scale-105 transition-transform p-4">
-                                <a href="{{ route('members.show', $member->id) }}" class="block">
+                                <a href="{{ route('members.show', $member->slug) }}" class="block">
                                     <img src="{{ asset('storage/' . ($member->image ?? 'default.jpg')) }}"
                                          alt="{{ $member->name }}（日向坂46）"
                                          class="w-32 h-32 object-cover mx-auto rounded-full"

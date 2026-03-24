@@ -6,9 +6,9 @@
 @push('head_meta')
 
 <meta property="og:type" content="music.song">
-<meta property="og:url" content="{{ url()->current() }}">
+<meta property="og:url" content="{{ route('songs.show', $song->slug) }}">
 <meta name="twitter:card" content="summary_large_image">
-
+<link rel="canonical" href="{{ route('songs.show', $song->slug) }}">
 {{-- パンくず(JSON-LD) --}}
 <script type="application/ld+json">
 {
@@ -107,7 +107,7 @@
                 <ul class="mt-2">
                     @foreach ($recordedSongs as $recordedSong)
                         <li class="block text-lg font-semibold hover:text-blue-600">
-                            <a href="{{ route('songs.show', $recordedSong->id) }}">{{ $recordedSong->title }}</a>
+                            <a href="{{ route('songs.show', $recordedSong->slug) }}">{{ $recordedSong->title }}</a>
                         </li>
                     @endforeach
                 </ul>
@@ -126,7 +126,7 @@
             <ul class="mt-2">
                 @foreach ($song->members as $member)
                     <li class="block text-lg font-semibold hover:text-blue-600">
-                        <a href="{{ route('members.show', $member->id) }}">{{ $member->name }}</a>
+                        <a href="{{ route('members.show', $member->slug) }}">{{ $member->name }}</a>
                         @if ($member->pivot->is_center)
                             <strong class="text-red-500">（センター）</strong>
                         @endif
@@ -176,7 +176,7 @@
         type: 'song',
         id: {{ $song->id }},
         title: @json($song->title),
-        url: @json(route('songs.show', $song->id)),
+        url: @json(route('songs.show', $song->slug)),
         image: @json($song->photo ? asset('storage/'.$song->photo) : null),
         viewedAt: Date.now()
     };

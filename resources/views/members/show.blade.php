@@ -10,8 +10,9 @@
     : ($member->image_url ?? 'https://kasumizaka46.com/storage/images/logo.png'))
 
 @push('head_meta')
-    <link rel="canonical" href="{{ route('members.show', $member->id) }}">
+    <link rel="canonical" href="{{ route('members.show', $member->slug) }}">
 
+    <meta property="og:url" content="{{ route('members.show', $member->slug) }}">
     <meta property="og:type" content="profile">
     <meta property="profile:username" content="{{ $member->name }}">
     <meta property="og:image:width" content="1200">
@@ -23,7 +24,7 @@
             '@type' => 'Person',
             'name' => $member->name,
             'alternateName' => $member->furigana,
-            'url' => route('members.show', $member->id),
+            'url' => route('members.show', $member->slug),
             'image' => $member->image ? asset('storage/' . $member->image) : ($member->image_url ?? null),
             'memberOf' => [
                 '@type' => 'MusicGroup',
@@ -58,11 +59,11 @@
             '@context' => 'https://schema.org',
             '@type' => 'ProfilePage',
             'name' => $member->name . '（日向坂46）プロフィール | HINABASE',
-            'url' => route('members.show', $member->id),
+            'url' => route('members.show', $member->slug),
             'mainEntity' => [
                 '@type' => 'Person',
                 'name' => $member->name,
-                'url' => route('members.show', $member->id),
+                'url' => route('members.show', $member->slug),
             ],
             'isPartOf' => [
                 '@type' => 'WebSite',
@@ -91,7 +92,7 @@
                     '@type' => 'ListItem',
                     'position' => 3,
                     'name' => $member->name,
-                    'item' => route('members.show', $member->id),
+                    'item' => route('members.show', $member->slug),
                 ],
             ],
         ];
@@ -246,7 +247,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 @if($previousMember)
-                    <a href="{{ route('members.show', $previousMember->id) }}"
+                    <a href="{{ route('members.show', $previousMember->slug) }}"
                     class="block rounded-xl border p-4 hover:bg-gray-50 transition">
                         <p class="text-sm text-gray-500 mb-2">← 前のメンバー</p>
                         <div class="flex items-center gap-4">
@@ -271,7 +272,7 @@
                 @endif
 
                 @if($nextMember)
-                    <a href="{{ route('members.show', $nextMember->id) }}"
+                    <a href="{{ route('members.show', $nextMember->slug) }}"
                     class="block rounded-xl border p-4 hover:bg-gray-50 transition">
                         <p class="text-sm text-gray-500 mb-2">次のメンバー →</p>
                         <div class="flex items-center gap-4">
@@ -321,7 +322,7 @@
             <ul class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
                 @foreach($sameGenMembers as $mate)
                     <li class="text-center">
-                        <a href="{{ route('members.show', $mate->id) }}" class="block hover:opacity-80">
+                        <a href="{{ route('members.show', $mate->slug) }}" class="block hover:opacity-80">
                             <img
                                 src="{{ asset('storage/' . $mate->image) }}"
                                 alt="{{ $mate->name }}"
@@ -371,7 +372,7 @@
                 @foreach ($member->songs as $song)
                     <li class="bg-white p-4 shadow-md rounded-lg"
                         data-center="{{ $song->pivot->is_center ? '1' : '0' }}">
-                        <a href="{{ route('songs.show', $song->id) }}"
+                        <a href="{{ route('songs.show', $song->slug) }}"
                            class="block text-lg font-semibold hover:text-blue-600">
                             {{ $song->title }}
                             @if ($song->pivot->is_center)
@@ -639,7 +640,7 @@ document.addEventListener('DOMContentLoaded', function () {
         type: 'member',
         id: {{ $member->id }},
         title: @json($member->name),
-        url: @json(route('members.show', $member->id)),
+        url: @json(route('members.show', $member->slug)),
         image: @json($member->image ? asset('storage/' . $member->image) : null),
         viewedAt: Date.now()
     };

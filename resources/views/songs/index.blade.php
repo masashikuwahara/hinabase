@@ -29,7 +29,7 @@
         {
           "@type":"ListItem",
           "position": {{ $pos++ }},
-          "url": "{{ route('songs.show', $song->id) }}",
+          "url": "{{ route('songs.show', $song->slug) }}",
           "name": "{{ $song->title }}"
         }@if(!$loop->last),@endif
       @endforeach
@@ -74,7 +74,7 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
           @foreach ($singles as $song)
             <div class="bg-white shadow-md rounded-lg p-3 text-center hover:scale-105 transition-transform">
-              <a href="{{ route('songs.show', $song->id) }}" class="block">
+              <a href="{{ route('songs.show', $song->slug) }}" class="block">
                 <img src="{{ asset('storage/' . ($song->photo ?? 'default.jpg')) }}"
                      alt="{{ $song->title }}（日向坂46）"
                      class="w-20 h-20 sm:w-32 sm:h-32 object-cover rounded-lg mx-auto"
@@ -101,7 +101,7 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
           @foreach ($others as $song)
             <div class="bg-white shadow-md rounded-lg p-3 text-center hover:scale-105 transition-transform">
-              <a href="{{ route('songs.show', $song->id) }}" class="block">
+              <a href="{{ route('songs.show', $song->slug) }}" class="block">
                 <img src="{{ asset('storage/' . ($song->photo ?? 'default.jpg')) }}"
                      alt="{{ $song->title }}（日向坂46）"
                      class="w-20 h-20 sm:w-32 sm:h-32 object-cover rounded-lg mx-auto"

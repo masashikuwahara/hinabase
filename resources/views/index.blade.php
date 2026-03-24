@@ -74,7 +74,7 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
             @foreach ($members as $member)
                 <div class="bg-white shadow-md rounded-lg p-3 text-center hover:scale-105 transition-transform">
-                    <a href="{{ route('members.show', $member->id) }}">
+                    <a href="{{ route('members.show', $member->slug) }}">
                         <img src="{{ asset('storage/' . $member->image) }}" 
                         alt="{{ $member->name }}" 
                         class="w-20 h-20 sm:w-32 sm:h-32 object-cover rounded-full mx-auto"
@@ -102,7 +102,7 @@
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-2">
             @foreach ($songs as $song)
                 <div class="bg-white shadow-md rounded-lg p-3 text-center hover:scale-105 transition-transform">
-                    <a href="{{ route('songs.show', $song->id) }}">
+                    <a href="{{ route('songs.show', $song->slug) }}">
                         <img src="{{ asset('storage/' . $song->photo) }}" 
                         alt="{{ $song->title }}" 
                         class="w-20 h-20 sm:w-32 sm:h-32 object-cover rounded-lg mx-auto"
@@ -195,5 +195,5 @@
     });
     })();
     </script>
-<!-- v.1.49.1 -->
+<!-- v.1.50.0 -->
 @endsection

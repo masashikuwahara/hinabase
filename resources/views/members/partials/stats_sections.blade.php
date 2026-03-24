@@ -12,7 +12,7 @@
     <ol class="space-y-2">
       @foreach($data['heightRank'] as $m)
         <li class="flex items-center justify-between">
-          <a href="{{ route('members.show', $m->id) }}" class="font-semibold hover:underline">
+          <a href="{{ route('members.show', $m->slug) }}" class="font-semibold hover:underline">
             {{ $m->name }}
           </a>
           <span class="font-num text-gray-700">{{ $m->height }}cm</span>
@@ -103,7 +103,7 @@
             </div>
 
             <div class="mt-2 flex justify-end">
-              <a :href="`/members/${m.id}`"
+              <a :href="`/members/${m.slug}`"
                 class="text-blue-600 hover:underline"
                 @click.stop
               >詳細へ</a>
@@ -148,7 +148,7 @@
     <ol class="space-y-2">
       @foreach($data['birthdayRank'] as $m)
         <li class="flex items-center justify-between">
-          <a href="{{ route('members.show', $m->id) }}" class="font-semibold hover:underline">
+          <a href="{{ route('members.show', $m->slug) }}" class="font-semibold hover:underline">
             {{ $m->name }}
           </a>
           <span class="font-num text-gray-700">
@@ -173,7 +173,7 @@
     <ol class="space-y-2">
       @foreach($data['bloodtypeRank'] as $m)
         <li class="flex items-center justify-between">
-          <a href="{{ route('members.show', $m->id) }}" class="font-semibold hover:underline">
+          <a href="{{ route('members.show', $m->slug) }}" class="font-semibold hover:underline">
             {{ $m->name }}
           </a>
           <span class="font-num text-gray-700">{{ $m->blood_type }}</span>
@@ -196,7 +196,7 @@
       @foreach($data['birthplaceRank'] as $m)
         <li class="flex items-center gap-3 px-4 py-3">
           {{-- 画像・名前・リンクは既存に合わせる --}}
-          <a href="{{ route('members.show', $m->id) }}" class="font-semibold hover:underline">
+          <a href="{{ route('members.show', $m->slug) }}" class="font-semibold hover:underline">
             {{ $m->name }}
           </a>
           <span class="ml-auto text-sm text-slate-600">
@@ -220,7 +220,7 @@
     <ol class="space-y-2">
       @foreach($data['songCountRank'] as $row)
         <li class="flex items-center justify-between">
-          <a href="{{ route('members.show', $row->id) }}" class="font-semibold hover:underline">
+          <a href="{{ route('members.show', $row->slug) }}" class="font-semibold hover:underline">
             {{ $row->name }}
           </a>
           <span class="font-num text-gray-700">{{ (int)$row->song_count }}</span>
@@ -242,7 +242,7 @@
     <ol class="space-y-2">
       @foreach($data['centerCountRank'] as $row)
         <li class="flex items-center justify-between">
-          <a href="{{ route('members.show', $row->id) }}" class="font-semibold hover:underline">
+          <a href="{{ route('members.show', $row->slug) }}" class="font-semibold hover:underline">
             {{ $row->name }}
           </a>
           <span class="font-num text-gray-700">{{ (int)$row->center_count }}</span>
@@ -264,7 +264,7 @@
     <ol class="space-y-2">
       @foreach($data['titleSongCountRank'] as $row)
         <li class="flex items-center justify-between">
-          <a href="{{ route('members.show', $row->id) }}" class="font-semibold hover:underline">
+          <a href="{{ route('members.show', $row->slug) }}" class="font-semibold hover:underline">
             {{ $row->name }}
           </a>
           <span class="font-num text-gray-700">{{ (int)$row->titlesong_count }}</span>
