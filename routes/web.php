@@ -27,15 +27,24 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 //メンバー、楽曲一覧
 Route::get('/songs', [SongController::class, 'index'])->name('songs.index');
-Route::get('/songs/{id}', [SongController::class, 'show'])
-    ->middleware(['throttle:songs-limit', 'count.popularity'])
+Route::get('/songs/{id}', function ($id) {
+    $song = \App\Models\Song::findOrFail($id);
+    return redirect()->route('songs.show', $song->slug, 301);
+})->whereNumber('id');
+Route::get('/songs/{song:slug}', [SongController::class, 'show'])
     ->name('songs.show');
 Route::get('/members', [MemberController::class, 'index'])->name('members.index');
 Route::get('/members/current', [MemberController::class, 'current'])->name('members.current');
 Route::get('/members/graduates', [MemberController::class, 'graduates'])->name('members.graduates');
 Route::get('/members/generation', [MemberController::class, 'generation'])->name('members.generation');
 Route::get('/members/stats', [MemberStatsController::class, 'index'])->name('members.stats');
-Route::get('/members/{member}', [MemberController::class, 'show'])
+
+Route::get('/members/{id}', function ($id) {
+    $member = \App\Models\Member::findOrFail($id);
+    return redirect()->route('members.show', $member->slug, 301);
+})->whereNumber('id');
+
+Route::get('/members/{member:slug}', [MemberController::class, 'show'])
     ->middleware('count.popularity', 'throttle:members-limit')
     ->name('members.show');
 Route::get('/search', [SearchController::class, 'search'])->name('search');
