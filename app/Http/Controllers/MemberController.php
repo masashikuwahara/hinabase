@@ -70,9 +70,9 @@ class MemberController extends Controller
         return view('members.index', compact('currentMembers', 'graduatedMembers', 'sort', 'order'));
     }
 
-    public function show($id)
+    public function show(Member $member)
     {
-        $member = Member::with(['songs', 'skill'])->findOrFail($id);
+        $member->load(['songs', 'skill']);
         $previousMember = Member::where('graduation', $member->graduation)
             ->where(function ($query) use ($member) {
                 $query->where('furigana', '<', $member->furigana)
@@ -184,7 +184,6 @@ class MemberController extends Controller
             'sameGenMembers',
             'radar',
             'radarData',
-            'sameGenMembers',
             'previousMember',
             'nextMember',
             'accessChartLabels',

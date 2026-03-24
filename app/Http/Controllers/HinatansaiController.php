@@ -14,6 +14,7 @@ class HinatansaiController extends Controller
             ->orderBy('furigana')
             ->get([
                 'id',
+                'slug',
                 'name',
                 'furigana',
                 'grade',

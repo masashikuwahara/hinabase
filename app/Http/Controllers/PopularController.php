@@ -39,7 +39,7 @@ class PopularController extends Controller
             if ($row->type === 'member') {
                 $m = $members[$row->entity_id] ?? null;
                 return [
-                    'url'        => route('members.show', $row->entity_id),
+                    'url'        => $m ? route('members.show', $m->slug) : '#',
                     'title'      => $m->name ?? "メンバー #{$row->entity_id}",
                     'image'      => $m && $m->image ? asset('storage/'.$m->image) : asset('images/member-default.jpg'),
                     'tag'        => 'メンバー',
@@ -51,7 +51,7 @@ class PopularController extends Controller
                 $s = $songs[$row->entity_id] ?? null;
                 $songImage = $s?->photo ?? $s?->image ?? null;
                 return [
-                    'url'        => route('songs.show', $row->entity_id),
+                    'url'        => $s ? route('songs.show', $s->slug) : '#',
                     'title'      => $s->title ?? "楽曲 #{$row->entity_id}",
                     'image'      => $songImage ? asset('storage/'.$songImage) : asset('images/song-default.jpg'),
                     'tag'        => '楽曲',

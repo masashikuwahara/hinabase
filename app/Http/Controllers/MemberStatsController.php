@@ -39,7 +39,7 @@ class MemberStatsController extends Controller
         $heightRank = (clone $base)
             ->orderByRaw('height IS NULL asc')
             ->orderBy('height', 'desc')
-            ->get(['id', 'name', 'height', 'grade']);
+            ->get(['id', 'slug', 'name', 'height', 'grade']);
         
         // 1b) 可視化用（Alpineへ渡す配列）
         $heightRankForJs = $heightRank
@@ -47,6 +47,7 @@ class MemberStatsController extends Controller
         ->map(fn ($m) => [
             'id' => (int)$m->id,
             'name' => (string)$m->name,
+            'slug' => (string)$m->slug,
             'height' => (float)$m->height,
             'grade' => $this->gradeToNum($m->grade),
         ])->values();
@@ -56,7 +57,7 @@ class MemberStatsController extends Controller
             ->orderByRaw('birthday IS NULL asc')
             ->orderByDesc('birthday')
             ->orderBy('furigana', 'asc')
-            ->get(['id', 'name', 'birthday', 'furigana'])
+            ->get(['id', 'slug', 'name', 'birthday', 'furigana'])
             ->map(function ($m) use ($asOf) {
                 $m->age_2026 = $m->birthday
                     ? (int) floor(\Carbon\Carbon::parse($m->birthday)->diffInRealYears($asOf)) // 満年齢（整数）
@@ -67,8 +68,8 @@ class MemberStatsController extends Controller
         // 3) 参加曲数
         $songCountRank = (clone $base)
             ->leftJoin('song_members', 'members.id', '=', 'song_members.member_id')
-            ->groupBy('members.id', 'members.name')
-            ->select('members.id', 'members.name', DB::raw('COUNT(song_members.song_id) as song_count'))
+            ->groupBy('members.id', 'members.slug', 'members.name')
+            ->select('members.id', 'members.slug', 'members.name', DB::raw('COUNT(song_members.song_id) as song_count'))
             ->orderByDesc('song_count')
             ->get();
 
@@ -78,8 +79,8 @@ class MemberStatsController extends Controller
                 $join->on('members.id', '=', 'song_members.member_id')
                     ->where('song_members.is_center', 1);
             })
-            ->groupBy('members.id', 'members.name')
-            ->select('members.id', 'members.name', DB::raw('COUNT(song_members.song_id) as center_count'))
+            ->groupBy('members.id', 'members.slug', 'members.name')
+            ->select('members.id', 'members.slug', 'members.name', DB::raw('COUNT(song_members.song_id) as center_count'))
             ->orderByDesc('center_count')
             ->get();
 
@@ -87,10 +88,11 @@ class MemberStatsController extends Controller
         $titleSongCountRank = (clone $base)
             ->leftJoin('song_members', 'members.id', '=', 'song_members.member_id')
             ->leftJoin('songs', 'songs.id', '=', 'song_members.song_id')
-            ->groupBy('members.id', 'members.name')
+            ->groupBy('members.id', 'members.slug', 'members.name')
             ->select(
                 'members.id',
                 'members.name',
+                'members.slug', 
                 DB::raw('SUM(CASE WHEN songs.titlesong = 1 THEN 1 ELSE 0 END) as titlesong_count')
             )
             ->orderByDesc('titlesong_count')
@@ -106,7 +108,7 @@ class MemberStatsController extends Controller
             ")
             ->orderByRaw("FIELD(blood_type, 'A型', 'B型', 'O型', 'AB型', '不明')")
             ->orderBy('furigana', 'asc')
-            ->get(['id', 'name', 'furigana', 'blood_type']);
+            ->get(['id', 'slug', 'name', 'furigana', 'blood_type']);
         
         // 7) 出身地（都道府県）順：北→南（京都問題修正版）
         $prefExpr = "
@@ -139,7 +141,7 @@ class MemberStatsController extends Controller
                 '福岡','佐賀','長崎','熊本','大分','宮崎','鹿児島','沖縄'
             ) asc")
             ->orderBy('furigana', 'asc')
-            ->get(['id','name','furigana','birthplace']);
+            ->get(['id', 'slug', 'name','furigana','birthplace']);
 
         return [
             'heightRank' => $heightRank,
