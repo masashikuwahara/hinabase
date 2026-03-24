@@ -32,13 +32,13 @@ class BuildSitemap extends Command
 
         foreach (\App\Models\Member::cursor() as $m) {
             $urls[] = [
-                'loc'     => route('members.show', $m->id),
+                'loc'     => route('members.show', $m->slug),
                 'lastmod' => optional($m->updated_at)->toAtomString()
             ];
         }
         foreach (\App\Models\Song::cursor() as $s) {
             $urls[] = [
-                'loc'     => route('songs.show', $s->id),
+                'loc'     => route('songs.show', $s->slug),
                 'lastmod' => optional($s->updated_at)->toAtomString()
             ];
         }
