@@ -23,8 +23,13 @@ class SongController extends Controller
         ->where('id', '!=', $song->id) // 自分自身は除外
         ->get();
 
-        $isSukininaru = (int) $song->id === 154;
+        $callVideos = [
+            'suki-ni-naru-crescendo' => 'https://www.youtube.com/embed/wA_lovpT5C4?si=5hmR4V6RppHi2ZQJ',
+            'surfs-up-girl' => 'https://www.youtube.com/embed/vr7IROT1ml4?si=yHgieV2CFYQi_NVz',
+        ];
 
-        return view('songs.show', compact('song', 'recordedSongs', 'isSukininaru'));
+        $callVideoUrl = $callVideos[$song->slug] ?? null;
+
+        return view('songs.show', compact('song', 'recordedSongs', 'callVideoUrl' ));
     }
 }
