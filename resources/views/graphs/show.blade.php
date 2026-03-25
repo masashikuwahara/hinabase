@@ -165,12 +165,12 @@
         let boxes = [];
         let boxEls = new Map();
 
-        function setInfo(title, sub = '', memberId = null) {
+        function setInfo(title, sub = '', memberSlug = null) {
             infoEl.textContent = title || '';
             infoSubEl.textContent = sub || '';
 
-            if (memberId) {
-                infoLinkEl.href = `${memberBaseUrl}/${memberId}`;
+            if (memberSlug) {
+                infoLinkEl.href = `${memberBaseUrl}/${memberSlug}`;
                 infoLinkEl.classList.remove('hidden');
             } else {
                 infoLinkEl.href = '#';
@@ -367,10 +367,12 @@
             cy.on('tap', 'node', function (evt) {
                 const n = evt.target;
                 const memberId = n.data('member_id');
+                const memberSlug = n.data('member_slug');
+
                 setInfo(
                     safeLabel(n),
                     memberId ? `member_id: ${memberId}` : '自由ノード',
-                    memberId
+                    memberSlug || null
                 );
             });
 

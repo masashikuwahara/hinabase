@@ -30,17 +30,6 @@ class GraphController extends Controller
 
     public function data(string $slug): JsonResponse
     {
-        // $graph = Graph::query()
-        //     ->where('slug', $slug)
-        //     ->with([
-        //         'nodes:id,graph_id,member_id,label,image_url,pos_x,pos_y,is_position_locked,size,meta,sort_order',
-        //         'edges:id,graph_id,from_node_id,to_node_id,relation_type_id,label,is_directed,weight,meta',
-        //         'edges.relationType:id,slug,name_ja,color',
-        //     ])
-        //     ->firstOrFail();
-
-        // $elements = [];
-
         $graph = Graph::query()
             ->where('slug', $slug)
             ->firstOrFail();
@@ -49,9 +38,12 @@ class GraphController extends Controller
 
         $graph->load([
             'nodes:id,graph_id,member_id,label,image_url,pos_x,pos_y,is_position_locked,size,meta,sort_order',
+            'nodes.member:id,slug',
             'edges:id,graph_id,from_node_id,to_node_id,relation_type_id,label,is_directed,weight,meta',
             'edges.relationType:id,slug,name_ja,color',
         ]);
+
+        $elements = [];
 
         foreach ($graph->nodes as $n) {
             $item = [
@@ -59,6 +51,7 @@ class GraphController extends Controller
                     'id' => 'n' . $n->id,
                     'label' => $n->label,
                     'member_id' => $n->member_id,
+                    'member_slug' => $n->member?->slug,
                     'image_url' => $n->image_url ?: null,
                     'size' => $n->size ?? 30,
                     'locked' => (bool) $n->is_position_locked,

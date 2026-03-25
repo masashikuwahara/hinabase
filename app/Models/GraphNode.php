@@ -21,4 +21,9 @@ class GraphNode extends Model
     {
         return $this->belongsTo(Graph::class);
     }
+
+    public function member()
+    {
+        return $this->belongsTo(\App\Models\Member::class);
+    }
 }
