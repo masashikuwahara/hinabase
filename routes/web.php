@@ -50,7 +50,7 @@ Route::get('/members/{member:slug}', [MemberController::class, 'show'])
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 Route::view('/others', 'others.index', [
     'links' => [
-        ['title' => '日向坂46メンバーのペンライトカラー検索アプリver3', 'url' => 'https://hinacolor.kasumizaka46.com/'],
+        ['title' => '日向坂46メンバーのペンライトカラー検索アプリver3', 'url' => 'https://x.gd/orSY4'],
         ['title' => '日向坂46推しメンチェッカーver2', 'url' => 'https://hinaselect.netlify.app/'],
         ['title' => '日向坂46メンバーのペンライトカラーが検索できます', 'url' => 'https://x.gd/0RLv3'],
         ['title' => '日向坂46クイズ', 'url' => 'https://hinata-quiz.netlify.app/'],

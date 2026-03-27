@@ -69,8 +69,8 @@
   </a>
 </div>
 
-{{-- <div class="bg-[#4ade80] text-white py-2 w-full text-center text-sm md:text-base">
-  <a href="https://kasumizaka46.com/graphs/hinata-relationship-5th" class="hover:text-yellow-200 font-semibold transition-colors duration-200">
-    五期生相関図公開しました
+<div class="bg-[#4ad9de] text-white py-2 w-full text-center text-sm md:text-base">
+  <a href="https://x.gd/orSY4" class="hover:text-yellow-200 font-semibold transition-colors duration-200">
+    メンバーのペンライト検索アプリリニューアルしました
   </a>
-</div> --}}
+</div>
