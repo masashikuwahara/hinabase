@@ -63,7 +63,19 @@
   </a>
 </div> --}}
 
-<div class="bg-[linear-gradient(90deg,#f19db5_0%,#f7c6a3_25%,#f9e27d_50%,#9dd9f3_75%,#c8b6ff_100%)] text-gray-900 py-2 w-full text-center text-sm md:text-base">
+<style>
+@keyframes rainbow-flow {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+.rainbow-animate {
+  background-size: 200% 100%;
+  animation: rainbow-flow 10s linear infinite alternate;
+}
+</style>
+
+<div class="rainbow-animate bg-[linear-gradient(90deg,#f19db5_0%,#f7c6a3_25%,#f9e27d_50%,#9dd9f3_75%,#c8b6ff_100%)] text-gray-900 py-2 w-full text-center text-sm md:text-base">
   <a href="{{ route('hinatansai.index') }}" class="hover:text-pink-700 font-semibold transition-colors duration-200">
     7回目のひな誕祭みどころ
   </a>
