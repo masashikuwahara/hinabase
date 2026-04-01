@@ -10,7 +10,8 @@ class MemberStatsController extends Controller
 {
     public function index()
     {
-        $asOf = Carbon::create(2026, 2, 15, 0, 0, 0, 'Asia/Tokyo');
+        // $asOf = Carbon::create(2026, 2, 15, 0, 0, 0, 'Asia/Tokyo');
+        $asOf = Carbon::now('Asia/Tokyo');
 
         $current   = $this->buildRanks(0, $asOf);
         $graduated = $this->buildRanks(1, $asOf);

@@ -14,7 +14,7 @@
 
   <h1 class="text-2xl font-bold font-mont">日向坂46メンバー 統計・ランキング</h1>
   <p class="text-sm text-gray-600 mt-1">身長・誕生日・血液型・出身地・参加曲数・センター回数・選抜回数をまとめてチェック。</p>
-  <p class="text-sm text-gray-600 mt-1">※2026年2月現在の情報です。</p>
+  <p class="text-sm text-gray-600 mt-1">※情報は随時更新しています。年齢は現在日時点です。</p>
 
   {{-- 切替ボタン --}}
   <div class="mt-4 flex flex-wrap gap-2">
