@@ -64,6 +64,24 @@ class MemberStatsController extends Controller
                     : null;
                 return $m;
             });
+        
+        // 2b) 誕生月別
+        $birthdayMonthGroups = collect(range(1, 12))->mapWithKeys(function ($month) use ($base, $asOf) {
+            $members = (clone $base)
+                ->whereNotNull('birthday')
+                ->whereMonth('birthday', $month)
+                ->orderByRaw('DAY(birthday) asc')
+                ->orderBy('furigana', 'asc')
+                ->get(['id', 'slug', 'name', 'birthday', 'furigana'])
+                ->map(function ($m) use ($asOf) {
+                    $m->age_2026 = $m->birthday
+                        ? (int) floor(\Carbon\Carbon::parse($m->birthday)->diffInRealYears($asOf))
+                        : null;
+                    return $m;
+                });
+
+            return [$month => $members];
+        });
 
         // 3) 参加曲数
         $songCountRank = (clone $base)
@@ -99,16 +117,23 @@ class MemberStatsController extends Controller
             ->get();
         
         // 6) 血液型順（A, B, O, AB, 不明）
-        $bloodtypeRank = (clone $base)
-            ->orderByRaw("
-                CASE
-                    WHEN blood_type IS NULL OR blood_type = '' THEN 6
-                    ELSE 0
-                END asc
-            ")
-            ->orderByRaw("FIELD(blood_type, 'A型', 'B型', 'O型', 'AB型', '不明')")
+        $bloodOrder = ['A型', 'B型', 'O型', 'AB型', '不明'];
+
+        $bloodMembers = (clone $base)
             ->orderBy('furigana', 'asc')
-            ->get(['id', 'slug', 'name', 'furigana', 'blood_type']);
+            ->get(['id', 'slug', 'name', 'furigana', 'blood_type'])
+            ->map(function ($m) {
+                $m->blood_type = filled($m->blood_type) ? $m->blood_type : '不明';
+                return $m;
+            });
+
+        $bloodtypeGroups = collect($bloodOrder)->mapWithKeys(function ($type) use ($bloodMembers) {
+            return [
+                $type => $bloodMembers
+                    ->where('blood_type', $type)
+                    ->values()
+            ];
+        });
         
         // 7) 出身地（都道府県）順：北→南（京都問題修正版）
         $prefExpr = "
@@ -147,10 +172,11 @@ class MemberStatsController extends Controller
             'heightRank' => $heightRank,
             'heightRankForJs' => $heightRankForJs,
             'birthdayRank' => $birthdayRank,
+            'birthdayMonthGroups' => $birthdayMonthGroups,
             'songCountRank' => $songCountRank,
             'centerCountRank' => $centerCountRank,
             'titleSongCountRank' => $titleSongCountRank,
-            'bloodtypeRank' => $bloodtypeRank,
+            'bloodtypeGroups' => $bloodtypeGroups,
             'birthplaceRank' => $birthplaceRank,
         ];
     }
