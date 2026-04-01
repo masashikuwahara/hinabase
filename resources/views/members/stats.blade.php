@@ -1,10 +1,11 @@
 @extends('layouts.main')
 
 @section('title', '日向坂46メンバー統計・ランキング | HINABASE')
-@section('meta_description', '日向坂46メンバーの身長順、誕生日順、参加曲数、センター回数、選抜回数を一覧化。')
+@section('meta_description', '日向坂46メンバーの身長順、誕生日順、血液型別、出身地別、参加曲数、センター回数、選抜回数を一覧化。')
 
 @section('content')
 @include('partials.breadcrumbs', ['breadcrumbs' => $breadcrumbs])
+
 <main class="container mx-auto px-4 mt-6"
       x-data="{
         group: 'current',

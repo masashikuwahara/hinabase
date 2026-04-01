@@ -161,26 +161,86 @@
   </div>
 </section>
 
-{{-- 血液型順 --}}
-<section class="bg-white rounded-xl shadow">
-  <button type="button" class="w-full flex items-center justify-between p-4"
-    @click="open = (open === 'blood_type' ? null : 'blood_type')" :aria-expanded="open === 'blood_type'">
-    <h2 class="text-lg font-semibold font-mont">血液型順</h2>
-    <span class="text-sm text-gray-500" x-text="open === 'blood_type' ? '閉じる' : '開く'"></span>
-  </button>
+{{-- 誕生月別 --}}
+<section class="bg-white border rounded-2xl shadow-sm overflow-hidden">
+    <button
+        type="button"
+        class="w-full flex items-center justify-between px-4 py-4 text-left hover:bg-gray-50 transition"
+        @click="{{ $openKey }} = {{ $openKey }} === 'birthday-month' ? '' : 'birthday-month'">
+        <span class="text-lg font-bold text-gray-900">誕生月別</span>
+        <span class="text-sm text-gray-500" x-text="{{ $openKey }} === 'birthday-month' ? '閉じる' : '開く'"></span>
+    </button>
 
-  <div x-show="open === 'blood_type'" x-collapse class="border-t p-4">
-    <ol class="space-y-2">
-      @foreach($data['bloodtypeRank'] as $m)
-        <li class="flex items-center justify-between">
-          <a href="{{ route('members.show', $m->slug) }}" class="font-semibold hover:underline">
-            {{ $m->name }}
-          </a>
-          <span class="font-num text-gray-700">{{ $m->blood_type }}</span>
-        </li>
-      @endforeach
-    </ol>
-  </div>
+    <div x-show="{{ $openKey }} === 'birthday-month'" x-collapse class="border-t bg-gray-50 px-4 py-4">
+        <div class="space-y-6">
+            @foreach ($data['birthdayMonthGroups'] as $month => $members)
+                <div>
+                    <div class="flex items-center justify-between border-b border-gray-200 pb-2">
+                        <h3 class="text-base md:text-lg font-semibold text-gray-800">{{ $month }}月</h3>
+                        <span class="text-sm text-gray-500">{{ $members->count() }}名</span>
+                    </div>
+
+                    @if ($members->isNotEmpty())
+                        <div class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
+                            @foreach ($members as $member)
+                                <a href="{{ route('members.show', $member->slug) }}"
+                                   class="rounded-xl border border-gray-200 bg-white px-3 py-2 hover:bg-sky-50 hover:border-sky-200 transition">
+                                    <div class="flex items-center justify-between gap-3">
+                                        <span class="font-medium text-gray-900">{{ $member->name }}</span>
+                                        <span class="text-sm text-gray-500">
+                                            {{ \Carbon\Carbon::parse($member->birthday)->format('n/j') }}
+                                            @if(!is_null($member->age_2026))
+                                                （{{ $member->age_2026 }}歳）
+                                            @endif
+                                        </span>
+                                    </div>
+                                </a>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="mt-3 text-sm text-gray-500">該当メンバーはいません。</p>
+                    @endif
+                </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+{{-- 血液型順 --}}
+<section class="bg-white border rounded-2xl shadow-sm overflow-hidden">
+    <button
+        type="button"
+        class="w-full flex items-center justify-between px-4 py-4 text-left hover:bg-gray-50 transition"
+        @click="{{ $openKey }} = {{ $openKey }} === 'bloodtype' ? '' : 'bloodtype'">
+        <span class="text-lg font-bold text-gray-900">血液型別</span>
+        <span class="text-sm text-gray-500" x-text="{{ $openKey }} === 'bloodtype' ? '閉じる' : '開く'"></span>
+    </button>
+
+    <div x-show="{{ $openKey }} === 'bloodtype'" x-collapse class="border-t bg-gray-50 px-4 py-4">
+        <div class="space-y-6">
+            @foreach ($data['bloodtypeGroups'] as $type => $members)
+                <div>
+                    <div class="flex items-center justify-between border-b border-gray-200 pb-2">
+                        <h3 class="text-base md:text-lg font-semibold text-gray-800">{{ $type }}</h3>
+                        <span class="text-sm text-gray-500">{{ $members->count() }}名</span>
+                    </div>
+
+                    @if ($members->isNotEmpty())
+                        <div class="mt-3 grid grid-cols-2 md:grid-cols-3 gap-3">
+                            @foreach ($members as $member)
+                                <a href="{{ route('members.show', $member->slug) }}"
+                                   class="rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-800 hover:bg-sky-50 hover:border-sky-200 hover:text-sky-700 transition">
+                                    {{ $member->name }}
+                                </a>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="mt-3 text-sm text-gray-500">該当メンバーはいません。</p>
+                    @endif
+                </div>
+            @endforeach
+        </div>
+    </div>
 </section>
 
 {{-- 出身地順 --}}
