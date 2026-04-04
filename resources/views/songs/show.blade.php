@@ -152,16 +152,26 @@
         @else
         <section class="bg-white p-6 shadow-md rounded-lg mt-6">
             <h3 class="text-xl font-bold text-gray-800">ミュージックビデオ</h3>
-            <div class="mt-4 aspect-w-16 aspect-h-9 youtube-ratio">
-                {!! $song->youtube !!}
+            <div class="mt-4">
+                <div class="relative w-full overflow-hidden rounded-xl" style="padding-top:56.25%;">
+                    <iframe
+                        class="absolute inset-0 w-full h-full"
+                        src="{{ $song->youtube }}"
+                        title="{{ $song->title }}"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                </div>
             </div>
         </section>
         @endif
 
+        {{-- コール動画 --}}
         @if ($callVideoUrl)
         <section class="bg-white p-6 shadow-md rounded-lg mt-6">
             <h3 class="text-xl font-bold text-gray-800">コール動画</h3>
-
             <div class="mt-4">
                 <div class="relative w-full overflow-hidden rounded-xl" style="padding-top:56.25%;">
                     <iframe
