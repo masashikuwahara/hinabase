@@ -19,13 +19,13 @@ class HomeController extends Controller
 
         $logs = Changelog::ordered()->limit(50)->get();
 
-        // $birthdayMembers = Member::query()
-        //     ->whereMonth('birth', $today->month)
-        //     ->whereDay('birth', $today->day)
-        //     ->orderBy('furigana')
-        //     ->get();
+        $birthdayMembers = Member::query()
+            ->whereMonth('birthday', $today->month)
+            ->whereDay('birthday', $today->day)
+            ->orderBy('furigana')
+            ->get();
 
-        // return view('index', compact('members','songs' ,'logs' ,'birthdayMembers'));
-        return view('index', compact('members','songs' ,'logs'));
+        return view('index', compact('members','songs' ,'logs' ,'birthdayMembers'));
+        // return view('index', compact('members','songs' ,'logs'));
     }
 }

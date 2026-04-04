@@ -13,7 +13,7 @@
     </section>
 
     {{-- 今日が誕生日のメンバー（個別カード型） --}}
-    {{-- @php $cols = $birthdayMembers->count() === 1 ? 'grid-cols-1' : 'grid-cols-2'; @endphp
+    @php $cols = $birthdayMembers->count() === 1 ? 'grid-cols-1' : 'grid-cols-2'; @endphp
     @if(isset($birthdayMembers) && $birthdayMembers->count())
         <section class="mt-10 px-6">
             <h2 class="text-xl font-bold mb-4 flex items-center justify-center gap-2">
@@ -37,8 +37,7 @@
                         <span class="text-[#7cc7e8] font-bold">BIRTHDAY!</span>
                         </span> --}}
 
-                        {{-- 年齢（birthdayがDATE想定、NULL対策込み） --}}
-                        {{-- @if($m->birthday)
+                        @if($m->birthday)
                         <p class="text-xs text-gray-500 mt-1">
                             {{ \Carbon\Carbon::parse($m->birthday)->age }}歳
                         </p>
@@ -49,7 +48,7 @@
                 </div>
             </div>
         </section>
-    @endif --}}
+    @endif
 
     <!-- 検索フォーム -->
     <div class="mt-6 text-center">
@@ -195,5 +194,5 @@
     });
     })();
     </script>
-<!-- v.1.51.0 -->
+<!-- v.1.51.1 -->
 @endsection
