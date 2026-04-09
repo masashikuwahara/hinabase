@@ -13,6 +13,7 @@
     <a href="{{ route('timeline.index') }}" class="hover:underline hover:text-white/90 transition-colors duration-200">日向坂46ヒストリー</a>
     <a href="{{ route('graphs.index') }}" class="hover:underline hover:text-white/90 transition-colors duration-200">相関図</a>
     <a href="{{ route('others.index') }}" class="hover:underline hover:text-white/90 transition-colors duration-200">その他</a>
+    <a href="{{ route('hinatansai.index') }}" class="hover:underline hover:text-white/90 transition-colors duration-200">7回目のひな誕祭みどころアーカイブ</a>
     <a href="https://x.com/sakamichiiwlu4e" target="_blank" rel="noopener noreferrer" class="hover:underline hover:text-white/90 transition-colors duration-200">X</a>
     <a href="https://x.gd/I7a73" target="_blank" rel="noopener noreferrer" class="hover:underline hover:text-white/90 transition-colors duration-200">Instagram</a>
   </div>

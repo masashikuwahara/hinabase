@@ -57,11 +57,6 @@
     </ul>
   </nav>
 </header>
-{{-- <div class="bg-[#a78bfa] text-white py-2 w-full text-center text-sm md:text-base">
-  <a href="{{ route('youtube.ranking') }}" class="hover:text-yellow-200 font-semibold transition-colors duration-200">
-    日向坂ちゃんねる 人気動画ランキング（再生数・高評価数を毎日更新中）
-  </a>
-</div> --}}
 
 <style>
 @keyframes rainbow-flow {
@@ -75,13 +70,19 @@
 }
 </style>
 
-<div class="rainbow-animate bg-[linear-gradient(90deg,#f19db5_0%,#f7c6a3_25%,#f9e27d_50%,#9dd9f3_75%,#c8b6ff_100%)] text-gray-900 py-2 w-full text-center text-sm md:text-base">
+{{-- <div class="bg-[#a78bfa] text-white py-2 w-full text-center text-sm md:text-base">
+  <a href="{{ route('youtube.ranking') }}" class="hover:text-yellow-200 font-semibold transition-colors duration-200">
+    日向坂ちゃんねる 人気動画ランキング（再生数・高評価数を毎日更新中）
+  </a>
+</div> --}}
+
+{{-- <div class="rainbow-animate bg-[linear-gradient(90deg,#f19db5_0%,#f7c6a3_25%,#f9e27d_50%,#9dd9f3_75%,#c8b6ff_100%)] text-gray-900 py-2 w-full text-center text-sm md:text-base">
   <a href="{{ route('hinatansai.index') }}" class="hover:text-pink-700 font-semibold transition-colors duration-200">
     7回目のひな誕祭みどころ
   </a>
-</div>
+</div> --}}
 
-<div class="bg-[#4ad9de] text-white py-2 w-full text-center text-sm md:text-base">
+<div class="bg-[#de994a] text-white py-2 w-full text-center text-sm md:text-base">
   <a href="https://x.gd/orSY4" class="hover:text-yellow-200 font-semibold transition-colors duration-200">
     メンバーのペンライト検索アプリリニューアルしました
   </a>

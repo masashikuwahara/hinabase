@@ -35,7 +35,7 @@
                         <span class="mt-2 font-semibold block">
                         {{ $m->name }}
                         <span class="text-[#7cc7e8] font-bold">BIRTHDAY!</span>
-                        </span> --}}
+                        </span>
 
                         @if($m->birthday)
                         <p class="text-xs text-gray-500 mt-1">
@@ -194,5 +194,5 @@
     });
     })();
     </script>
-<!-- v.1.51.2 -->
+<!-- v.1.51.3 -->
 @endsection
