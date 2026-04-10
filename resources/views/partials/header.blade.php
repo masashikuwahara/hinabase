@@ -82,8 +82,8 @@
   </a>
 </div> --}}
 
-<div class="bg-[#de994a] text-white py-2 w-full text-center text-sm md:text-base">
-  <a href="https://x.gd/orSY4" class="hover:text-yellow-200 font-semibold transition-colors duration-200">
-    メンバーのペンライト検索アプリリニューアルしました
+<div class="bg-[#ffb6c1] text-white py-2 w-full text-center text-sm md:text-base">
+  <a href="https://hinaselect.netlify.app/" class="hover:text-yellow-200 font-semibold transition-colors duration-200">
+    推しメンチェッカーであなたにぴったりのメンバーが見つかるかも？
   </a>
 </div>
