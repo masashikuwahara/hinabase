@@ -340,10 +340,26 @@
 
     {{-- 個人PV --}}
     @if (!empty($member->promotion_video))
-        <section class="bg-white p-6 shadow-md rounded-lg mt-6">
+        {{-- <section class="bg-white p-6 shadow-md rounded-lg mt-6">
             <h2 class="text-xl font-bold text-gray-800">個人PV</h2>
             <div class="mt-4 youtube-ratio">
                 {!! $member->promotion_video !!}
+            </div>
+        </section> --}}
+        <section class="bg-white p-6 shadow-md rounded-lg mt-6">
+            <h3 class="text-xl font-bold text-gray-800">個人PV</h3>
+            <div class="mt-4">
+                <div class="relative w-full overflow-hidden rounded-xl" style="padding-top:56.25%;">
+                    <iframe
+                        class="absolute inset-0 w-full h-full"
+                        src="{{ $member->promotion_video }}"
+                        title="{{ $member->title }}"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                    </iframe>
+                </div>
             </div>
         </section>
     @endif
