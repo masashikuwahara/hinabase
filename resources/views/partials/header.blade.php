@@ -84,6 +84,6 @@
 
 <div class="bg-[#ffb6c1] text-white py-2 w-full text-center text-sm md:text-base">
   <a href="https://hinaselect.netlify.app/" class="hover:text-yellow-200 font-semibold transition-colors duration-200">
-    推しメンチェッカーであなたにぴったりのメンバーが見つかるかも？
+    推しメン診断アプリ
   </a>
 </div>
