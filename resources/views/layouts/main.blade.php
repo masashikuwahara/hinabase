@@ -56,10 +56,6 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <style>
-    .youtube-ratio iframe {
-        width: 100%;
-        aspect-ratio: 16 / 9;
-    }
     .text-shadow {
         text-shadow:
         -1px -1px 0 #fff,
