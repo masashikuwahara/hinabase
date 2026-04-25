@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 
 class YouTubeSync extends Command
 {
-    protected $signature   = 'youtube:sync {--max=400 : 取得最大件数(概数)}';
+    protected $signature   = 'youtube:sync {--max=500 : 取得最大件数(概数)}';
     protected $description = 'YouTube Data APIから動画情報を同期する';
 
     public function handle()
